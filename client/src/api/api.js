@@ -1,4 +1,4 @@
-const url = 'http://localhost:3000'
+const url = 'http://localhost:9000'
 
 class api {
     async getGames() {

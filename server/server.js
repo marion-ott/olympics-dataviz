@@ -3,7 +3,7 @@ const mysql = require('mysql')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
-const port = 3000
+const port = 9000
 
 const connection = mysql.createConnection({
     host: 'localhost',
