@@ -1,20 +1,29 @@
 import React from 'react';
+import api from './api/api';
 import './App.css';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-  componentWillMount() {
-    const url = 'http://localhost:3000/games'
-    fetch(url)
-      .then(response => response.json()
-      .then(data => ({status: response.status, body: data})))
-      .then(data => console.log(data.body));
+    constructor(props) {
+        super(props)
+        this.state = {
+        games: null
+        }
     }
+
+    async componentWillMount() {
+        const data = await api.getGames();
+        this.setState({
+        games: data,
+        });
+    }
+
   render() {
+
     return(
-      <div>test</div>
+        this.state.games === null ? (<div>loading</div>) 
+        : this.state.games.map((game, key) => (
+            <p key={key}>Les Jeux Olympiques de {game.year} se sont déroulés à {game.city_name} ({game.country_name}).</p>
+        ))
     )
   }
 }
