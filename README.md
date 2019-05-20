@@ -18,3 +18,11 @@ $ CREATE DATABASE olympics;
 $ exit;
 $ mysql -u userName -p olympics < pathToFile/data.sql
 ```
+
+## Launch project locally
+```shell
+$ cd pathToFolder/client
+$ npm start || yarn start
+$ cd pathToFolder/server
+$ node server.js
+```
