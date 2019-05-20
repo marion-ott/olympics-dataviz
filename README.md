@@ -19,7 +19,7 @@ $ exit;
 $ mysql -u userName -p olympics < pathToFile/data.sql
 ```
 
-## Launch project locally
+## Start the project locally
 ```shell
 $ cd pathToFolder/client
 $ npm start || yarn start
