@@ -13,7 +13,7 @@ $ npm install
 ## Follow these steps to create the database
 ```shell
 $ mysql -u userName -p
-$ enter your password
+$ enter your mysql password
 $ CREATE DATABASE olympics;
 $ exit;
 $ mysql -u userName -p olympics < pathToFile/data.sql
