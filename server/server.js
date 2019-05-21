@@ -22,17 +22,71 @@ app.get('/', (req, res) => {
 
 app.get('/games/:id', (req, res) => {
     const gameId = req.params.id
-    const query = 'SELECT * FROM game INNER JOIN sport_per_game ON sport_per_game.game_id = game.id WHERE id = ?'
-
-    connection.query(query, [gameId], (err, rows, fields) => {
+    /* Query to get all the countries present at the current game and the amount of male & female athletes */
+    const countriesQuery = 'SELECT * FROM country_per_game INNER JOIN country ON country.id = country_per_game.country_id WHERE game_id = ?' 
+    let data = {}
+    
+    connection.query(countriesQuery, [gameId], (err, rows, fields) => {
         if(err) {
             console.log(`Failed query for game : ${err}`)
             res.sendStatus(500)
             return
         }
-        
-        res.json(rows)
-    })
+        data.countries = rows
+
+        /* Query to get all the disciplines of the current game */
+        const sportsQuery = "SELECT sport.sport_name FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"
+        new Promise((resolve, reject) => {
+            connection.query(sportsQuery, [gameId], (err, rows, fields) => {
+                if(err) {
+                    console.log(`Failed query for game : ${err}`)
+                    res.sendStatus(500)
+                    reject(err)
+                    return
+                }  
+                let sports = rows.map(row => row.sport_name)
+                data.sports = sports
+                resolve(data)    
+            })
+        }).then((data) => {
+            let details = [...data.countries]
+            let infos = details.map(async(country, i) => {
+                details[i] = {
+                    id: country.id,
+                    name: country.country_name,
+                    code: country.code,
+                    flag: country.flag,
+                    male: country.male,
+                    female: country.female
+                }
+                let resultQuery = "SELECT * FROM result WHERE country_id =? AND game_id = ?"
+                let results = [];
+                details[i].results = await new Promise((resolve, reject) => {
+                    connection.query(resultQuery, [country.id, gameId], (err, rows, fields) => {
+                        if(err) {
+                            console.log(`Failed query for game : ${err}`)
+                            res.sendStatus(500)
+                            reject(err)
+                            return
+                        } 
+                        results = rows.map(row => {
+                            let item = {
+                                sport: row.sport_id,
+                                gender: row.gender,
+                                medal: row.medal
+                            }
+                            return item
+                        })
+                        resolve(results)
+                    })
+                })
+                return details[i]
+            })
+
+            Promise.all(infos).then((infos) => res.json(infos))
+
+        })
+    })  
 })
 
 app.get('/games/:id/result', (req, res) => {
@@ -48,6 +102,7 @@ app.get('/games/:id/result', (req, res) => {
         
         res.json(rows)
     })
+    
 })
 
 app.get('/games', (req, res) => {
