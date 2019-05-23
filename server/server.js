@@ -20,11 +20,23 @@ app.get('/', (req, res) => {
     res.send('hello')
 })
 
+
 app.get('/games/:id', (req, res) => {
+    let data = {}
     const gameId = req.params.id
+    
+    const gameQuery = 'SELECT * FROM game INNER JOIN country ON country.id = game.country_id INNER JOIN city ON city.id = game.city_id WHERE game.id = ?' 
+    connection.query(gameQuery, [gameId], (err, rows, fields) => {
+        if(err) {
+            console.log(`Failed query for game : ${err}`)
+            res.sendStatus(500)
+            return
+        }
+        data.game = rows
+    })
+
     /* Query to get all the countries present at the current game and the amount of male & female athletes */
     const countriesQuery = 'SELECT * FROM country_per_game INNER JOIN country ON country.id = country_per_game.country_id WHERE game_id = ?' 
-    let data = {}
     
     connection.query(countriesQuery, [gameId], (err, rows, fields) => {
         if(err) {
@@ -33,7 +45,8 @@ app.get('/games/:id', (req, res) => {
             return
         }
         data.countries = rows
-
+        //console.log(rows);
+        
         /* Query to get all the disciplines of the current game */
         const sportsQuery = "SELECT sport.sport_name FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"
         new Promise((resolve, reject) => {
@@ -51,6 +64,8 @@ app.get('/games/:id', (req, res) => {
         }).then((data) => {
             let details = [...data.countries]
             let infos = details.map(async(country, i) => {
+                let female = []
+                let male = []
                 details[i] = {
                     id: country.id,
                     name: country.country_name,
@@ -59,7 +74,16 @@ app.get('/games/:id', (req, res) => {
                     male: country.male,
                     female: country.female
                 }
-                let resultQuery = "SELECT * FROM result WHERE country_id =? AND game_id = ?"
+                let resultQuery = `SELECT 
+                                        result.sport_id, 
+                                        sport.sport_name, 
+                                        result.gender, 
+                                        result.medal,
+                                        COUNT(*) AS amount
+                                    FROM result 
+                                    INNER JOIN sport ON sport.id = result.sport_id  
+                                    WHERE country_id =? AND game_id = ?
+                                    GROUP BY result.sport_id, result.gender, result.medal`
                 let results = [];
                 details[i].results = await new Promise((resolve, reject) => {
                     connection.query(resultQuery, [country.id, gameId], (err, rows, fields) => {
@@ -69,40 +93,76 @@ app.get('/games/:id', (req, res) => {
                             reject(err)
                             return
                         } 
-                        results = rows.map(row => {
+                        
+                        results = rows.length ? rows.map(row => {
                             let item = {
-                                sport: row.sport_id,
+                                sportId: row.sport_id,
+                                sport: row.sport_name,
                                 gender: row.gender,
-                                medal: row.medal
+                                medal: row.medal,
+                                amount: row.amount
                             }
                             return item
-                        })
+                        }) : null
+                        
                         resolve(results)
                     })
                 })
+
                 return details[i]
             })
-
-            Promise.all(infos).then((infos) => res.json(infos))
+            // infos.sports = [...data.sports] 
+            // console.log(infos.sports);
+                       
+            Promise.all(infos).then((infos) => {
+                data.countries = infos
+                data.countries.map(country => {
+                    let gold = 0
+                    let silver = 0
+                    let bronze = 0
+                    if(country.results !== null) {
+                        country.results.map(result => {
+                            switch(result.medal) {
+                                case 1:
+                                    gold += result.amount
+                                    break;
+                                case 2:
+                                    silver += result.amount
+                                    break;
+                                case 3:
+                                    bronze += result.amount
+                                    break;
+                            }
+                        })
+                    }
+                    country.medals = {
+                        gold,
+                        silver,
+                        bronze,
+                        total: gold + silver + bronze
+                    }
+                })
+                let topRanked = data.countries.sort(function(a, b) {
+                    return parseFloat(b.medals.total) - parseFloat(a.medals.total)
+                }).slice(0, 19)
+                let top20 = []
+                topRanked.forEach(top => {
+                    let item = {
+                        name: top.name,
+                        flag: top.flag,
+                        gold: top.medals.gold,
+                        silver: top.medals.silver,
+                        bronze: top.medals.bronze,
+                        total: top.medals.total
+                    }
+                    top20.push(item)
+                })
+                data.ranking = top20
+                res.json(data)
+            })
 
         })
     })  
-})
-
-app.get('/games/:id/result', (req, res) => {
-    const gameId = req.params.id
-    const query = 'SELECT id, country_id FROM result GROUP BY result.country_id INNER JOIN country ON result.country_id = country.id INNER JOIN sport ON result.sport_id = sport.id WHERE result.game_id = ?'
-
-    connection.query(query, [gameId], (err, rows, fields) => {
-        if(err) {
-            console.log(`Failed query for game : ${err}`)
-            res.sendStatus(500)
-            return
-        }
-        
-        res.json(rows)
-    })
-    
 })
 
 app.get('/games', (req, res) => {
@@ -117,6 +177,7 @@ app.get('/games', (req, res) => {
         res.json(rows)
     })
 })
+
 
 app.get('/games/:id/sports', (req, res) => {
     const gameId = req.params.id
@@ -149,6 +210,170 @@ app.get('/games/:id/countries', (req, res) => {
 })
 
 
+app.get('/games/:id/result', (req, res) => {
+    const gameId = req.params.id
+    const query = 'SELECT id, country_id FROM result GROUP BY result.country_id INNER JOIN country ON result.country_id = country.id INNER JOIN sport ON result.sport_id = sport.id WHERE result.game_id = ?'
+
+    connection.query(query, [gameId], (err, rows, fields) => {
+        if(err) {
+            console.log(`Failed query for game : ${err}`)
+            res.sendStatus(500)
+            return
+        }
+        
+        res.json(rows)
+    })
+})
+
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 })
+
+
+/** 
+"results": [
+    {
+        "sport": "natation",
+        "sportId": 12,
+        "medals": {
+            "male": [
+                {
+                    "type": 1,
+                    "amount": 30
+                },
+                {
+                    "type": 2,
+                    "amount": 30
+                },
+                {
+                    "type": 3,
+                    "amount": 30
+                }
+            ],
+            "female": [
+                {
+                    "type": 1,
+                    "amount": 30
+                },
+                {
+                    "type": 2,
+                    "amount": 30
+                },
+                {
+                    "type": 3,
+                    "amount": 30
+                }
+            ]
+        }
+    }
+]
+*/
+
+// let resultsFiltered = {}
+// results.map(result => {
+//     if("undefined" === typeof(myObject["hello"])){
+//         // The property DOESN'T exists
+//     }
+// })
+
+
+// "results": {
+//     "male": [
+//       {
+//         "sportId": 1,
+//         "sport": "Athlétisme",
+//         "medal": 1
+//       },
+//       {
+//         "sportId": 2,
+//         "sport": "Aviron",
+//         "medal": 2
+//       },
+//       {
+//         "sportId": 21,
+//         "sport": "Rugby",
+//         "medal": 3
+//       },
+//       {
+//         "sportId": 21,
+//         "sport": "Rugby",
+//         "medal": 3
+//       }
+//     ],
+//     "female": [
+//       {
+//         "sportId": 1,
+//         "sport": "Athlétisme",
+//         "medal": 1
+//       }
+//     ]
+
+
+
+// "results": [
+//     {
+//         "sport": "natation",
+//         "sportId": 2,
+//         "male": [
+//             {
+//                 "type": 1,
+//                 "count": 30
+//             },
+//             {
+//                 "type": 2,
+//                 "count": 30
+//             },
+//             {
+//                 "type": 3,
+//                 "count": 30
+//             }
+//         ],
+//         "female": [
+//             {
+//                 "type": 1,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 2,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 3,
+//                 "amount": 30
+//             }
+//         ]
+//     },
+//     {
+//         "sport": "athlétisme",
+//         "male": [
+//             {
+//                 "type": 1,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 2,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 3,
+//                 "amount": 30
+//             }
+//         ],
+//         "female": [
+//             {
+//                 "type": 1,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 2,
+//                 "amount": 30
+//             },
+//             {
+//                 "type": 3,
+//                 "amount": 30
+//             }
+//         ]
+//     }
+// }
+// */

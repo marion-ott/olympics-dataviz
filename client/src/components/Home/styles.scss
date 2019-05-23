@@ -1,0 +1,50 @@
+@import 'src/config/settings';
+
+.Home {
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    position: relative;
+    z-index: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    &--overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: $darkBlue;
+        opacity: 0.6;
+        z-index: -1;
+    }
+    &--rings {
+        z-index: -2;
+        opacity: 0.6;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center center;
+        position: absolute;
+        max-width: 600px;
+        width: 100%;
+        height: 300px;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    &_title {
+        // font-family: 'PlayfairDisplay';
+        font-size: 60px;
+        text-align: center;
+        color: $white;
+        font-weight: $bold;
+    }
+}
