@@ -9,7 +9,7 @@ $ npm install
 $ cd ../server
 $ npm install
 ```
-Update the MySql connection information in server/server.js
+#### Update the MySql connection information in server/server.js
 
 ## Follow these steps to create the database
 ```shell
