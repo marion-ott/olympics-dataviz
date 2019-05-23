@@ -52,12 +52,6 @@ table {
             box-sizing: border-box;
 }
 
-body {
-    font-family: 'SourceSans', sans-serif;
-    font-weight: normal;
-    font-size: 14px;
-}
-
 /** FONT FACE **/
 @font-face {
     font-family: 'SourceSans';
@@ -92,4 +86,17 @@ body {
     font-style: normal;
     font-weight: 900;
     src: url('/assets/fonts/Playfair_Display/PlayfairDisplay-Black.ttf') format('truetype');
+}
+
+
+
+/** GLOBAL STYLES **/
+
+@import 'src/config/settings';
+
+body {
+    font-family: 'SourceSans', sans-serif;
+    font-weight: $regular;
+    font-size: 14px;
+    background-color: $darkBlue;
 }
