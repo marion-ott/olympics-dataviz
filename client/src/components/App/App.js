@@ -14,6 +14,7 @@ class App extends React.Component {
         this.state = {
             games: null
         }
+        this.updateGame = this.updateGame.bind(this)
     }
 
     async componentWillMount() {
@@ -29,16 +30,28 @@ class App extends React.Component {
         });
     }
 
+    async updateGame(event) {
+        let gameId = event.target.id
+        const details = await api.getGameById(gameId);
+        this.setState({
+            game: details.game,
+            sports: details.sports,
+            countries: details.countries,
+            ranking: details.ranking,
+            countriesCount: details.countries.length
+        });
+    }
+
     render() {
         return(
             this.state.games !== null ? (
                 <div className="App">
                     <Home />
-                    <Timeline games={this.state.games} />
+                    <Timeline games={this.state.games} updateGame={this.updateGame} />
                     <Game game={this.state} />
                     <Statistics />
                 </div>)
-            : (<div>Loaging</div>)
+            : (<div>Loading</div>)
         )
     }
 }

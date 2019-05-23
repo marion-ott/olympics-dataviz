@@ -8,7 +8,7 @@ class Timeline extends React.Component {
                 <ul>
                     {
                         this.props.games.map((game, key) => (
-                            <li key={key}>{game.year}</li>
+                            <li key={key} id={game.id} onClick={(event) => this.props.updateGame(event)}>{game.year}</li>
                         ))
                     }
                 </ul>
