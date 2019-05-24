@@ -1,0 +1,10 @@
+@import 'src/config/settings';
+
+.Map {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    .mapboxgl-ctrl-bottom-left, .mapboxgl-ctrl-bottom-right {
+        display: none !important;
+    }
+}
