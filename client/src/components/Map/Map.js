@@ -9,13 +9,23 @@ class Map extends React.Component {
     }
 
     componentDidMount() {
+        this.displayCountries()
+    }
+
+    componentDidUpdate() {
+        this.displayCountries()
+    }
+
+    displayCountries = () => {
+        let activeEls = ReactDOM.findDOMNode(this).querySelectorAll('.active')
+        activeEls.forEach(el => el.classList.remove('active'))
         const activeCountries = [...this.props.countries]
         activeCountries.forEach(country => {
             let el = ReactDOM.findDOMNode(this).querySelector(`#${country.code}`)
             if(el) {
                 el.classList.add('active')
             }
-        })  
+        })
     }
 
     render() { 
