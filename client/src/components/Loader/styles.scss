@@ -1,0 +1,46 @@
+.Loader {
+    max-width: 600px;
+    width: 100%;
+    use {
+        opacity: 0;
+    }
+    .path {
+        opacity: 1;
+        stroke-dashoffset: 90;
+        stroke-dasharray: 1000;
+        -webkit-animation: path-animation forwards;
+                animation: path-animation forwards;
+        -webkit-transition: all cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        transition: all cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        -webkit-animation-duration: 60s;
+                animation-duration: 60s;
+    }
+    @-webkit-keyframes path-animation {
+        0% {
+            stroke-dasharray: 250;
+            opacity: 0;
+        }
+        1% {
+            opacity: 1;
+        }
+        5%, 100% {
+            stroke-dasharray: 1000;
+            opacity: 1;
+        }
+    }
+
+
+    @keyframes path-animation {
+        0% {
+            stroke-dasharray: 250;
+            opacity: 0;
+        }
+        1% {
+            opacity: 1;
+        }
+        5%, 100% {
+            stroke-dasharray: 1000;
+            opacity: 1;
+        }
+    }
+}

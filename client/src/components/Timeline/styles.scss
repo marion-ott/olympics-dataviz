@@ -9,6 +9,7 @@
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
+        flex-wrap: wrap;
         li {
             margin: 10px;
         }

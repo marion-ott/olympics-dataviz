@@ -4,7 +4,8 @@ import './styles.scss';
 // import ReactFullpage from '@fullpage/react-fullpage';
 import api from '../../api/api';
 import Home from '../Home/Home'
-import WorldMap from '../WorldMap/WorldMap'
+// import WorldMap from '../WorldMap/WorldMap'
+// import Map from '../Map/Map'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
 import Statistics from '../Statistics/Statistics';
@@ -20,7 +21,7 @@ class App extends React.Component {
 
     async componentWillMount() {
         const data = await api.getGames();
-        const details = await api.getGameById(1);
+        const details = await api.getGameById(28);
         this.setState({
             games: data,
             game: details.game,
@@ -47,9 +48,10 @@ class App extends React.Component {
         return(
             this.state.games !== null ? (
                 <div className="App">
-                    <WorldMap />
+                    {/* <WorldMap /> */}
                     <Home />
                     <Timeline games={this.state.games} updateGame={this.updateGame} />
+                    {/* <Map game={this.state} /> */}
                     <Game game={this.state} />
                     <Statistics />
                 </div>)

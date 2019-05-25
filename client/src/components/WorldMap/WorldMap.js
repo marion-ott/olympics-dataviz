@@ -39,10 +39,7 @@ class WorldMap extends React.Component {
       maxZoom: 3
     });
 
-    const tooltip = new mapboxgl.Marker(this.tooltipContainer, {
-      offset: [-120, 0]
-    }).setLngLat([0,0]).addTo(map);
-   
+    var hoveredStateId =  null;
 
     map.on('load', () => {
         let data = require('./countries.geojson')
@@ -50,6 +47,11 @@ class WorldMap extends React.Component {
             "type": "geojson",
             "data": data
         });
+
+        var states = map.queryRenderedFeatures(e.point, {
+            layers: ['statedata']
+          });
+        console.log(states)
         
         map.addLayer({
             "id": "countries-layer",
@@ -57,11 +59,24 @@ class WorldMap extends React.Component {
             "source": "countries",
             "layout": {},
             "paint": {
-                "fill-color": "#627BC1",
+                "fill-color": "#aaa",
                 "fill-opacity": 0.5
             }
-        });
+        })
+
+        map.addLayer({
+            "id": 3,
+            "source": "countries",
+            'type': 'line',
+            'minzoom': 15,
+            'paint': {
+                'line-color': '#f00',
+              'line-width': 3
+            }
+          });
     })
+    
+
 
     map.on('click', 'countries-layer', function (e) {
         new mapboxgl.Popup()
@@ -70,12 +85,13 @@ class WorldMap extends React.Component {
         .addTo(map);
     });
 
-    // map.on('mousemove', (e) => {
+    map.on('mousemove', (e) => {
     //   const features = map.queryRenderedFeatures(e.point);      
     //   tooltip.setLngLat(e.lngLat);
     //   map.getCanvas().style.cursor = features.length ? 'pointer' : '';
-    // //   this.setTooltip(features);
-    // });
+    //   this.setTooltip(features);
+        
+        });
   }
 
   render() {
