@@ -17,7 +17,7 @@ class Loader extends React.Component {
                 this.rings[count].classList.add('path')
                 count++
             }
-        }, 800)
+        }, 500)
     }
 
     render() {

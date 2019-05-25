@@ -6,12 +6,41 @@
     height: 50px;
     position: static;
     ul {
+        width: 90%;
+        margin: 0 auto;
         display: -webkit-box;
         display: -ms-flexbox;
         display: flex;
-        flex-wrap: wrap;
+        -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
         li {
-            margin: 10px;
+            margin: 8px;
+            font-size: 10px;
+            font-family: 'Oswald';
+            letter-spacing: 0.1em;
+            position: relative;
+            cursor: pointer;
+            &:before {
+                content: '';
+                position: absolute;
+                width: 4px;
+                height: 4px;
+                left: 50%;
+                top: -15px;
+                -webkit-transform: translate(-50%, 0);
+                        transform: translate(-50%, 0);
+                background-color: $white;
+                border-radius: 20px;
+            }
+            &.active {
+                color: $yellow;
+                &:before {
+                    background-color: $yellow;
+                }
+            }
         }
     }
 }

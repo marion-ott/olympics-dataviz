@@ -8,14 +8,14 @@ class Home extends React.Component {
     constructor(props) {
         super(props)
         this.title = null
-        this.scrollMessage = null
         this.scrollIcon = null
         this.tl = new TimelineLite({paused: true})
     }
 
     componentDidMount() {
-        this.tl.to(ReactDOM.findDOMNode(this.loader), 1, {y: -150, opacity: .6, delay: 5})
-               .to(this.title, 1, {y: -50, opacity: 1},6)
+        this.tl.to(ReactDOM.findDOMNode(this.loader), 1, { opacity:0.6, delay: 3})
+               .to(this.title, 1, {y: -50, opacity: 1},3.5)
+               .to(this.scrollIcon, 1, {y: -10, opacity: 1, delay: 1})
         this.tl.play()
     }
 
@@ -26,10 +26,9 @@ class Home extends React.Component {
                 <Loader ref={el => this.loader = el} />
                 <div className="Home--rings" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}assets/img/olympics-rings.png)` }}></div>
                 <h1 ref={el => this.title = el} className="Home_title">Inside the Olympics<br/><span className="date">(1896 - 2016)</span></h1>
-                <div className="indicator">
-                    <p ref={el => this.scrollMessage = el}>Scroll</p>
-                    <div ref={el => this.scrollIcon = el} className="container">
-                        <div className="line"></div>
+                <div ref={el => this.scrollIcon = el} className="scroller">
+                    <div className="mouse">
+                        <div className="ball"></div>
                     </div>
                 </div>
             </div>

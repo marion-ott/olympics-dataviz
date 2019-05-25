@@ -21,7 +21,7 @@ class App extends React.Component {
 
     async componentWillMount() {
         const data = await api.getGames();
-        const details = await api.getGameById(28);
+        const details = await api.getGameById(1);
         this.setState({
             games: data,
             game: details.game,
@@ -50,10 +50,7 @@ class App extends React.Component {
                 <div className="App">
                     {/* <WorldMap /> */}
                     <Home />
-                    <Timeline games={this.state.games} updateGame={this.updateGame} />
-                    {/* <Map game={this.state} /> */}
-                    <Game game={this.state} />
-                    <Statistics />
+                    <Game data={this.state} updateGame={this.updateGame} />
                 </div>)
             : (<div>Loading</div>)
         )
