@@ -1,0 +1,189 @@
+@import 'src/config/settings';
+
+.Map {
+    width: 100vw;
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    svg {
+        display: block;
+        margin: 0 auto;
+        -webkit-transform: scale(0.9);
+                transform: scale(0.9);
+        path {
+            fill: $lightGrey;
+            stroke: $darkBlue;
+            stroke-width: 0.5px;
+            -webkit-transition: ease .2s fill;
+            transition: ease .2s fill;
+            pointer-events: none;
+        }
+        path.active {
+            fill: $lightYellow;
+            pointer-events: initial;
+            cursor: pointer;
+        }
+        path.clicked {
+            fill: $yellow !important;
+        }
+    }
+    &_popin {
+        position: absolute;
+        background-color: $white;
+        border-radius: 2px;
+        &_item {
+            width: 240px;
+            position: relative;
+            color: $black;
+            &:after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: -10px;
+                -webkit-transform: translate(-50%, 0);
+                        transform: translate(-50%, 0);
+                width: 0; 
+                height: 0; 
+                border-left: 15px solid transparent;
+                border-right: 15px solid transparent;
+                border-top: 15px solid $white;
+            }
+            &_head {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: start;
+                    -ms-flex-align: start;
+                        align-items: flex-start;
+                padding: 10px 20px;
+                border-top-left-radius: 2px;
+                border-top-right-radius: 2px;
+                img {
+                    width: 25px;
+                    height: 15px;
+                    display: block;
+                    margin-right: 5px;
+                    margin-top: 1px;
+                }
+                h2 {
+                    font-weight: $semi-bold;
+                    text-transform: uppercase;
+                    line-height: 18px;
+                    -webkit-user-select: none;
+                       -moz-user-select: none;
+                        -ms-user-select: none;
+                            user-select: none;
+                }
+            }
+            &_infos {
+                padding: 0 10px 20px 10px;
+                &_athletes {
+                    width: 90%;
+                    margin: 0 auto;
+                    div {
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-pack: justify;
+                            -ms-flex-pack: justify;
+                                justify-content: space-between;
+                        margin-bottom: 20px;
+                    }
+                    h4 {
+                        font-weight: $bold;
+                        margin: 10px 0;
+                        text-align: center;
+                        position: relative;
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
+                        &:after {
+                            display: none;
+                            content: '';
+                            position: absolute;
+                            left: 50%;
+                            -webkit-transform: translate(-50%, 0);
+                                    transform: translate(-50%, 0);
+                            bottom: -5px;
+                            width: 15%;
+                            height: 1px;
+                            background-color: $black;
+                        }
+                    }
+                    p {
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
+                        span {
+                            font-weight: $bold;
+                        }
+                    }
+                }
+                &_results {
+                    width: 50%;
+                    margin: 0 auto;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: justify;
+                        -ms-flex-pack: justify;
+                            justify-content: space-between;
+                    -webkit-box-align: center;
+                        -ms-flex-align: center;
+                            align-items: center;
+                    &_single {
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-orient: vertical;
+                        -webkit-box-direction: normal;
+                            -ms-flex-direction: column;
+                                flex-direction: column;
+                        -webkit-box-pack: center;
+                            -ms-flex-pack: center;
+                                justify-content: center;
+                        -webkit-box-align: center;
+                            -ms-flex-align: center;
+                                align-items: center;
+                    }
+                    p {
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
+                        text-align: center;
+                        font-weight: $bold;
+                    }
+                    .gold, .silver, .bronze {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50px;
+                        margin-bottom: 5px;
+                    }
+                    .gold {
+                        background-color: $gold;
+                    }
+                    .silver {
+                        background-color: $silver;
+                    }
+                    .bronze {
+                        background-color: $bronze;
+                    }
+                }
+            }
+        }
+    }
+}

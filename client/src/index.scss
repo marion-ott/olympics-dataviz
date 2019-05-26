@@ -54,40 +54,67 @@ table {
 
 /** FONT FACE **/
 @font-face {
-    font-family: 'SourceSans';
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: 200;
-    src: url('/assets/fonts/Source_Sans_Pro/SourceSansPro-Light.ttf') format('truetype');
+    src: url('/assets/fonts/Roboto/Roboto-Light.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'SourceSans';
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: normal;
-    src: url('/assets/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf') format('truetype');
+    src: url('/assets/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'SourceSans';
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/assets/fonts/Roboto/Roboto-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
     font-style: normal;
     font-weight: bold;
-    src: url('/assets/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf') format('truetype');
+    src: url('/assets/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
 }
 
 @font-face {
-    font-family: 'PlayfairDisplay';
+    font-family: 'Anton';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/assets/fonts/Anton/Anton-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: 200;
+    src: url('/assets/fonts/Signika/Signika-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/assets/fonts/Signika/Signika-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/assets/fonts/Signika/Signika-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
     font-style: normal;
     font-weight: bold;
-    src: url('/assets/fonts/Playfair_Display/PlayfairDisplay-Bold.ttf') format('truetype');
+    src: url('/assets/fonts/Signika/Signika-Bold.ttf') format('truetype');
 }
-
-@font-face {
-    font-family: 'PlayfairDisplay';
-    font-style: normal;
-    font-weight: 900;
-    src: url('/assets/fonts/Playfair_Display/PlayfairDisplay-Black.ttf') format('truetype');
-}
-
 
 
 /** GLOBAL STYLES **/
@@ -95,7 +122,7 @@ table {
 @import 'src/config/settings';
 
 body {
-    font-family: 'SourceSans', sans-serif;
+    font-family: 'Signika', sans-serif;
     font-weight: $regular;
     font-size: 14px;
     background-color: $darkBlue;

@@ -1,0 +1,63 @@
+@import 'src/config/settings';
+
+.Fact {
+    width: 100vw;
+    height: 100vh;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    position: relative;
+    &_sectionTitle {
+        font-family: 'Anton';
+        position: absolute;
+        bottom: 180px;
+        right: -210px;
+        font-size: 170px;
+        -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+        opacity: 0.05;
+        text-transform: uppercase;
+    }
+    &_container {
+        width: 80%;
+        margin: 0 auto;
+    }
+    &_background {
+        margin-left: -30px;
+        width: 80%;
+        height: 400px;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+    }
+    h3 {
+        font-family: 'Anton';
+        color: $yellow;
+        font-size: 30px;
+        line-height: 40px;
+        width: 100%;
+        margin-bottom: 30px;
+        padding-left: 100px;
+    }
+    &_paragraph {
+        background-color: $darkBlue;
+        margin-top: -100px;
+        margin-left: 70px;
+        padding: 30px;
+        p {
+            font-weight: $light;
+            font-size: 16px;
+            line-height: 22px;
+        }
+    }
+}

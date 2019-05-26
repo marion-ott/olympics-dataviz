@@ -20,6 +20,31 @@ app.get('/', (req, res) => {
     res.send('hello')
 })
 
+app.get('/champions', (req, res) => {
+    const gameId = req.params.id
+    const query = `
+        SELECT 
+            country.country_name,
+            country.code, 
+            country.flag, 
+            country_per_game.male, 
+            country_per_game.female 
+        FROM 
+            country_per_game
+        INNER JOIN country ON country_per_game.country_id = country.id 
+        WHERE game_id =?`
+    connection.query(query, [gameId], (err, rows, fields) => {
+        if(err) {
+            console.log(`Failed query for game : ${err}`)
+            res.sendStatus(500)
+            return
+        }  
+
+        res.json(rows)
+    })
+})
+
+
 
 app.get('/games/:id', (req, res) => {
     let data = {}
@@ -66,13 +91,15 @@ app.get('/games/:id', (req, res) => {
             let infos = details.map(async(country, i) => {
                 let female = []
                 let male = []
+                let ratio = country.female / (country.male + country.female)
                 details[i] = {
                     id: country.id,
                     name: country.country_name,
                     code: country.code,
                     flag: country.flag,
                     male: country.male,
-                    female: country.female
+                    female: country.female,
+                    ratio: ratio
                 }
                 let resultQuery = `SELECT 
                                         result.sport_id, 
@@ -116,6 +143,9 @@ app.get('/games/:id', (req, res) => {
                        
             Promise.all(infos).then((infos) => {
                 data.countries = infos
+                let women = 0
+                let men = 0
+                let countries = 0
                 data.countries.map(country => {
                     let gold = 0
                     let silver = 0
@@ -135,6 +165,9 @@ app.get('/games/:id', (req, res) => {
                             }
                         })
                     }
+                    countries++
+                    women+= country.female
+                    men+= country.male
                     country.medals = {
                         gold,
                         silver,
@@ -144,7 +177,7 @@ app.get('/games/:id', (req, res) => {
                 })
                 let topRanked = data.countries.sort(function(a, b) {
                     return parseFloat(b.medals.total) - parseFloat(a.medals.total)
-                }).slice(0, 19)
+                }).slice(0, 10)
                 let top20 = []
                 topRanked.forEach(top => {
                     let item = {
@@ -157,6 +190,9 @@ app.get('/games/:id', (req, res) => {
                     }
                     top20.push(item)
                 })
+                data.game[0].nations = countries
+                data.game[0].male = men
+                data.game[0].female = women
                 data.ranking = top20
                 res.json(data)
             })
