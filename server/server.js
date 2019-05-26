@@ -91,13 +91,15 @@ app.get('/games/:id', (req, res) => {
             let infos = details.map(async(country, i) => {
                 let female = []
                 let male = []
+                let ratio = country.female / (country.male + country.female)
                 details[i] = {
                     id: country.id,
                     name: country.country_name,
                     code: country.code,
                     flag: country.flag,
                     male: country.male,
-                    female: country.female
+                    female: country.female,
+                    ratio: ratio
                 }
                 let resultQuery = `SELECT 
                                         result.sport_id, 
@@ -141,6 +143,9 @@ app.get('/games/:id', (req, res) => {
                        
             Promise.all(infos).then((infos) => {
                 data.countries = infos
+                let women = 0
+                let men = 0
+                let countries = 0
                 data.countries.map(country => {
                     let gold = 0
                     let silver = 0
@@ -160,6 +165,9 @@ app.get('/games/:id', (req, res) => {
                             }
                         })
                     }
+                    countries++
+                    women+= country.female
+                    men+= country.male
                     country.medals = {
                         gold,
                         silver,
@@ -182,6 +190,9 @@ app.get('/games/:id', (req, res) => {
                     }
                     top20.push(item)
                 })
+                data.game[0].nations = countries
+                data.game[0].male = men
+                data.game[0].female = women
                 data.ranking = top20
                 res.json(data)
             })

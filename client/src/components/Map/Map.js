@@ -6,12 +6,14 @@ class Map extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            activeId: null,
             clicked: false,
             popin: null,
             top: null,
             left: null
         }
         this.countries = []
+        this.prevEl = null
     }
 
     componentDidMount() {
@@ -58,17 +60,29 @@ class Map extends React.Component {
     }
 
     renderPopin = (event) => {
-        const id = event.target.getAttribute('aria-label')
+        event.persist()
+        let clicked;
+        const nextId = event.target.getAttribute('aria-label')
+
         if(!this.state.clicked) {
             event.target.classList.add('clicked')
-        } else {
-            event.target.classList.remove('clicked')
+            clicked = true
+        } else if(this.state.clicked && this.prevId !== nextId){
+            event.target.classList.add('clicked')
+            this.prevEl.classList.remove('clicked')
+            clicked = true
+        } else if(this.state.clicked && this.prevId === nextId) {
+            this.prevEl.classList.remove('clicked')
+            clicked = false
         }
-        event.persist()
-        const clicked = !this.state.clicked
-        const popin = this.props.countries[id]
+
+        this.prevEl = event.target
+        this.prevId = event.target.getAttribute('aria-label')       
+        
+        const popin = this.props.countries[nextId]
         let [ popinWidth, popinHeight ] = [ 240, 160 ]
         const [ top, left ] = [ (event.pageY - (popinHeight + 20)), (event.pageX - (popinWidth / 2)) ]
+        
         this.setState({
             clicked,
             popin,

@@ -82,24 +82,38 @@ table {
 }
 
 @font-face {
-    font-family: 'Graduate';
-    font-style: normal;
-    font-weight: normal;
-    src: url('/assets/fonts/Graduate/Graduate-Regular.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: 'Oswald';
-    font-style: normal;
-    font-weight: normal;
-    src: url('/assets/fonts/Oswald/Oswald-Regular.ttf') format('truetype');
-}
-
-@font-face {
     font-family: 'Anton';
     font-style: normal;
     font-weight: normal;
     src: url('/assets/fonts/Anton/Anton-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: 200;
+    src: url('/assets/fonts/Signika/Signika-Light.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: normal;
+    src: url('/assets/fonts/Signika/Signika-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/assets/fonts/Signika/Signika-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Signika';
+    font-style: normal;
+    font-weight: bold;
+    src: url('/assets/fonts/Signika/Signika-Bold.ttf') format('truetype');
 }
 
 
@@ -108,8 +122,8 @@ table {
 @import 'src/config/settings';
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Signika', sans-serif;
     font-weight: $regular;
     font-size: 14px;
-    background-color: $black;
+    background-color: $darkBlue;
 }

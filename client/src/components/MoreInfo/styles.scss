@@ -1,0 +1,24 @@
+.MoreInfo {
+    border: solid 2px #fff;
+    border-radius: 50px;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+    .vertical, .horizontal {
+        position: absolute;
+        background-color: #fff;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+    }
+    .vertical {
+        width: 2px;
+        height: 15px;
+    }
+    .horizontal {
+        width: 15px;
+        height: 2px;
+    }
+}

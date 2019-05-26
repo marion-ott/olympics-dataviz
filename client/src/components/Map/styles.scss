@@ -15,7 +15,7 @@
             pointer-events: none;
         }
         path.active {
-            fill: #FFD16A;
+            fill: $lightYellow;
             pointer-events: initial;
             cursor: pointer;
         }
@@ -60,12 +60,16 @@
                     height: 15px;
                     display: block;
                     margin-right: 5px;
-                    margin-top: 3px;
+                    margin-top: 1px;
                 }
                 h2 {
-                    font-weight: $bold;
+                    font-weight: $semi-bold;
                     text-transform: uppercase;
                     line-height: 18px;
+                    -webkit-user-select: none;
+                       -moz-user-select: none;
+                        -ms-user-select: none;
+                            user-select: none;
                 }
             }
             &_infos {

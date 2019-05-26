@@ -4,4 +4,278 @@
     width: 100vw;
     height: 100vh;
     color: $white;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    &_infos {
+        width: 50%;
+        height: 100%;
+        // border: solid 1px red;
+        &_year {
+            background-color: $darkBlue;
+            width: 100%;
+            height: 50%;
+            // border: solid 1px yellow;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-pack: end;
+                -ms-flex-pack: end;
+                    justify-content: flex-end;
+            padding: 0 20px 20px 0;
+            h5 {
+                font-size: 160px;
+                text-align: right;
+            }
+            span {
+                text-align: right;
+                font-size: 30px;
+                text-transform: uppercase;
+                margin-right: 10px;
+                margin-bottom: -10px;
+            }
+        }
+        &_details {
+            width: 100%;
+            height: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            &_location {
+                background-color: #333751;
+                width: 60%;
+                // border: solid 1px green;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
+                -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                        justify-content: center;
+                padding-left: 20px;
+                div {
+                    &:not(:last-child) {
+                        margin-bottom: 30px;
+                    }
+                }
+                p {
+                    font-size: 60px;
+                    font-family: 'Anton', sans-serif;
+                }
+                span {
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    display: block;
+                    margin-bottom: 10px;
+                }
+            }
+            &_numbers {
+                
+                width: 40%;
+                height: 100%;
+                // border: solid 1px blue;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
+                -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                        justify-content: center;
+                .nations {
+                    background-color: #494f7c;
+                    width: 100%;
+                    height: 50%;
+                    padding: 40px 25px 0 0;
+                    position: relative;
+                }
+                .sports {
+                    background-color: #5e6599;
+                    width: 100%;
+                    height: 50%;
+                    padding: 40px 25px 0 0;
+                    position: relative;
+                }
+                .moreInfo {
+                    position: absolute;
+                    left: 15px;
+                    bottom: 15px;
+                }
+                p {
+                    text-align: right;
+                    font-size: 60px;
+                    font-family: 'Anton', sans-serif;
+                }
+                span {
+                    text-align: right;
+                    text-transform: uppercase;
+                    font-size: 16px;
+                    display: block;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+    }
+    &_athletes {
+        -webkit-user-select: none;
+           -moz-user-select: none;
+            -ms-user-select: none;
+                user-select: none;
+        width: 50%;
+        height: 50%;
+        background-color: #333751;
+        padding: 60px 20px 20px 20px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+                justify-content: space-between;
+        h4 {
+            font-family: 'Anton';
+            font-size: 35px;
+            line-height: 45px;
+        }
+        &_text {
+            height: 60%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            .scale {
+                width: 40%;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                &_visual {
+                    width: 40%;
+                    height: 100%;
+                    position: relative;
+                    div {
+                        width: 100%;
+                        position: absolute;
+                        left: 0;
+                        bottom: 0;
+                    }
+                    .total {
+                        height: 100%;
+                        background-color: $yellow;                      
+                    }
+                    .male {
+                        background-color: $lightYellow;
+                    }
+                }
+                &_explanation {
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-orient: vertical;
+                    -webkit-box-direction: normal;
+                        -ms-flex-direction: column;
+                            flex-direction: column;
+                    -webkit-box-pack: end;
+                        -ms-flex-pack: end;
+                            justify-content: flex-end;
+                    margin-left: 20px;
+                    p {
+                        font-family: 'Anton';
+                        font-size: 22px;
+                        letter-spacing: 0.05em;
+                        text-align: right;
+                    }
+                    img {
+                        width: 15px;
+                        margin-left: 15px;
+                    }
+                    &_male {
+                        margin-bottom: 20px;
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-pack: end;
+                            -ms-flex-pack: end;
+                                justify-content: flex-end;
+                        -webkit-box-align: center;
+                            -ms-flex-align: center;
+                                align-items: center;
+                        p {
+                            color: $lightYellow
+                        }
+                    }
+                    &_female {
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        -webkit-box-pack: end;
+                            -ms-flex-pack: end;
+                                justify-content: flex-end;
+                        -webkit-box-align: center;
+                            -ms-flex-align: center;
+                                align-items: center;
+                        p {
+                            color: $yellow
+                        }
+                    }
+                }
+            }
+            .stats {
+                width: 50%;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-orient: vertical;
+                -webkit-box-direction: normal;
+                    -ms-flex-direction: column;
+                        flex-direction: column;
+                -ms-flex-pack: distribute;
+                    justify-content: space-around;
+                .amount {
+                    width: 100%;
+                    margin-bottom: 20px;
+                    span {
+                        font-size: 14px;
+                        line-height: 16px;
+                    }
+                }
+                .ratio {
+                    width: 100%;
+                    span {
+                        font-size: 14px;
+                        line-height: 16px;
+                        display: block;
+                    }
+                }
+                p {
+                    font-family: 'Anton';
+                    font-size: 18px;
+                    line-height: 24px;
+                    letter-spacing: 0.02em;
+                    margin-top: 2px;
+                    span.details {
+                        font-family: 'Signika';
+                    }
+                }
+            }
+        }
+        &_graph {
+            width: 50%;
+            height: 50%;
+        }
+    }
+    
 }
