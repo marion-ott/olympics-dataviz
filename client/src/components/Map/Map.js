@@ -94,7 +94,6 @@ class Map extends React.Component {
     render() { 
         return (
             <div className="Map">
-                <p>{this.props.game[0].year}</p>
                 <svg
                     width="1009.6727"
                     height="665.96301">

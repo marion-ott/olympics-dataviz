@@ -35,9 +35,10 @@ class Home extends React.Component {
                     <div ref={el => this.lineAfter = el} className="Home_loader_lineAfter"></div>
                 </div> */}
                 <div ref={el => this.background = el}>
-                    <div className="Home_background back" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}assets/img/background_fond.png)` }}></div>
-                    <div className="Home_background front" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}assets/img/background_front.png)` }}></div>
+                    <div className="Home_background back" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}assets/img/background-back.png)` }}></div>
+                    <div className="Home_background front" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}assets/img/background-front.png)` }}></div>
                 </div>
+                <div className="Home_backgroundOverlay"></div>
                 <div className="Home_title">
                     <h1 ref={el => this.title = el}>Les jeux<br/>Olympiques</h1>
                     <div className="date">

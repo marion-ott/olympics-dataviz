@@ -131,23 +131,27 @@
             -ms-user-select: none;
                 user-select: none;
         width: 50%;
-        height: 50%;
+        height: 100%;
         background-color: #333751;
-        padding: 60px 20px 20px 20px;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -webkit-box-pack: justify;
-            -ms-flex-pack: justify;
+        .top {
+            width: 100%;
+            height: 50%;
+            padding: 60px 20px 20px 20px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
                 justify-content: space-between;
+        }
         h4 {
             font-family: 'Anton';
-            font-size: 35px;
-            line-height: 45px;
+            font-size: 30px;
+            line-height: 40px;
         }
         &_text {
             height: 60%;
@@ -273,8 +277,60 @@
             }
         }
         &_graph {
-            width: 50%;
+            width: 100%;
             height: 50%;
+        }
+        .bottom {
+            width: 100%;
+            height: 50%;
+            padding: 30px 20px;
+            position: relative;
+        }
+        &_selector {
+            max-width: 150px;
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            div {
+                width: 50%;
+                background-color: #494f7c;
+                text-align: center;
+                -webkit-transition: ease .1s all;
+                transition: ease .1s all;
+                padding: 8px 0;
+                &:first-child {
+                    border-top-left-radius: 4px;
+                    border-bottom-left-radius: 4px;
+                }
+                &:last-child {
+                    border-top-right-radius: 4px;
+                    border-bottom-right-radius: 4px;
+                }
+                &.selected {
+                    background-color: $darkBlue;
+                }
+                &.unSelected {
+                    cursor: pointer;
+                    &:hover {
+                        background-color: #5e6599;
+                    }
+                }
+            }
+        }
+        &_graph {
+            h4 {
+                margin-top: 20px;
+            }
+            span {
+                font-size: 10px;
+                position: absolute;
+                right: 15px;
+                bottom: 10px;
+            }
+            &_visual {
+                
+            }
         }
     }
     
