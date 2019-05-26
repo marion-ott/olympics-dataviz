@@ -5,6 +5,7 @@ class Ranking extends React.Component {
     render() {
         return(
             <section className="Ranking">
+                <p className="Ranking_sectionTitle">Classement</p>
                 <div className="Ranking_table">
                     <h3>Tableau des médailles</h3>
                     <div className="Ranking_table_rows">

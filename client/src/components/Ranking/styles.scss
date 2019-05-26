@@ -11,7 +11,19 @@
             justify-content: center;
     -webkit-box-align: center;
         -ms-flex-align: center;
-            align-items: center; 
+            align-items: center;
+    position: relative;
+    &_sectionTitle {
+        font-family: 'Anton';
+        position: absolute;
+        bottom: 280px;
+        left: -340px;
+        font-size: 170px;
+        -webkit-transform: rotate(-90deg);
+                transform: rotate(-90deg);
+        opacity: 0.05;
+        text-transform: uppercase;
+    }
     &_table {
         width: 50%;
         h3 {
