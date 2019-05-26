@@ -1,7 +1,6 @@
 @import 'src/config/settings';
 
 .Map {
-    position: relative;
     width: 100vw;
     height: 100vh;
     svg {
@@ -11,23 +10,25 @@
             fill: $lightGrey;
             stroke: $darkBlue;
             stroke-width: 0.5px;
-            -webkit-transition: ease .5s fill;
-            transition: ease .5s fill;
+            -webkit-transition: ease .2s fill;
+            transition: ease .2s fill;
             pointer-events: none;
         }
         path.active {
-            fill: rgba(242, 182, 50, 0.5);
+            fill: #FFD16A;
             pointer-events: initial;
             cursor: pointer;
         }
+        path.clicked {
+            fill: $yellow !important;
+        }
     }
     &_popin {
-
+        position: absolute;
+        background-color: $white;
+        border-radius: 2px;
         &_item {
-            background-color: $white;
-            width: 260px;
-            margin: 20px;
-            border-radius: 2px;
+            width: 240px;
             position: relative;
             color: $black;
             &:after {
@@ -50,7 +51,7 @@
                 -webkit-box-align: start;
                     -ms-flex-align: start;
                         align-items: flex-start;
-                //background-color: #a6aebc;
+                background-color: $yellow;
                 padding: 10px 20px;
                 border-top-left-radius: 2px;
                 border-top-right-radius: 2px;
@@ -68,7 +69,7 @@
                 }
             }
             &_infos {
-                padding: 20px;
+                padding: 0 10px 20px 10px;
                 &_athletes {
                     width: 90%;
                     margin: 0 auto;
@@ -83,9 +84,13 @@
                     }
                     h4 {
                         font-weight: $bold;
-                        margin-bottom: 20px;
+                        margin: 10px 0;
                         text-align: center;
                         position: relative;
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
                         &:after {
                             display: none;
                             content: '';
@@ -100,6 +105,10 @@
                         }
                     }
                     p {
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
                         span {
                             font-weight: $bold;
                         }
@@ -133,6 +142,10 @@
                                 align-items: center;
                     }
                     p {
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
                         text-align: center;
                         font-weight: $bold;
                     }

@@ -5,6 +5,12 @@ import './styles.scss'
 class Map extends React.Component {
     constructor(props) {
         super(props)
+        this.state = {
+            clicked: false,
+            popin: null,
+            top: null,
+            left: null
+        }
         this.countries = []
     }
 
@@ -46,48 +52,29 @@ class Map extends React.Component {
                 event.target.style.fill = 'rgba(242, 182, 50, 1)'
                 break;
             case 'mouseleave':
-                event.target.style.fill = 'rgba(242, 182, 50, 0.5)'
+                event.target.style.fill = '#FFD16A'
                 break;
         }
     }
 
     renderPopin = (event) => {
         const id = event.target.getAttribute('aria-label')
+        if(!this.state.clicked) {
+            event.target.classList.add('clicked')
+        } else {
+            event.target.classList.remove('clicked')
+        }
         event.persist()
-        // console.log(this.props.countries[id])
-        // console.log(event.pageX)
-        
-        return(
-            <div className="Map_popin_item" style={{ top: '10px', left: '10px' }}>      
-                {/* <div className="Map_popin_item_head">
-                    <img src={this.props.countries[id].flag} alt={`Drapeau du pays ${this.props.countries[id].name}`}/>
-                    <h2>{this.props.countries[id].name}</h2>
-                </div>
-                <div className="Map_popin_item_infos">
-                    <div className="Map_popin_item_infos_athletes">
-                        <h4>Athlètes</h4>
-                        <div>
-                            <p>Hommes : <span>{this.props.countries[id].male}</span></p>
-                            <p>Femmes : <span>{this.props.countries[id].female}</span></p>
-                        </div>
-                    </div>
-                    <div className="Map_popin_item_infos_results">
-                        <div className="Map_popin_item_results_single">
-                            <div className="gold"></div>
-                            <p>{this.props.countries[id].medals.gold}</p>
-                        </div>
-                        <div className="Map_popin_item_results_single">
-                            <div className="silver"></div>
-                            <p>{this.props.countries[id].medals.silver}</p>
-                        </div>
-                        <div className="Map_popin_item_results_single">
-                            <div className="bronze"></div>
-                            <p>{this.props.countries[id].medals.bronze}</p>
-                        </div>
-                    </div>
-                </div> */}
-            </div>
-        )
+        const clicked = !this.state.clicked
+        const popin = this.props.countries[id]
+        let [ popinWidth, popinHeight ] = [ 240, 160 ]
+        const [ top, left ] = [ (event.pageY - (popinHeight + 20)), (event.pageX - (popinWidth / 2)) ]
+        this.setState({
+            clicked,
+            popin,
+            top,
+            left
+        })
     }
 
     render() { 
@@ -1106,9 +1093,42 @@ class Map extends React.Component {
                         title="Zimbabwe"
                         id="ZIM" />
                 </svg>              
-                <div className="Map_popin">
-
-                </div>
+                
+                {
+                    this.state.clicked && (
+                        <div className="Map_popin" style={{ top: this.state.top, left: this.state.left }}>
+                            <div className="Map_popin_item" >  
+                                <div className="Map_popin_item_head">
+                                    <img src={this.state.popin.flag} alt={`Drapeau du pays ${this.state.popin.name}`}/>
+                                    <h2>{this.state.popin.name}</h2>
+                                </div>
+                                <div className="Map_popin_item_infos">
+                                    <div className="Map_popin_item_infos_athletes">
+                                        <h4>Athlètes</h4>
+                                        <div>
+                                            <p>Hommes : <span>{this.state.popin.male}</span></p>
+                                            <p>Femmes : <span>{this.state.popin.female}</span></p>
+                                        </div>
+                                    </div>
+                                    <div className="Map_popin_item_infos_results">
+                                        <div className="Map_popin_item_results_single">
+                                            <div className="gold"></div>
+                                            <p>{this.state.popin.medals.gold}</p>
+                                        </div>
+                                        <div className="Map_popin_item_results_single">
+                                            <div className="silver"></div>
+                                            <p>{this.state.popin.medals.silver}</p>
+                                        </div>
+                                        <div className="Map_popin_item_results_single">
+                                            <div className="bronze"></div>
+                                            <p>{this.state.popin.medals.bronze}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    )
+                }
             </div>
         )
     }
