@@ -42,10 +42,22 @@ class Statistics extends React.Component {
         })
     }
 
+    openPopin = () => {
+        //TODO: Fonction pour ouver une popin
+        // écouter l'événement pour ouvrir la popin appropriée
+        // et set le state correspondant pour appeler le render
+    }
+
+    closePopin = () => {
+        //TODO: Fonction pour refermer une popin
+        // et set le state showSportPopin & showCountryPopin à FALSE
+    }
+
     render() {
         const maxAmount = this.props.data.countries.sort(function(a, b) {
             return parseFloat(b.female) - parseFloat(a.female)
         }).slice(0,1)
+
         const maxRatio = this.props.data.countries.sort(function(a, b) {
             return parseFloat(b.ratio) - parseFloat(a.ratio)
         }).slice(0,1)
@@ -132,6 +144,42 @@ class Statistics extends React.Component {
                         </div>
                     </div>
                 </div>
+                {
+                    this.state.showSportPopin && (
+                        <div id="sport" className="Statistics_popup">
+                            <div className="Statistics_popup_container">
+                                <span onClick={this.closePopin}>X</span>
+                                <div className="Statistics_popup_container_list">
+                                    <h4>Les disciplines<br/>en compétition :</h4>
+                                    <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
+                                        { this.props.data.sports.map((sport, key) => (
+                                            <li key={key}>{sport}</li>
+                                        )) }
+                                    </ul>
+                                </div>
+                                <div className="Statistics_popup_graph"></div>
+                            </div>
+                        </div>
+                    )
+                }
+                {
+                    this.state.showCountriesPopin && (
+                        <div id="country" className="Statistics_popup">
+                            <div className="Statistics_popup_container">
+                                <span onClick={this.closePopin}>X</span>
+                                <div className="Statistics_popup_container_list">
+                                    <h4>Les disciplines<br/>en compétition :</h4>
+                                    <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
+                                        { this.props.data.sports.map((sport, key) => (
+                                            <li key={key}>{sport}</li>
+                                        )) }
+                                    </ul>
+                                </div>
+                                <div className="Statistics_popup_graph"></div>
+                            </div>
+                        </div>
+                    )
+                }
             </section>
         )
     }

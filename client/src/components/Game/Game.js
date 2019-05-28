@@ -8,13 +8,14 @@ import Statistics from '../Statistics/Statistics'
 
 class Game extends React.Component {
     render() {
+        console.log(this.props)
         return(
             <div className="Game">
                 <Timeline games={this.props.data.games} updateGame={this.props.updateGame} />
                 <Map game={this.props.data.game} countries={this.props.data.countries} />
                 <Statistics data={this.props.data} />
-                <Fact data={this.props.data.game[0]} />
-                <Ranking ranks={this.props.data.ranking} />
+                <Fact fact={this.props.data.fact[0]} />
+                <Ranking countries={this.props.data.countries} />
             </div>
         )
     }
