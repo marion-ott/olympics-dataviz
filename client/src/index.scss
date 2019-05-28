@@ -123,7 +123,8 @@ table {
 
 body {
     font-family: 'Signika', sans-serif;
-    font-weight: $regular;
+    font-weight: $light;
     font-size: 14px;
     background-color: $darkBlue;
+    overflow-x: hidden;
 }

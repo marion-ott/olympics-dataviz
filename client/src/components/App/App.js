@@ -25,6 +25,7 @@ class App extends React.Component {
         this.setState({
             games: data,
             game: details.game,
+            fact: details.fact,
             sports: details.sports,
             countries: details.countries,
             ranking: details.ranking,
@@ -37,6 +38,7 @@ class App extends React.Component {
         const details = await api.getGameById(gameId);
         this.setState({
             game: details.game,
+            fact: details.fact,
             sports: details.sports,
             countries: details.countries,
             ranking: details.ranking,

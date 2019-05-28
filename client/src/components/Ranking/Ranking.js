@@ -2,12 +2,33 @@ import React from 'react'
 import './styles.scss'
 
 class Ranking extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            ranking: null
+        }
+        this.ranking = null
+    }
+
+    componentWillMount() {
+        this.sortCountries()
+    }
+
+    sortCountries = () => {
+        let ranking = this.props.countries.sort(function(a, b) {
+            return parseFloat(b.medals.total) - parseFloat(a.medals.total)
+        })
+        this.ranking = ranking
+    }
+
     render() {
+        
+        this.sortCountries()
+
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
                 <div className="Ranking_table">
-                    <h3>Tableau des médailles</h3>
                     <div className="Ranking_table_rows">
                         <div className="Ranking_table_rows_legend">
                             <div className="name">
@@ -20,7 +41,7 @@ class Ranking extends React.Component {
                                 <p>Total</p>
                             </div>
                         </div>
-                        { this.props.ranks.map((rank, key) => (
+                        { this.ranking.map((rank, key) => (
                             <div className="Ranking_table_rows_item" key={key}>
                                 <div className="name">
                                     <p>
