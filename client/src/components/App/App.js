@@ -1,14 +1,10 @@
 import React from 'react';
 import './styles.scss';
 // import ReactDOM from 'react-dom';
-// import ReactFullpage from '@fullpage/react-fullpage';
 import api from '../../api/api';
 import Home from '../Home/Home'
-// import WorldMap from '../WorldMap/WorldMap'
-// import Map from '../Map/Map'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
-import Statistics from '../Statistics/Statistics';
 
 class App extends React.Component {
     constructor(props) {
@@ -52,6 +48,7 @@ class App extends React.Component {
                 <div className="App">
                     {/* <WorldMap /> */}
                     <Home />
+                    <Timeline games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
                 </div>)
             : (<div>Loading</div>)

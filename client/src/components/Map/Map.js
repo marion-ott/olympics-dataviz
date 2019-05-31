@@ -56,6 +56,8 @@ class Map extends React.Component {
             case 'mouseleave':
                 event.target.style.fill = '#FFD16A'
                 break;
+            default:
+                break;
         }
     }
 

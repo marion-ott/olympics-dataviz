@@ -103,7 +103,7 @@ app.get('/games/:id', (req, res) => {
             let infos = details.map(async(country, i) => {
                 let female = []
                 let male = []
-                let ratio = country.female / (country.male + country.female)
+                let ratio = (country.female / (country.male + country.female)).toFixed(2)
                 details[i] = {
                     id: country.id,
                     name: country.country_name,
