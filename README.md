@@ -48,10 +48,8 @@ $ DROP TABLE IF EXISTS `fact`;
   KEY `fact_game_id_fk` (`game_id`),
   CONSTRAINT `fact_game_id_fk` FOREIGN KEY (`game_id`) REFERENCES `game` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-  
 $ exit;
 $ cd <project-folder>
 $ cd server
 $ node facts.js
 ```
-$ node facts.js
