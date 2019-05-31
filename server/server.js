@@ -50,6 +50,17 @@ app.get('/games/:id', (req, res) => {
     let data = {}
     const gameId = req.params.id
     
+
+    let factQuery = 'SELECT * FROM fact INNER JOIN game ON game.id = fact.game_id WHERE game_id = ?'
+    connection.query(factQuery, [gameId], (err, rows, fields) => {
+        if(err) {
+            console.log(`Failed query for game : ${err}`)
+            res.sendStatus(500)
+            return
+        }
+        data.fact = rows
+    })
+
     const gameQuery = 'SELECT * FROM game INNER JOIN country ON country.id = game.country_id INNER JOIN city ON city.id = game.city_id WHERE game.id = ?' 
     connection.query(gameQuery, [gameId], (err, rows, fields) => {
         if(err) {
@@ -59,6 +70,7 @@ app.get('/games/:id', (req, res) => {
         }
         data.game = rows
     })
+
 
     /* Query to get all the countries present at the current game and the amount of male & female athletes */
     const countriesQuery = 'SELECT * FROM country_per_game INNER JOIN country ON country.id = country_per_game.country_id WHERE game_id = ?' 
@@ -175,25 +187,13 @@ app.get('/games/:id', (req, res) => {
                         total: gold + silver + bronze
                     }
                 })
-                let topRanked = data.countries.sort(function(a, b) {
-                    return parseFloat(b.medals.total) - parseFloat(a.medals.total)
-                }).slice(0, 10)
-                let top20 = []
-                topRanked.forEach(top => {
-                    let item = {
-                        name: top.name,
-                        flag: top.flag,
-                        gold: top.medals.gold,
-                        silver: top.medals.silver,
-                        bronze: top.medals.bronze,
-                        total: top.medals.total
-                    }
-                    top20.push(item)
-                })
+                
                 data.game[0].nations = countries
                 data.game[0].male = men
                 data.game[0].female = women
-                data.ranking = top20
+
+                
+
                 res.json(data)
             })
 
