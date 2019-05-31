@@ -29,7 +29,6 @@ class Chart extends React.Component {
     
     render() {
         this.updateData()
-        console.log("chart render", this.props.type)
         return(
             <div className="Chart" style={{ marginTop: '30px'}}>
                 <Bar 

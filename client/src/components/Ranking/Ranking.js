@@ -18,16 +18,27 @@ class Ranking extends React.Component {
         let ranking = this.props.countries.sort(function(a, b) {
             return parseFloat(b.medals.total) - parseFloat(a.medals.total)
         })
-        this.ranking = ranking
+        this.ranking = ranking.slice(0,10)
+        
     }
 
     render() {
         
         this.sortCountries()
-
+        console.log(this.props)
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
+                <div className="Ranking_sports_selector">
+                    <select name="sportSelect" defaultValue="all" id="">
+                        <option value="all">Tous</option>
+                        {
+                            this.props.sports.map((sport, key) => (
+                                <option key={key} value={sport.toLowerCase()}>{sport}</option>
+                            ))
+                        }
+                    </select>
+                </div>
                 <div className="Ranking_table">
                     <div className="Ranking_table_rows">
                         <div className="Ranking_table_rows_legend">
