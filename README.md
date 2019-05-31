@@ -4,7 +4,7 @@
 
 ```shell
 $ git clone https://github.com/marion-ott/olympics-dataviz.git
-$ cd pathToFolder/client
+$ cd <pathToFolder>/client
 $ npm install
 $ cd ../server
 $ npm install
@@ -17,14 +17,14 @@ $ mysql -u userName -p
 $ enter your mysql password
 $ CREATE DATABASE olympics;
 $ exit;
-$ mysql -u userName -p olympics < pathToFile/data.sql
+$ mysql -u <user> -p olympics < pathToFile/data.sql
 ```
 
 ## Start the project locally
 ```shell
-$ cd pathToFolder/client
+$ cd <pathToFolder>/client
 $ npm start || yarn start
-$ cd pathToFolder/server
+$ cd <pathToFolder>/server
 $ node server.js
 ```
 
