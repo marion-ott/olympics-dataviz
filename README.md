@@ -20,18 +20,9 @@ $ exit;
 $ mysql -u <user> -p olympics < pathToFile/data.sql
 ```
 
-## Start the project locally
-```shell
-$ cd <pathToFolder>/client
-$ npm start || yarn start
-$ cd <pathToFolder>/server
-$ node server.js
-```
+## To add the data about Olympics facts
 
-
-### To add the data about Olympics facts
-
-## Execute the script in your MySql console or terminal
+### Execute the script in your MySql console or terminal
 
 ```shell
 $ mysql -u <user> -p
@@ -53,3 +44,13 @@ $ cd <project-folder>
 $ cd server
 $ node facts.js
 ```
+
+
+## Start the project locally
+```shell
+$ cd <pathToFolder>/client
+$ npm start || yarn start
+$ cd <pathToFolder>/server
+$ node server.js
+```
+
