@@ -1,7 +1,7 @@
 import React from 'react'
 // import ReactDOM from 'react-dom'
 import './styles.scss'
-import { TimelineLite, Power2 } from 'gsap'
+// import { TimelineLite, Power2 } from 'gsap'
 
 class Home extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ class Home extends React.Component {
         this.lineAfter = null
         this.scrollIcon = null
         this.background = null
-        this.tl = new TimelineLite({paused: true})
+        // this.tl = new TimelineLite({paused: true})
     }
 
     componentDidMount() {
