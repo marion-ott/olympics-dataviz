@@ -16,34 +16,6 @@ class Timeline extends React.Component {
                 element.classList.remove('active');
             }
         })
-
-        // elementClick.classList.add('active');
-        // allDates.forEach((element, index) => {
-
-        // const allItems = Array.from(document.querySelectorAll('a'));
-        // allItems.forEach((element, index) => {
-        //     if (element.className === 'active') {
-        //         element.classList.remove('active');
-        //     }
-        // })
-        //
-        // //Récupère l'element click
-        // const element = index.target;
-        // //Retourne l'index de l'element click
-        // const indexElement = parseInt(element.getAttribute('index'));
-        //
-        // //Selection et affichage des div contenu
-        // const divContent = Array.from(document.querySelectorAll('.container div'));
-        // divContent.forEach((el, index) => {
-        //     if (index === indexElement) {
-        //         el.classList.add('activeContent');
-        //         element.classList.add('active');
-        //
-        //     } else {
-        //         el.classList.remove('activeContent');
-        //     }
-        // })
-
     }
 
     render() {
