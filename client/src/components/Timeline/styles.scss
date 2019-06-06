@@ -10,6 +10,7 @@
     left: 0;
     z-index: 100;
     padding-top: 20px;
+    background: rgba(37, 40, 57, 0.5);
     ul {
         width: 90%;
         margin: 0 auto;
@@ -42,7 +43,22 @@
             }
             &.active {
                 color: $yellow;
+                margin: 5px 10px 10px 10px;
+                font-size: 18px;
                 &:before {
+                    width: 8px;
+                    height: 8px;
+                    background-color: $yellow;
+                }
+            }
+
+            &:hover {
+                color: $yellow;
+                margin: 5px 10px 10px 10px;
+                font-size: 18px;
+                &:before {
+                    width: 8px;
+                    height: 8px;
                     background-color: $yellow;
                 }
             }
