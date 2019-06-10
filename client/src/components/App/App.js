@@ -11,7 +11,8 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            games: null
+            games: null,
+            loading: true
         }
         this.updateGame = this.updateGame.bind(this)
     }
@@ -55,12 +56,15 @@ class App extends React.Component {
 
     render() {
         if (this.state.loading) {
-            return <Loader />
+            return (
+                <Loader />
+            )
         }
         return(
             this.state.games !== null ? (
                 <div className="App">
                     {/* <WorldMap /> */}
+                    
                     <Home />
                     <Timeline games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
