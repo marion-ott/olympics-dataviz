@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import './styles.scss'
 
 class Ranking extends React.Component {
@@ -12,76 +13,67 @@ class Ranking extends React.Component {
     }
 
     componentWillMount() {
-        // this.sortCountries()
-        let ranking = this.props.countries.sort(function(a, b) {
-            return parseFloat(b.medals.total) - parseFloat(a.medals.total)
-        })
-        this.ranking = ranking.slice(0,10)
-
+        this.sortCountries()
     }
 
     componentWillReceiveProps(newProps) {
         this.props = newProps
-        console.log('new prop : ', this.props)
+        ReactDOM.findDOMNode(this).querySelector('select').value = ''
+        this.sortCountries()
     }
-
-    componentDidUpdate() {
-        // reset all blocks
-        // this._blocs.map((block)=> {
-        //     ReactDOM.findDOMNode(block).style.top = '100%'
-        //     ReactDOM.findDOMNode(block).style.zIndex = 'initial'
-        // })
-
-        // // set first block as defaut
-        // const firstBloc = this._blocs[0]
-        // ReactDOM.findDOMNode(firstBloc).style.top = 0
-    }
-
 
     sortCountries = () => {
-        if(!this.filtering) {
-            let ranking = this.props.countries.sort(function(a, b) {
-                return parseFloat(b.medals.total) - parseFloat(a.medals.total)
-            })
-            this.ranking = ranking.slice(0,10)
-        } 
-        //console.log('sort countries');
-        this.filtering = false
+        let ranking = this.props.countries.sort(function(a, b) {
+            return parseFloat(b.medals.total) - parseFloat(a.medals.total)
+        }).slice(0,10)
+
+        this.setState({
+            countries: ranking
+        })
     }
-
-    renderRank = () => {
-        
-    }
-
-
 
     selectSport = (event) => {
         
-        const selectedSport = event.target.value
-        let filteredBySport = this.props.countries.map(country => {
-            return country.results.filter(result => result.sportId == selectedSport)
-        }).filter(country => country.length > 0)
-        console.log(filteredBySport)
-
-        // let rankFilteredCountries = filteredBySport.sort(function(a, b) {
-        //     return parseFloat(b.medals.total) - parseFloat(a.medals.total)
-        // })
-
-        this.ranking = filteredBySport
-        // console.log(this.ranking)
-        this.filtering = true
-        this.forceUpdate()
+        const selectedSport = event.target.value !== 'all' ? parseFloat(event.target.value) : 'all'
+        if(event.target.value === 'all') {
+            this.sortCountries()
+        } else {
+            let filteredCountries = this.props.countries.map(country => {
+                let selectedCountry = {}
+                selectedCountry.results = country.results.filter(result => result.sportId === selectedSport)
+                selectedCountry.name = country.name
+                selectedCountry.flag = country.flag
+                let medalCount = {
+                    gold: 0,
+                    silver: 0,
+                    bronze: 0,
+                    total: 0
+                }
+                selectedCountry.results.forEach(result => {
+                    medalCount.gold = medalCount.gold + result.male.gold + result.female.gold + result.neutral.gold
+                    medalCount.silver = medalCount.silver + result.male.silver + result.female.silver + result.neutral.silver
+                    medalCount.bronze = medalCount.bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
+                })
+                medalCount.total = medalCount.gold + medalCount.silver + medalCount.bronze
+                selectedCountry.medals = medalCount
+                return selectedCountry
+            })
+    
+            let rankingBySport = filteredCountries.sort((a, b) => (b.medals.total - a.medals.total || b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
+    
+            this.setState({
+                countries: rankingBySport
+            })
+        }
     }
     
     render() {
-        
-        // console.log(this.ranking);
-        //this.sortCountries()
-        console.log('render props : ', this.props)
+
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
                 <div className="Ranking_sports_selector">
+                    <label htmlFor="sportSelect">Filter par discipline :</label>
                     <select name="sportSelect" defaultValue="all" id="" onChange={this.selectSport}>
                         <option value="all">Tous</option>
                         {
@@ -90,6 +82,7 @@ class Ranking extends React.Component {
                             ))
                         }
                     </select>
+                    <div></div>
                 </div>
                 <div className="Ranking_table">
                     <div className="Ranking_table_rows">
@@ -105,25 +98,17 @@ class Ranking extends React.Component {
                             </div>
                         </div>
                         {
-                            this.ranking.map((country, key) => {
+                            this.state.countries.map((country, key) => {
                                 let gold = 0
                                 let silver = 0
                                 let bronze = 0
+                                
                                 country.results.forEach(result => {
-                                    switch(result.medal) {
-                                        case 1:
-                                            gold = gold + result.amount
-                                            break;
-                                        case 2:
-                                            silver = silver + result.amount
-                                            break;
-                                        case 3:
-                                            bronze = bronze + result.amount
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    gold = gold + result.male.gold + result.female.gold + result.neutral.gold
+                                    silver = silver + result.male.silver + result.female.silver + result.neutral.silver
+                                    bronze = bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
                                 })
+
                                 return(
                                     <div className="Ranking_table_rows_item" key={key}>
                                         <div className="name">
