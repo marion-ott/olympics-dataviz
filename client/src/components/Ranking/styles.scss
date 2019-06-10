@@ -9,9 +9,10 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     position: relative;
     &_sectionTitle {
         font-family: 'Anton';
@@ -23,6 +24,18 @@
                 transform: rotate(-90deg);
         opacity: 0.05;
         text-transform: uppercase;
+        z-index: -1;
+    }
+    &_sports {
+        &_selector {
+            //max-width: 150px;
+            width: 50%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+        }
     }
     &_table {
         width: 50%;
@@ -76,12 +89,10 @@
                         align-items: center;
                 background-color: $white;
                 border-radius: 2px;
-                margin: 15px 0;
-                padding: 15px 20px;
+                margin: 10px 0;
+                padding: 10px 20px;
                 color: $black;
-                &:not(:last-child) {
-                    display: none;
-                }
+                
                 .name {
                     width: 60%;
                     p {
@@ -95,7 +106,7 @@
                     .rank {
                         font-size: 16px;
                         font-weight: $bold;
-                        margin-right: 25px;
+                        margin-right: 20px;
                         width: 20px;
                     }
                     img {

@@ -25,12 +25,6 @@ class Dashboard extends React.Component {
         this.malePercentage = Math.round((this.props.data.game[0].male / (this.props.data.game[0].female + this.props.data.game[0].male)) * 100)
     }
 
-
-    componentDidMount() {
-        
-    }
-
-
     changeGraph = (event) => {
         let displayAmount;
         let displayRatio;
@@ -65,15 +59,35 @@ class Dashboard extends React.Component {
         })
     }
 
-    openPopin = () => {
+    openPopin = (event) => {
         //TODO: Fonction pour ouver une popin
         // écouter l'événement pour ouvrir la popin appropriée
         // et set le state correspondant pour appeler le render
+        switch(event.target.id) {
+            case 'sports': 
+                this.setState({
+                    showSportsPopin: true,
+                    showCountriesPopin: false
+                })
+                break;
+            case 'countries': 
+                this.setState({
+                    showSportsPopin: false,
+                    showCountriesPopin: true
+                })
+                break;
+            default:
+                break;
+        }
     }
 
     closePopin = () => {
         //TODO: Fonction pour refermer une popin
         // et set le state showSportPopin & showCountryPopin à FALSE
+        this.setState({
+            showSportsPopin: false,
+            showCountriesPopin: false
+        })
     }
 
     
@@ -111,14 +125,14 @@ class Dashboard extends React.Component {
                                 <p>{this.props.data.countries.length}</p>
                                 <span>Pays participants</span>
                                 <div className="moreInfo">
-                                    <MoreInfo />
+                                    <MoreInfo id="countries" onClick={this.openPopin} />
                                 </div>
                             </div>
                             <div className="sports">
                                 <p>{this.props.data.sports.length}</p>
                                 <span>Disciplines</span>
                                 <div className="moreInfo">
-                                    <MoreInfo />
+                                    <MoreInfo id="sports" onClick={this.openPopin} />
                                 </div>
                             </div>
                         </div>
@@ -186,16 +200,18 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
                 {
-                    this.state.showSportPopin && (
+                    this.state.showSportsPopin && (
                         <div id="sport" className="Dashboard_popup">
                             <div className="Dashboard_popup_container">
                                 <span onClick={this.closePopin}>X</span>
                                 <div className="Dashboard_popup_container_list">
                                     <h4>Les disciplines<br/>en compétition :</h4>
                                     <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
-                                        { this.props.data.sports.map((sport, key) => (
-                                            <li key={key}>{sport}</li>
-                                        )) }
+                                        { this.props.data.sports.map((sport, key) => {
+                                            return(
+                                                <li key={key}>{sport.sport_name}</li>
+                                            )
+                                        }) }
                                     </ul>
                                 </div>
                                 <div className="Dashboard_popup_graph"></div>
@@ -212,7 +228,7 @@ class Dashboard extends React.Component {
                                     <h4>Les disciplines<br/>en compétition :</h4>
                                     <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
                                         { this.props.data.sports.map((sport, key) => (
-                                            <li key={key}>{sport}</li>
+                                            <li key={key}>{sport.sport_name}</li>
                                         )) }
                                     </ul>
                                 </div>
