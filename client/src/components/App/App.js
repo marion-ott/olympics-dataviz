@@ -18,6 +18,7 @@ class App extends React.Component {
     async componentWillMount() {
         const data = await api.getGames();
         const details = await api.getGameById(1);
+        
         this.setState({
             games: data,
             game: details.game,
@@ -32,6 +33,7 @@ class App extends React.Component {
     async updateGame(event) {
         let gameId = event.target.id
         const details = await api.getGameById(gameId);
+
         this.setState({
             game: details.game,
             fact: details.fact,

@@ -207,9 +207,11 @@ class Dashboard extends React.Component {
                                 <div className="Dashboard_popup_container_list">
                                     <h4>Les disciplines<br/>en compétition :</h4>
                                     <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
-                                        { this.props.data.sports.map((sport, key) => (
-                                            <li key={key}>{sport}</li>
-                                        )) }
+                                        { this.props.data.sports.map((sport, key) => {
+                                            return(
+                                                <li key={key}>{sport.sport_name}</li>
+                                            )
+                                        }) }
                                     </ul>
                                 </div>
                                 <div className="Dashboard_popup_graph"></div>
@@ -226,7 +228,7 @@ class Dashboard extends React.Component {
                                     <h4>Les disciplines<br/>en compétition :</h4>
                                     <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
                                         { this.props.data.sports.map((sport, key) => (
-                                            <li key={key}>{sport}</li>
+                                            <li key={key}>{sport.sport_name}</li>
                                         )) }
                                     </ul>
                                 </div>
