@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bar } from 'react-chartjs-2'
+import { Bar, HorizontalBar } from 'react-chartjs-2'
 
 class Chart extends React.Component {
     constructor(props) {
@@ -35,9 +35,56 @@ class Chart extends React.Component {
                         width={520}
                         height={220}
                         options={{
+                            title: {
+                                display: this.props.title,
+                                text: this.props.titleText,
+                                fontFamily: this.props.titleFontFamily,
+                                fontColor: this.props.titleFontColor
+                            },
                             maintainAspectRatio: false,
                             legend: {
-                                display: false
+                                display: this.props.legend,
+                                text: this.props.legendText
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            fontSize: 16,
+                                            fontColor: '#FFF'
+                                        }
+                                    }
+                                ],
+                                xAxes: [
+                                    {
+                                        ticks: {
+                                            fontSize: 10,
+                                            fontColor: '#FFF'
+                                        }
+                                    }
+                                ]
+                            }
+                        }}
+                    />
+                )
+                break;
+            case 'horizontal':
+                return(
+                    <HorizontalBar 
+                        data={this.chartData}
+                        width={this.props.width}
+                        height={this.props.height}
+                        options={{
+                            title: {
+                                display: this.props.title,
+                                text: this.props.titleText,
+                                fontFamily: this.props.titleFontFamily,
+                                fontColor: this.props.titleFontColor
+                            },
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: this.props.legend,
+                                text: this.props.legendText
                             },
                             scales: {
                                 yAxes: [

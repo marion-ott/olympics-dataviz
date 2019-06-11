@@ -160,8 +160,6 @@ app.get('/games/:id', (req, res) => {
 
                 return details[i]
             })
-            // infos.sports = [...data.sports] 
-            // console.log(infos.sports);
                        
             Promise.all(infos).then((infos) => {
                 data.countries = infos

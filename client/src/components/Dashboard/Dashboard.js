@@ -126,9 +126,9 @@ class Dashboard extends React.Component {
                             <div className="nations">
                                 <p>{this.props.data.countries.length}</p>
                                 <span>Pays participants</span>
-                                <div className="moreInfo">
+                                {/* <div className="moreInfo">
                                     <MoreInfo id="countries" onClick={this.openPopin} />
-                                </div>
+                                </div> */}
                             </div>
                             <div className="sports">
                                 <p>{this.props.data.sports.length}</p>
@@ -184,6 +184,7 @@ class Dashboard extends React.Component {
                                 {
                                     this.state.displayRatio ? (
                                         <Chart 
+                                            legend={false}
                                             labels={this.maxRatio.map(country => country.code)}
                                             dataset={this.maxRatio.map(country => country.ratio)}
                                             type="ratio"
@@ -191,6 +192,7 @@ class Dashboard extends React.Component {
                                         />
                                     ) : (
                                         <Chart 
+                                            legend={false}
                                             labels={this.maxAmount.map(country => country.code)}
                                             dataset={this.maxAmount.map(country => country.female)}
                                             type="amount"
@@ -206,11 +208,6 @@ class Dashboard extends React.Component {
                 {
                     this.state.showSportsPopin && (
                         <Popin data={this.props.data} id="sport" closePopin={this.closePopin} />
-                    )
-                }
-                {
-                    this.state.showCountriesPopin && (
-                        <Popin data={this.props.data} id="country" closePopin={this.closePopin} />
                     )
                 }
             </section>

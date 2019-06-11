@@ -3,12 +3,14 @@ import './styles.scss'
 import Chart from '../Chart/Chart'
 
 class Popin extends React.Component {
-    
+
+
     componentWillMount() {
-        //TODO: Create animation for popin appearing
-        this.setState({
-            sports: this.props.data.sports
-        })
+        this.setData()
+    }
+    
+    componentWillReceiveProps() {
+        this.setData()
     }
     
     componentWillUnmount() {
@@ -21,6 +23,39 @@ class Popin extends React.Component {
             //then call appropriate function
             this.props.closePopin()
         }
+    }
+
+    setData = () => {
+        const eventCount = []
+        //TODO: Create animation for popin appearing
+        this.props.data.sports.forEach(sport => {
+            let count = 0
+            this.props.data.countries.forEach(country => {
+                country.results.forEach(result => {
+                    if(result.sportId == sport.id) {
+                        count++
+                    }
+                })
+            })
+            eventCount.push(count)
+        })
+
+        const sportData = []
+        this.props.data.sports.forEach((sport, key) => {
+            let sportItem = {
+                sport: sport.sport_name,
+                event: eventCount[key]
+            }
+            sportData.push(sportItem)
+        })
+
+        sportData.sort(function(a, b) {
+            return parseFloat(b.event) - parseFloat(a.event)
+        }).slice(0,10)
+
+        this.setState({
+            data: sportData
+        })
     }
 
     selectSport = (event) => {
@@ -55,51 +90,38 @@ class Popin extends React.Component {
     }
 
     render() {
-        console.log(this.props)
 
         return(
-            this.props.id === 'sport' ? (
-                <div onClick={this.handleClick} id={this.props.id} className="Popin">
-                    <div className="Popin_container">
-                        <span onClick={this.props.closePopin}>X</span>
-                        <div className="Popin_container_list">
-                            <h4>Les disciplines<br/>en compétition :</h4>
-                            <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
-                                { this.props.data.sports.map((sport, key) => {
-                                    return(
-                                        <li key={key}>{sport.sport_name}</li>
-                                    )
-                                }) }
-                            </ul>
-                        </div>
-                        <div className="Popin_graph">
+            <div onClick={this.handleClick} id={this.props.id} className="Popin">
+                <div className="Popin_container">
+                    <span onClick={this.props.closePopin}>X</span>
+                    <div className="Popin_container_list">
+                        <h4>Les disciplines<br/>en compétition :</h4>
+                        <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
+                            { this.props.data.sports.map((sport, key) => {
+                                return(
+                                    <li key={key}>{sport.sport_name}</li>
+                                )
+                            }) }
+                        </ul>
+                    </div>
+                    <div className="Popin_graph">
                         <Chart 
-                            labels={this.props.data.sports.map(sport => sport.sport_name)}
-                            dataset={this.maxRatio.map(country => country.ratio)}
+                            legend={false}
+                            title={true}
+                            titleText="Nombre d'épreuves par discpline"
+                            titleFontFamily="Signika"
+                            titleFontColor="#e6e6e8"
+                            labels={this.state.data.map(item => item.sport)}
+                            dataset={this.state.data.map(item => item.event)}
                             type="ratio"
                             shape="bar" 
+                            height={500}
+                            width={30 * this.state.data.length}
                         />
-                        </div>
                     </div>
                 </div>
-            ) : (
-                <div onClick={this.handleClick} id={this.props.id} className="Popin">
-                    <div className="Popin_container">
-                        <span onClick={this.props.closePopin}>X</span>
-                        <div className="Popin_container_list">
-                            <h4>Les pays en compétition :</h4>
-                            <ul className={this.props.data.countries.length > 14 ? 'columns' : ''}>
-                                { this.props.data.countries.map((country, key) => {
-                                    return(
-                                        <li key={key}>{country.name}</li>
-                                    )
-                                }) }
-                            </ul>
-                        </div>
-                        <div className="Popin_graph"></div>
-                    </div>
-                </div>
-            )
+            </div>
         )
     }
 }

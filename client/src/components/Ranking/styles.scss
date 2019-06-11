@@ -49,6 +49,7 @@
                 text-transform: uppercase;
                 font-family: 'Signika';
                 letter-spacing: 0.05em;
+                color: $black;
                 &:focus {
                     outline: none;
                 }
@@ -120,12 +121,11 @@
                 -webkit-box-align: center;
                     -ms-flex-align: center;
                         align-items: center;
-                background-color: $white;
-                border-radius: 2px;
-                margin: 10px 0;
-                padding: 7px 15px;
-                color: $black;
-                
+                padding: 10px 15px;
+                color: $white;
+                &:not(:last-child) {
+                    border-bottom: solid 1px $white;
+                }
                 .name {
                     width: 60%;
                     p {
