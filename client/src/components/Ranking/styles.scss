@@ -105,8 +105,29 @@
                         -ms-flex-align: center;
                             align-items: center;
                     text-align: center;
-                    p {
+                    &_container {
                         width: 25%;
+                        div.goldMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $gold;
+                            margin: 0 auto;
+                        }
+                        div.silverMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $silver;
+                            margin: 0 auto;
+                        }
+                        div.bronzeMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $bronze;
+                            margin: 0 auto;
+                        }
                     }
                 }
             }

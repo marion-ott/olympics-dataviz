@@ -83,10 +83,16 @@ class Ranking extends React.Component {
                                 <p>Pays</p>
                             </div>
                             <div className="medals">
-                                <p className="gold">Or</p>
-                                <p className="silver">Argent</p>
-                                <p className="bronze">Bronze</p>
-                                <p>Total</p>
+                                <div className="medals_container">
+                                    <div className="goldMedal"></div>
+                                </div>
+                                <div className="medals_container">
+                                    <div className="silverMedal"></div>
+                                </div>
+                                <div className="medals_container">
+                                    <div className="bronzeMedal"></div>
+                                </div>
+                                <p className="medals_container">Total</p>
                             </div>
                         </div>
                         {

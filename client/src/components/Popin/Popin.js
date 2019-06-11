@@ -110,7 +110,7 @@ class Popin extends React.Component {
                             legend={false}
                             title={true}
                             titleText="Nombre d'épreuves par discpline"
-                            titleFontFamily="Signika"
+                            titleFontFamily="Anton"
                             titleFontColor="#e6e6e8"
                             labels={this.state.data.map(item => item.sport)}
                             dataset={this.state.data.map(item => item.event)}

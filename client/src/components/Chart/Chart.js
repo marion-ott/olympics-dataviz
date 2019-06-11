@@ -39,7 +39,9 @@ class Chart extends React.Component {
                                 display: this.props.title,
                                 text: this.props.titleText,
                                 fontFamily: this.props.titleFontFamily,
-                                fontColor: this.props.titleFontColor
+                                fontColor: this.props.titleFontColor,
+                                fontSize: 18,
+                                fontStyle: 'normal'
                             },
                             maintainAspectRatio: false,
                             legend: {
@@ -79,7 +81,9 @@ class Chart extends React.Component {
                                 display: this.props.title,
                                 text: this.props.titleText,
                                 fontFamily: this.props.titleFontFamily,
-                                fontColor: this.props.titleFontColor
+                                fontColor: this.props.titleFontColor,
+                                fontSize: 18,
+                                fontStyle: 'normal'
                             },
                             maintainAspectRatio: false,
                             legend: {
