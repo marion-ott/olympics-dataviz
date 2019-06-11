@@ -3,14 +3,6 @@ import ReactDOM from 'react-dom'
 import './styles.scss'
 
 class Ranking extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            ranking: null
-        }
-        this.countries = this.props.countries
-        this.ranking = this.props.countries
-    }
 
     componentWillMount() {
         this.sortCountries()
@@ -72,19 +64,19 @@ class Ranking extends React.Component {
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
-                <div className="Ranking_sports_selector">
-                    <label htmlFor="sportSelect">Filter par discipline :</label>
-                    <select name="sportSelect" defaultValue="all" id="" onChange={this.selectSport}>
-                        <option value="all">Tous</option>
-                        {
-                            this.props.sports.map((sport, key) => (
-                                <option key={key} value={sport.id}>{sport.sport_name}</option>
-                            ))
-                        }
-                    </select>
-                    <div></div>
-                </div>
                 <div className="Ranking_table">
+                    <div className="Ranking_sports_selector">
+                        <label htmlFor="sportSelect">Filter par discipline :</label>
+                        <select name="sportSelect" defaultValue="all" id="" onChange={this.selectSport}>
+                            <option value="all">Tous</option>
+                            {
+                                this.props.sports.map((sport, key) => (
+                                    <option key={key} value={sport.id}>{sport.sport_name}</option>
+                                ))
+                            }
+                        </select>
+                        <div></div>
+                    </div>
                     <div className="Ranking_table_rows">
                         <div className="Ranking_table_rows_legend">
                             <div className="name">
@@ -129,6 +121,9 @@ class Ranking extends React.Component {
                             })
                         }
                     </div>
+                </div>
+                <div className="Ranking_graphs">
+                    
                 </div>
             </section>
         )

@@ -1,0 +1,62 @@
+@import 'src/config/settings';
+
+.Popin {
+    position: absolute;
+    background-color: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    &_container {
+        padding: 20px;
+        border-radius: 3px;
+        position: relative;
+        width: 80%;
+        background-color: $darkBlue;
+            -webkit-box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.31);
+                    box-shadow: 0px 0px 40px 0px rgba(0,0,0,0.31);
+        span {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            font-weight: $bold;
+            cursor: pointer;
+        }
+        &_list {
+            width: 30%;
+            h4 {
+                font-family: 'Anton';
+                font-size: 18px;
+                line-height: 28px;
+                font-weight: $regular;
+                position: relative;
+                &:after {
+                    content: '';
+                    position: absolute;
+                    bottom: -10px;
+                    left: 0;
+                    width: 30px;
+                    height: 2px;
+                    background-color: $white;
+                }
+            }
+            ul {
+                margin-top: 50px;
+                &.columns {
+                    -webkit-columns: 2;
+                            columns: 2;
+                }
+                li {
+                    margin-bottom: 5px;
+                }
+            }
+        }
+    }
+}
