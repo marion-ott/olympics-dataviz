@@ -61,6 +61,16 @@ app.get('/games/:id', (req, res) => {
         data.fact = rows
     })
 
+    let gamesQuery = 'SELECT * FROM game'
+    connection.query(gamesQuery, (err, rows, fields) => {
+        if(err) {
+            console.log(`Failed query for game : ${err}`)
+            res.sendStatus(500)
+            return
+        }
+        data.games = rows
+    })
+
     const gameQuery = 'SELECT * FROM game INNER JOIN country ON country.id = game.country_id INNER JOIN city ON city.id = game.city_id WHERE game.id = ?'
     connection.query(gameQuery, [gameId], (err, rows, fields) => {
         if(err) {
@@ -85,7 +95,7 @@ app.get('/games/:id', (req, res) => {
         //console.log(rows);
 
         /* Query to get all the disciplines of the current game */
-        const sportsQuery = "SELECT sport.sport_name FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"
+        const sportsQuery = "SELECT sport.sport_name, sport.id FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"
         new Promise((resolve, reject) => {
             connection.query(sportsQuery, [gameId], (err, rows, fields) => {
                 if(err) {
@@ -95,7 +105,7 @@ app.get('/games/:id', (req, res) => {
                     return
                 }
                 let sports = rows.map(row => row.sport_name)
-                data.sports = sports
+                data.sports = rows
                 resolve(data)
             })
         }).then((data) => {
@@ -133,7 +143,7 @@ app.get('/games/:id', (req, res) => {
                             return
                         }
 
-                        results = rows.length ? rows.map(row => {
+                        results = rows.map(row => {
                             let item = {
                                 sportId: row.sport_id,
                                 sport: row.sport_name,
@@ -142,7 +152,7 @@ app.get('/games/:id', (req, res) => {
                                 amount: row.amount
                             }
                             return item
-                        }) : null
+                        })
 
                         resolve(results)
                     })
@@ -193,6 +203,104 @@ app.get('/games/:id', (req, res) => {
                 data.game[0].female = women
 
 
+                data.countries.forEach(country => {
+                    let result = []
+                    country.results.forEach(function (hash) {
+                        return function (a) {
+                            if (!hash[a.sport]) {
+                                hash[a.sport] = { sport: a.sport, sportId: a.sportId, male: [], female: [], neutral: []};
+                                result.push(hash[a.sport]);
+                            }
+
+                            switch(a.gender) {
+                                case 'M':
+                                    hash[a.sport].male.push({ type: a.type, amount: a.amount, type: a.medal });
+                                    break;
+                                case 'W':
+                                    hash[a.sport].female.push({ type: a.type, amount: a.amount, type: a.medal });
+                                    break;
+                                case 'X':
+                                    hash[a.sport].neutral.push({ type: a.type, amount: a.amount, type: a.medal });
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        };
+                    }(Object.create(null)));
+
+                    country.results = result
+                })
+
+                data.countries.forEach(country => {
+                    if(country.results) {
+                        country.results.forEach(result => {
+                            let malegold = 0
+                            let malesilver = 0
+                            let malebronze = 0
+                            let femalegold = 0
+                            let femalesilver = 0
+                            let femalebronze = 0
+                            let neutralgold = 0
+                            let neutralsilver = 0
+                            let neutralbronze = 0
+                            result.male.forEach(medal => {
+                                switch(medal.type) {
+                                    case 1:
+                                        malegold = malegold += medal.amount
+                                        break;
+                                    case 2:
+                                        malesilver = malesilver += medal.amount
+                                        break;
+                                    case 3:
+                                        malebronze = malebronze += medal.amount
+                                        break;
+                                }
+                            })
+                            result.female.forEach(medal => {
+                                switch(medal.type) {
+                                    case 1:
+                                        femalegold = femalegold += medal.amount
+                                        break;
+                                    case 2:
+                                        femalesilver = femalesilver += medal.amount
+                                        break;
+                                    case 3:
+                                        femalebronze = femalebronze += medal.amount
+                                        break;
+                                }
+                            })
+                            result.neutral.forEach(medal => {
+                                switch(medal.type) {
+                                    case 1:
+                                        neutralgold = neutralgold += medal.amount
+                                        break;
+                                    case 2:
+                                        neutralsilver = neutralsilver += medal.amount
+                                        break;
+                                    case 3:
+                                        neutralbronze = neutralbronze += medal.amount
+                                        break;
+                                }
+                            })
+                            result.male = {
+                                gold: malegold,
+                                silver: malesilver,
+                                bronze: malebronze
+                            }
+                            result.female = {
+                                gold: femalegold,
+                                silver: femalesilver,
+                                bronze: femalebronze
+                            }
+                            result.neutral = {
+                                gold: neutralgold,
+                                silver: neutralsilver,
+                                bronze: neutralbronze
+                            }
+                        })
+                    }
+                })
 
                 res.json(data)
             })
@@ -413,3 +521,25 @@ app.listen(port, () => {
 //     }
 // }
 // */
+
+
+/**
+
+results: [
+    {
+        sport: "athletirsme",
+        sportId: 4,
+        male: {
+            gold: 2,
+            silver: 1,
+            bronze: 3
+        },
+        female: {
+            gold: 1,
+
+        }
+    },
+]
+
+
+ */

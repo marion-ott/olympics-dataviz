@@ -8224,6 +8224,7 @@ react-virtualized-auto-sizer@^1.0.2:
 react-vivus@^0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/react-vivus/-/react-vivus-0.0.2.tgz#5afc7f0804c5b038a543a1f2358be9149f769ebb"
+  integrity sha512-T65P3JxixMfbsG1Z82JveFj/Lw2vzpVebxCX0skc9xKpdBjJZTvMXTq4K/Nb3aZOlspRgJMk/zE7/UD3W/Mmrg==
 
 react@^16.8.6:
   version "16.8.6"

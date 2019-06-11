@@ -9,10 +9,12 @@
     -webkit-box-pack: center;
         -ms-flex-pack: center;
             justify-content: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     position: relative;
+    padding: 40px;
     &_sectionTitle {
         font-family: 'Anton';
         position: absolute;
@@ -23,6 +25,46 @@
                 transform: rotate(-90deg);
         opacity: 0.05;
         text-transform: uppercase;
+        z-index: -1;
+    }
+    &_sports {
+        &_selector {
+            //max-width: 150px;
+            width: 180px;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            position: relative;
+            label {
+                margin-bottom: 15px;
+            }
+            select {
+                width: 180px;
+                border: none;
+                border-radius: 0;
+                -webkit-appearance: none;
+                padding: 5px 10px;
+                text-transform: uppercase;
+                font-family: 'Signika';
+                letter-spacing: 0.05em;
+                &:focus {
+                    outline: none;
+                }
+            }
+            div {
+                position: absolute;
+                top: 73%;
+                right: 10px;
+                width: 0; 
+                height: 0; 
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid $darkBlue;
+                z-index: 1;
+            }
+        }
     }
     &_table {
         width: 50%;
@@ -42,10 +84,11 @@
                 -webkit-box-align: center;
                     -ms-flex-align: center;
                         align-items: center;
-                padding: 15px 10px;
+                padding: 25px 10px 5px 10px;
                 color: $white;
-                font-size: 18px;
-                font-family: 'Anton';
+                font-size: 13px;
+                font-weight: $semi-bold;
+                text-transform: uppercase;
                 .name {
                     width: 60%;
                 }
@@ -61,6 +104,9 @@
                         -ms-flex-align: center;
                             align-items: center;
                     text-align: center;
+                    p {
+                        width: 25%;
+                    }
                 }
             }
             &_item {
@@ -76,12 +122,10 @@
                         align-items: center;
                 background-color: $white;
                 border-radius: 2px;
-                margin: 15px 0;
-                padding: 15px 20px;
+                margin: 10px 0;
+                padding: 7px 15px;
                 color: $black;
-                &:not(:last-child) {
-                    display: none;
-                }
+                
                 .name {
                     width: 60%;
                     p {
@@ -95,7 +139,7 @@
                     .rank {
                         font-size: 16px;
                         font-weight: $bold;
-                        margin-right: 25px;
+                        margin-right: 20px;
                         width: 20px;
                     }
                     img {
@@ -116,20 +160,20 @@
                     -webkit-box-align: center;
                         -ms-flex-align: center;
                             align-items: center;
-                            font-size: 18px;
-                            font-family: 'Anton', sans-serif;
+                    font-size: 18px;
+                    font-weight: bold;
                     text-align: center;
+                    p {
+                        width: 25%;
+                    }
                     .gold {
                         color: $gold;
-                        font-weight: $bold;
                     }
                     .silver {
                         color: $silver;
-                        font-weight: $bold;
                     }
                     .bronze {
                         color: $bronze;
-                        font-weight: $bold;
                     }
                 }
             }

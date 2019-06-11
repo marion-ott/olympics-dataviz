@@ -3,7 +3,7 @@ let facts = [
         id: 1,
         src: "assets/img/fact-1896.jpg",
         title: "Les Jeux Olympiques de 1896, également nommés Jeux de la première olympiade.",
-        text: "C'est à l'issue d'un congrès organisé en 1894 à Paris par le Français Pierre de Coubertin qu'est créé le Comité International Olympique (CIO) et que la capitale grecque est désignée première ville hôte de l'événement olympique. Ce congrès décide également de l'exclusion des sports professionnels et des femmes au profit de de l'amateurisme et du sexe masculin.", 
+        text: "C'est à l'issue d'un congrès organisé en 1894 à Paris par le Français Pierre de Coubertin qu'est créé le Comité International Olympique (CIO) et que la capitale grecque est désignée première ville hôte de l'événement olympique. Ce congrès décide également de l'exclusion des sports professionnels et des femmes au profit de de l'amateurisme et du sexe masculin.",
     },
 
     {
@@ -203,19 +203,19 @@ const mysql = require('mysql')
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'YOURPASSWORD',
+    password: 'root',
     database: 'olympics'
 })
 
 
 facts.forEach(fact => {
     let query = `
-        INSERT INTO 
-            fact 
+        INSERT INTO
+            fact
             (title, text, src, game_id)
-        VALUES 
+        VALUES
             ("${fact.title}", "${fact.text}", "${fact.src}", ${fact.id})`
-    
+
     connection.query(query, function (err, result, fields) {
         if (err) throw err;
         console.log(result);
