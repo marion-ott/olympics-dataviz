@@ -2,6 +2,7 @@ import React from 'react'
 // import ReactDOM from 'react-dom'
 import './styles.scss'
 import MoreInfo from '../MoreInfo/MoreInfo'
+import Popin from '../Popin/Popin'
 import Chart from '../Chart/Chart'
 
 class Dashboard extends React.Component {
@@ -84,6 +85,7 @@ class Dashboard extends React.Component {
     closePopin = () => {
         //TODO: Fonction pour refermer une popin
         // et set le state showSportPopin & showCountryPopin à FALSE
+        console.log("closing")
         this.setState({
             showSportsPopin: false,
             showCountriesPopin: false
@@ -184,13 +186,15 @@ class Dashboard extends React.Component {
                                         <Chart 
                                             labels={this.maxRatio.map(country => country.code)}
                                             dataset={this.maxRatio.map(country => country.ratio)}
-                                            type="ratio" 
+                                            type="ratio"
+                                            shape="bar" 
                                         />
                                     ) : (
                                         <Chart 
                                             labels={this.maxAmount.map(country => country.code)}
                                             dataset={this.maxAmount.map(country => country.female)}
-                                            type="amount" 
+                                            type="amount"
+                                            shape="bar" 
                                         />
                                     )
                                 }
@@ -201,40 +205,12 @@ class Dashboard extends React.Component {
                 </div>
                 {
                     this.state.showSportsPopin && (
-                        <div id="sport" className="Dashboard_popup">
-                            <div className="Dashboard_popup_container">
-                                <span onClick={this.closePopin}>X</span>
-                                <div className="Dashboard_popup_container_list">
-                                    <h4>Les disciplines<br/>en compétition :</h4>
-                                    <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
-                                        { this.props.data.sports.map((sport, key) => {
-                                            return(
-                                                <li key={key}>{sport.sport_name}</li>
-                                            )
-                                        }) }
-                                    </ul>
-                                </div>
-                                <div className="Dashboard_popup_graph"></div>
-                            </div>
-                        </div>
+                        <Popin data={this.props.data} id="sport" closePopin={this.closePopin} />
                     )
                 }
                 {
                     this.state.showCountriesPopin && (
-                        <div id="country" className="Dashboard_popup">
-                            <div className="Dashboard_popup_container">
-                                <span onClick={this.closePopin}>X</span>
-                                <div className="Dashboard_popup_container_list">
-                                    <h4>Les disciplines<br/>en compétition :</h4>
-                                    <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
-                                        { this.props.data.sports.map((sport, key) => (
-                                            <li key={key}>{sport.sport_name}</li>
-                                        )) }
-                                    </ul>
-                                </div>
-                                <div className="Dashboard_popup_graph"></div>
-                            </div>
-                        </div>
+                        <Popin data={this.props.data} id="country" closePopin={this.closePopin} />
                     )
                 }
             </section>

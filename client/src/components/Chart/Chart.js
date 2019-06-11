@@ -19,47 +19,61 @@ class Chart extends React.Component {
                 {
                     label: '',
                     data: this.props.dataset,
-                    backgroundColor: '#5e6599',
+                    backgroundColor: '#f2b632',
                     borderWidth: 1,
-                    borderColor: 'white',
                 }
             ]
+        }
+    }
+
+    renderChart = (shape) => {
+        switch(shape) {
+            case 'bar':
+                return(
+                    <Bar 
+                        data={this.chartData}
+                        width={520}
+                        height={220}
+                        options={{
+                            maintainAspectRatio: false,
+                            legend: {
+                                display: false
+                            },
+                            scales: {
+                                yAxes: [
+                                    {
+                                        ticks: {
+                                            fontSize: 16,
+                                            fontColor: '#FFF'
+                                        }
+                                    }
+                                ],
+                                xAxes: [
+                                    {
+                                        ticks: {
+                                            fontSize: 10,
+                                            fontColor: '#FFF'
+                                        }
+                                    }
+                                ]
+                            }
+                        }}
+                    />
+                )
+                break;
+            default:
+                break;
         }
     }
     
     render() {
         this.updateData()
+
         return(
             <div className="Chart" style={{ marginTop: '30px'}}>
-                <Bar 
-                    data={this.chartData}
-                    width={520}
-                    height={220}
-                    options={{
-                        maintainAspectRatio: false,
-                        legend: {
-                            display: false
-                        },
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        fontSize: 16,
-                                        fontColor: '#FFF'
-                                    }
-                                }
-                            ],
-                            xAxes: [
-                                {
-                                    ticks: {
-                                        fontSize: 10,
-                                        fontColor: '#FFF'
-                                    }
-                                }
-                            ]
-                        }
-                    }}
-                />
+                {
+                    this.renderChart(this.props.shape)
+                }
             </div>
         )
     }
