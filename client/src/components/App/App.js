@@ -36,8 +36,7 @@ class App extends React.Component {
     async updateGame(event) {
         let gameId = event.target.dataset.index
         ReactDOM.findDOMNode(this).querySelector('.Timeline_item.clicked').classList.remove('clicked')
-        console.log(event.target)
-        event.target.classList.add('clicked')
+            event.target.classList.add('clicked')
         const details = await api.getGameById(gameId);
 
         this.setState({
