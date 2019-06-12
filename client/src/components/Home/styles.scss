@@ -11,8 +11,8 @@
     &_logo {
         position: fixed;
         left: 20px;
-        bottom: 20px;
-        max-width: 80px;
+        bottom: 10px;
+        max-width: 60px;
         width: 100%;
         z-index: 10;
         img {
@@ -32,8 +32,7 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background: -webkit-gradient(linear, left top, right top, from(#003e76),color-stop(33%, #ff0000),color-stop(66%, #ffce01),to(#179a13));
-            background: linear-gradient(to right, #003e76 0%,#ff0000 33%,#ffce01 66%,#179a13 100%);
+            background-image: url()
         }
         &_lineAfter {
             display: none;
@@ -64,13 +63,14 @@
     }
     &_backgroundOverlay {
         width: 100%;
-        height: 60px;
+        height: 220px;
         position: absolute;
         bottom: 0;
         left: 0;
         z-index: 1;
-        background: -webkit-gradient(linear, left bottom, left top, from($darkBlue), to(transparent));
-        background: linear-gradient(to top, $darkBlue 0%, transparent 100%);
+        background-image: url('/assets/img/bottom_home.png');
+        background-size: cover;
+        background-position: top center;
     }
     &_title {
         font-family: 'Anton';
@@ -78,7 +78,7 @@
         opacity: 1;
         text-transform: uppercase;
         position: absolute;
-        left: 7%;
+        left: 6%;
         top: 28%;
         text-align: right;
         h1 {

@@ -6,13 +6,12 @@
     display: -webkit-box;  
     display: -ms-flexbox;  
     display: flex;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: relative;
     padding: 40px;
     &_sectionTitle {
@@ -49,6 +48,7 @@
                 text-transform: uppercase;
                 font-family: 'Signika';
                 letter-spacing: 0.05em;
+                color: $black;
                 &:focus {
                     outline: none;
                 }
@@ -104,8 +104,29 @@
                         -ms-flex-align: center;
                             align-items: center;
                     text-align: center;
-                    p {
+                    &_container {
                         width: 25%;
+                        div.goldMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $gold;
+                            margin: 0 auto;
+                        }
+                        div.silverMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $silver;
+                            margin: 0 auto;
+                        }
+                        div.bronzeMedal {
+                            width: 10px;
+                            height: 10px;
+                            border-radius: 50px;
+                            background-color: $bronze;
+                            margin: 0 auto;
+                        }
                     }
                 }
             }
@@ -120,12 +141,11 @@
                 -webkit-box-align: center;
                     -ms-flex-align: center;
                         align-items: center;
-                background-color: $white;
-                border-radius: 2px;
-                margin: 10px 0;
-                padding: 7px 15px;
-                color: $black;
-                
+                padding: 10px 15px;
+                color: $white;
+                &:not(:last-child) {
+                    border-bottom: solid 1px $white;
+                }
                 .name {
                     width: 60%;
                     p {
@@ -176,6 +196,28 @@
                         color: $bronze;
                     }
                 }
+            }
+        }
+    }
+    &_graphs {
+        width: 40%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        h4 {
+            margin-bottom: 40px;
+        }
+        &_option {
+            width: 80%;
+            input {
+                width: 100%;
             }
         }
     }
