@@ -1,10 +1,13 @@
 import React from 'react';
 import './styles.scss';
-// import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 import api from '../../api/api';
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
+import Chart from '../Chart/Chart'
+import Global from '../Global/Global'
+import global from '../../json/global.json'
 
 class App extends React.Component {
     constructor(props) {
@@ -13,6 +16,7 @@ class App extends React.Component {
             games: null
         }
         this.updateGame = this.updateGame.bind(this)
+        this.globalIsOpen = false
     }
 
     async componentWillMount() {
@@ -31,7 +35,10 @@ class App extends React.Component {
     }
 
     async updateGame(event) {
-        let gameId = event.target.id
+        let gameId = event.target.dataset.index
+        ReactDOM.findDOMNode(this).querySelector('.Timeline_item.clicked').classList.remove('clicked')
+        console.log(event.target)
+        event.target.classList.add('clicked')
         const details = await api.getGameById(gameId);
 
         this.setState({
@@ -44,14 +51,26 @@ class App extends React.Component {
         });
     }
 
+    toggleGlobal = () => {
+        if(!this.globalIsOpen) {
+            ReactDOM.findDOMNode(this).querySelector('.Global').style.left = '0px'
+            this.globalIsOpen = !this.globalIsOpen
+        } else {
+            ReactDOM.findDOMNode(this).querySelector('.Global').style.left = '-100%'
+            this.globalIsOpen = !this.globalIsOpen
+        }
+    }
+
     render() {
+        const globalData = global
+        
         return(
             this.state.games !== null ? (
                 <div className="App">
-                    {/* <WorldMap /> */}
                     <Home />
-                    <Timeline games={this.state.games} updateGame={this.updateGame} />
+                    <Timeline toggleGlobal={this.toggleGlobal} games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
+                    <Global toggleGlobal={this.toggleGlobal} data={globalData} />
                 </div>)
             : (<div>Loading</div>)
         )

@@ -32,7 +32,7 @@ class Popin extends React.Component {
             let count = 0
             this.props.data.countries.forEach(country => {
                 country.results.forEach(result => {
-                    if(result.sportId == sport.id) {
+                    if(parseFloat(result.sportId) === parseFloat(sport.id)) {
                         count++
                     }
                 })

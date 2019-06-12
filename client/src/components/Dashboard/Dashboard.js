@@ -185,18 +185,34 @@ class Dashboard extends React.Component {
                                     this.state.displayRatio ? (
                                         <Chart 
                                             legend={false}
-                                            labels={this.maxRatio.map(country => country.code)}
+                                            labels={this.maxRatio.map(country => {
+                                                if (country.name.length > 12)
+                                                    return country.code;
+                                                else
+                                                    return country.name;
+                                            })}
                                             dataset={this.maxRatio.map(country => country.ratio)}
                                             type="ratio"
-                                            shape="bar" 
+                                            fontFamily="Signika"
+                                            shape="horizontal" 
+                                            height={220}
+                                            width={400}
                                         />
                                     ) : (
                                         <Chart 
                                             legend={false}
-                                            labels={this.maxAmount.map(country => country.code)}
+                                            labels={this.maxAmount.map(country => {
+                                                if (country.name.length > 12)
+                                                    return country.code;
+                                                else
+                                                    return country.name;
+                                            })}
                                             dataset={this.maxAmount.map(country => country.female)}
                                             type="amount"
-                                            shape="bar" 
+                                            fontFamily="Signika"
+                                            shape="horizontal" 
+                                            height={220}
+                                            width={400}
                                         />
                                     )
                                 }
