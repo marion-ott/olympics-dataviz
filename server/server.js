@@ -8,7 +8,7 @@ const port = 9000
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '@Cc15091963',
+    password: 'root',
     database: 'olympics'
 })
 
@@ -23,22 +23,22 @@ app.get('/', (req, res) => {
 app.get('/champions', (req, res) => {
     const gameId = req.params.id
     const query = `
-        SELECT 
+        SELECT
             country.country_name,
-            country.code, 
-            country.flag, 
-            country_per_game.male, 
-            country_per_game.female 
-        FROM 
+            country.code,
+            country.flag,
+            country_per_game.male,
+            country_per_game.female
+        FROM
             country_per_game
-        INNER JOIN country ON country_per_game.country_id = country.id 
+        INNER JOIN country ON country_per_game.country_id = country.id
         WHERE game_id =?`
     connection.query(query, [gameId], (err, rows, fields) => {
         if(err) {
             console.log(`Failed query for game : ${err}`)
             res.sendStatus(500)
             return
-        }  
+        }
 
         res.json(rows)
     })
@@ -49,7 +49,7 @@ app.get('/champions', (req, res) => {
 app.get('/games/:id', (req, res) => {
     let data = {}
     const gameId = req.params.id
-    
+
 
     let factQuery = 'SELECT * FROM fact INNER JOIN game ON game.id = fact.game_id WHERE game_id = ?'
     connection.query(factQuery, [gameId], (err, rows, fields) => {
@@ -71,7 +71,7 @@ app.get('/games/:id', (req, res) => {
         data.games = rows
     })
 
-    const gameQuery = 'SELECT * FROM game INNER JOIN country ON country.id = game.country_id INNER JOIN city ON city.id = game.city_id WHERE game.id = ?' 
+    const gameQuery = 'SELECT * FROM game INNER JOIN country ON country.id = game.country_id INNER JOIN city ON city.id = game.city_id WHERE game.id = ?'
     connection.query(gameQuery, [gameId], (err, rows, fields) => {
         if(err) {
             console.log(`Failed query for game : ${err}`)
@@ -83,8 +83,8 @@ app.get('/games/:id', (req, res) => {
 
 
     /* Query to get all the countries present at the current game and the amount of male & female athletes */
-    const countriesQuery = 'SELECT * FROM country_per_game INNER JOIN country ON country.id = country_per_game.country_id WHERE game_id = ?' 
-    
+    const countriesQuery = 'SELECT * FROM country_per_game INNER JOIN country ON country.id = country_per_game.country_id WHERE game_id = ?'
+
     connection.query(countriesQuery, [gameId], (err, rows, fields) => {
         if(err) {
             console.log(`Failed query for game : ${err}`)
@@ -93,7 +93,7 @@ app.get('/games/:id', (req, res) => {
         }
         data.countries = rows
         //console.log(rows);
-        
+
         /* Query to get all the disciplines of the current game */
         const sportsQuery = "SELECT sport.sport_name, sport.id FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"
         new Promise((resolve, reject) => {
@@ -103,10 +103,10 @@ app.get('/games/:id', (req, res) => {
                     res.sendStatus(500)
                     reject(err)
                     return
-                }  
+                }
                 let sports = rows.map(row => row.sport_name)
                 data.sports = rows
-                resolve(data)    
+                resolve(data)
             })
         }).then((data) => {
             let details = [...data.countries]
@@ -125,14 +125,14 @@ app.get('/games/:id', (req, res) => {
                     gdp: country.gdp === null ? null : Math.floor(country.gdp),
                     population: country.population
                 }
-                let resultQuery = `SELECT 
-                                        result.sport_id, 
-                                        sport.sport_name, 
-                                        result.gender, 
+                let resultQuery = `SELECT
+                                        result.sport_id,
+                                        sport.sport_name,
+                                        result.gender,
                                         result.medal,
                                         COUNT(*) AS amount
-                                    FROM result 
-                                    INNER JOIN sport ON sport.id = result.sport_id  
+                                    FROM result
+                                    INNER JOIN sport ON sport.id = result.sport_id
                                     WHERE country_id =? AND game_id = ?
                                     GROUP BY result.sport_id, result.gender, result.medal`
                 let results = [];
@@ -143,8 +143,8 @@ app.get('/games/:id', (req, res) => {
                             res.sendStatus(500)
                             reject(err)
                             return
-                        } 
-                        
+                        }
+
                         results = rows.map(row => {
                             let item = {
                                 sportId: row.sport_id,
@@ -155,14 +155,14 @@ app.get('/games/:id', (req, res) => {
                             }
                             return item
                         })
-                        
+
                         resolve(results)
                     })
                 })
 
                 return details[i]
             })
-                       
+
             Promise.all(infos).then((infos) => {
                 data.countries = infos
                 let women = 0
@@ -197,12 +197,12 @@ app.get('/games/:id', (req, res) => {
                         total: gold + silver + bronze
                     }
                 })
-                
+
                 data.game[0].nations = countries
                 data.game[0].male = men
                 data.game[0].female = women
 
-                
+
                 data.countries.forEach(country => {
                     let result = []
                     country.results.forEach(function (hash) {
@@ -214,7 +214,7 @@ app.get('/games/:id', (req, res) => {
 
                             switch(a.gender) {
                                 case 'M':
-                                    hash[a.sport].male.push({ type: a.type, amount: a.amount, type: a.medal }); 
+                                    hash[a.sport].male.push({ type: a.type, amount: a.amount, type: a.medal });
                                     break;
                                 case 'W':
                                     hash[a.sport].female.push({ type: a.type, amount: a.amount, type: a.medal });
@@ -225,10 +225,10 @@ app.get('/games/:id', (req, res) => {
                                 default:
                                     break;
                             }
-                            
+
                         };
                     }(Object.create(null)));
-                    
+
                     country.results = result
                 })
 
@@ -246,7 +246,7 @@ app.get('/games/:id', (req, res) => {
                             let neutralbronze = 0
                             result.male.forEach(medal => {
                                 switch(medal.type) {
-                                    case 1: 
+                                    case 1:
                                         malegold = malegold += medal.amount
                                         break;
                                     case 2:
@@ -259,7 +259,7 @@ app.get('/games/:id', (req, res) => {
                             })
                             result.female.forEach(medal => {
                                 switch(medal.type) {
-                                    case 1: 
+                                    case 1:
                                         femalegold = femalegold += medal.amount
                                         break;
                                     case 2:
@@ -272,7 +272,7 @@ app.get('/games/:id', (req, res) => {
                             })
                             result.neutral.forEach(medal => {
                                 switch(medal.type) {
-                                    case 1: 
+                                    case 1:
                                         neutralgold = neutralgold += medal.amount
                                         break;
                                     case 2:
@@ -284,17 +284,17 @@ app.get('/games/:id', (req, res) => {
                                 }
                             })
                             result.male = {
-                                gold: malegold, 
+                                gold: malegold,
                                 silver: malesilver,
                                 bronze: malebronze
                             }
                             result.female = {
-                                gold: femalegold, 
+                                gold: femalegold,
                                 silver: femalesilver,
                                 bronze: femalebronze
                             }
                             result.neutral = {
-                                gold: neutralgold, 
+                                gold: neutralgold,
                                 silver: neutralsilver,
                                 bronze: neutralbronze
                             }
@@ -306,7 +306,7 @@ app.get('/games/:id', (req, res) => {
             })
 
         })
-    })  
+    })
 })
 
 
@@ -317,7 +317,7 @@ app.get('/games', (req, res) => {
             console.log(`Failed query for game : ${err}`)
             res.sendStatus(500)
             return
-        }  
+        }
 
         res.json(rows)
     })
@@ -327,11 +327,11 @@ app.get('/games', (req, res) => {
 
 //     new Promise((resolve, reject) => {
 //         const query = `
-//             SELECT 
+//             SELECT
 //                 game.id,
 //                 year
-//             FROM 
-//                 game 
+//             FROM
+//                 game
 //             ORDER BY year ASC`
 //         connection.query(query, (err, rows, fields) => {
 //             if(err) {
@@ -353,12 +353,12 @@ app.get('/games', (req, res) => {
 //     }).then((games) => {
 //         let data = [...games]
 //         let details = data.map(async(el, i) => {
-//             let resultQuery =  `SELECT 
+//             let resultQuery =  `SELECT
 //                                     country.id,
 //                                     country.country_name,
 //                                     country_per_game.male,
 //                                     country_per_game.female
-//                                 FROM country_per_game 
+//                                 FROM country_per_game
 //                                 INNER JOIN country ON country.id = country_per_game.country_id
 //                                 WHERE year = ${el.year}
 //                                 `
@@ -369,10 +369,10 @@ app.get('/games', (req, res) => {
 //                         res.sendStatus(500)
 //                         reject(err)
 //                         return
-//                     } 
-                    
+//                     }
+
 //                     //console.log(rows)
-                    
+
 //                     countries = rows.map(row => {
 //                         let item = {
 //                             country_id: row.id,
@@ -390,13 +390,13 @@ app.get('/games', (req, res) => {
 //             // console.log(data[i])
 //             return data[i]
 //         })
-                    
+
 //         Promise.all(details).then((details) => {
 //             let data = [...details]
 //             let infos = data.map((el, i) => {
 //                 // console.log(el)
 //                 el.countries.map(async(country, i) => {
-//                     let resultQuery =  `SELECT 
+//                     let resultQuery =  `SELECT
 //                                             sport_id,
 //                                             medal,
 //                                             gender
@@ -410,10 +410,10 @@ app.get('/games', (req, res) => {
 //                                 res.sendStatus(500)
 //                                 reject(err)
 //                                 return
-//                             } 
-                            
+//                             }
+
 //                             //console.log(rows)
-                            
+
 //                             results = rows.map(row => {
 //                                 let item = {
 //                                     sport_id: row.sport_id,
@@ -422,8 +422,8 @@ app.get('/games', (req, res) => {
 //                                 }
 //                                 return item
 //                             })
-        
-        
+
+
 //                             console.log("resolve results")
 //                             resolve(results)
 //                         })
@@ -431,12 +431,12 @@ app.get('/games', (req, res) => {
 //                 })
 //                 return data[i]
 //             })
-            
+
 //         })
 //         Promise.all(infos).then((infos) => {
 //             console.log("promise all")
-            
-            
+
+
 //             res.json(infos)
 //         })
 //     })
@@ -452,7 +452,7 @@ app.get('/games/:id/sports', (req, res) => {
             console.log(`Failed query for game : ${err}`)
             res.sendStatus(500)
             return
-        }  
+        }
         const data = rows.map(row => row.sport_name)
         // res.json(rows)
         res.json(data)
@@ -468,7 +468,7 @@ app.get('/games/:id/countries', (req, res) => {
             console.log(`Failed query for game : ${err}`)
             res.sendStatus(500)
             return
-        }  
+        }
 
         res.json(rows)
     })
@@ -485,7 +485,7 @@ app.get('/games/:id/result', (req, res) => {
             res.sendStatus(500)
             return
         }
-        
+
         res.json(rows)
     })
 })

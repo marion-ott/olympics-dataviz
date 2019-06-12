@@ -6,10 +6,10 @@ class Timeline extends React.Component {
         let eventType = event.type
 
         switch(eventType) {
-            case 'mouseenter': 
+            case 'mouseenter':
                 event.target.classList.add('active')
                 break;
-            case 'mouseleave': 
+            case 'mouseleave':
                 if(this.isClicked) {
                     return false
                 } else {

@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import ReactDOM from 'react-dom';
 import api from '../../api/api';
+import Loader from '../Loader/Loader'
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
@@ -12,16 +13,21 @@ class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            games: null
+            games: null,
+            loading: true
         }
         this.updateGame = this.updateGame.bind(this)
         this.globalIsOpen = false
     }
 
+    state = {
+        loading: true
+    }
+
     async componentWillMount() {
         const data = await api.getGames();
         const details = await api.getGameById(1);
-        
+
         this.setState({
             games: data,
             game: details.game,
@@ -31,6 +37,12 @@ class App extends React.Component {
             ranking: details.ranking,
             countriesCount: details.countries.length
         });
+
+        setTimeout(() => {
+            this.setState({
+                loading: false
+            })
+        }, 5000)
     }
 
     async updateGame(event) {
@@ -69,8 +81,13 @@ class App extends React.Component {
     }
 
     render() {
+        if (this.state.loading) {
+              {/*return (
+                <Loader />
+            )*/}
+        }
+
         const globalData = global
-        
         return(
             this.state.games !== null ? (
                 <div className="App">

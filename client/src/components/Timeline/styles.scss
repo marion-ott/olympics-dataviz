@@ -33,7 +33,7 @@
         -webkit-box-pack: justify;
             -ms-flex-pack: justify;
                 justify-content: space-between;
-        
+
         div {
             width: 20px;
             height: 40px;
@@ -93,6 +93,19 @@
                     font-weight: $semi-bold;
                 }
                 &:before {
+                    width: 8px;
+                    height: 8px;
+                    background-color: $yellow;
+                }
+            }
+
+            &:hover {
+                color: $yellow;
+                margin: 5px 10px 10px 10px;
+                font-size: 18px;
+                &:before {
+                    width: 8px;
+                    height: 8px;
                     background-color: $yellow;
                 }
             }

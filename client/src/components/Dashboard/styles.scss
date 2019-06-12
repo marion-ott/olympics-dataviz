@@ -183,7 +183,7 @@
                     .total {
                         width: 100%;
                         height: 100%;
-                        background-color: $yellow;                      
+                        background-color: $yellow;
                     }
                     .male {
                         background-color: $lightYellow;
@@ -261,6 +261,16 @@
                         display: block;
                     }
                 }
+
+                .noFemale {
+                  span {
+                    font-size: 16px;
+                    strong {
+                      font-weight: bold;
+                      color: $yellow
+                    }
+                  }
+                }
                 .ratio {
                     width: 100%;
                     span {
@@ -284,6 +294,21 @@
         &_graph {
             width: 100%;
             height: 50%;
+
+            &_noFemale {
+              position: relative;
+              margin-top: 20%;
+              span {
+                position: relative !important;
+                font-size: 20px !important;
+                right: 0 !important;
+                bottom: 0 !important;
+                strong {
+                  font-weight: bold;
+                  color: $yellow
+                }
+              }
+            }
         }
         .bottom {
             width: 100%;
@@ -335,7 +360,7 @@
                 bottom: 10px;
             }
             &_visual {
-                
+
             }
         }
     }

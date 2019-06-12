@@ -101,7 +101,7 @@
     &_title {
         font-family: 'Anton';
         color: rgba(255,255,255,0.8);
-        opacity: 1;
+        //opacity: 1;
         text-transform: uppercase;
         position: absolute;
         left: 6%;
@@ -111,9 +111,11 @@
             font-size: 10vw;
             color: $yellow;
         }
+
         .date {
             position: relative;
             z-index: 1;
+            opacity: 0;
             div {
                 width: 100px;
                 height: 2px;
@@ -126,6 +128,16 @@
                 color: $white;
             }
         }
+        .title {
+          &.one {
+            padding-right: 30px;
+            opacity: 0;
+          }
+          &.two {
+            padding-right: 30px;
+            opacity: 0;
+          }
+        }
     }
     .scroller {
         width:25px;
@@ -133,13 +145,14 @@
         position:absolute;
         left:50%;
         bottom: 30px;
-        -webkit-transform:translateX(-50%);	
+        -webkit-transform:translateX(-50%);
                 transform:translateX(-50%);
         opacity: 0;
         cursor:pointer;
+        z-index: 99;
     }
-    
-    
+
+
     .mouse{
         width:100%;
         -webkit-box-sizing:border-box;
@@ -149,8 +162,8 @@
         border-radius:15px;
         position:relative;
     }
-    
-    
+
+
     .ball{
         position:absolute;
         left:50%;
@@ -163,7 +176,7 @@
          -webkit-animation: ballAnim 1s linear infinite;
               animation: ballAnim 1s linear infinite;
     }
-    
+
     @-webkit-keyframes ballAnim {
         0% {
             width:2px;
@@ -187,7 +200,7 @@
             top: 25px;
         }
     }
-    
+
     @keyframes ballAnim {
         0% {
             width:2px;
@@ -212,7 +225,7 @@
         }
     }
 
-    
+
     @-webkit-keyframes mouseAnim {
         0% {
             border-color:rgba(250,250,250,1);
@@ -225,7 +238,7 @@
         }
     }
 
-    
+
     @keyframes mouseAnim {
         0% {
             border-color:rgba(250,250,250,1);
@@ -237,5 +250,5 @@
             border-color:rgba(250,250,250,.5);
         }
     }
-    
+
 }
