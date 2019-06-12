@@ -2,7 +2,6 @@ import React from 'react';
 import './styles.scss';
 import ReactDOM from 'react-dom';
 import api from '../../api/api';
-import Loader from '../Loader/Loader'
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
