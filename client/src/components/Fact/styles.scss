@@ -33,9 +33,9 @@
         margin: 0 auto;
     }
     &_background {
-        margin-left: -30px;
-        width: 80%;
-        height: 400px;
+        width: 60%;
+        margin-left: 50px;
+        height: 350px;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
@@ -54,6 +54,7 @@
         margin-top: -70px;
         margin-left: 70px;
         padding: 30px;
+        width: 90%;
         p {
             font-weight: $light;
             font-size: 14px;

@@ -2,32 +2,40 @@ import React from 'react'
 import './styles.scss'
 
 class Timeline extends React.Component {
+    handleHover = (event) => {
+        let eventType = event.type
 
-    addClass = (index) => {
-
-        const allDates = Array.from(document.querySelectorAll('.Timeline ul li'));
-        const elementClick = index.target;
-
-        allDates.forEach((element, index) => {
-            if (element  === elementClick) {
-                element.classList.add('active');
-            }
-            else {
-                element.classList.remove('active');
-            }
-        })
+        switch(eventType) {
+            case 'mouseenter':
+                event.target.classList.add('active')
+                break;
+            case 'mouseleave':
+                if(this.isClicked) {
+                    return false
+                } else {
+                    event.target.classList.remove('active')
+                }
+                break;
+            default:
+                break;
+        }
     }
-
     render() {
         return(
             <section className="Timeline">
-                <ul>
+                <div className="Timeline_container">
                     {
                         this.props.games.map((game, key) => (
-                            <li key={key} id={game.id} onClick={(event) => {this.props.updateGame(event); this.addClass(event)}}>{game.year}</li>
+                            <div onMouseEnter={this.handleHover} onMouseLeave={this.handleHover} key={key} className={`Timeline_item ${key === 0 ? 'clicked first' : key === 27 ? 'last' : ''}`} data-index={game.id} onClick={(event) => this.props.updateGame(event)}>
+                                <div></div>
+                                <span>{game.year}</span>
+                            </div>
                         ))
                     }
-                </ul>
+                    <div onClick={this.props.toggleGlobal} className="Timeline_global">
+                        <p>ALL TIME</p>
+                    </div>
+                </div>
             </section>
         )
     }

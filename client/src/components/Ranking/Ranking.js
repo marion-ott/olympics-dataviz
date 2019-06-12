@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Chart from '../Chart/Chart'
 import './styles.scss'
 
 class Ranking extends React.Component {
@@ -60,7 +61,7 @@ class Ranking extends React.Component {
     }
     
     render() {
-
+        let test = [this.props.countries[0].medals.total, (this.props.countries[0].male + this.props.countries[0].female - this.props.countries[0].medals.total)]
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
@@ -83,10 +84,16 @@ class Ranking extends React.Component {
                                 <p>Pays</p>
                             </div>
                             <div className="medals">
-                                <p className="gold">Or</p>
-                                <p className="silver">Argent</p>
-                                <p className="bronze">Bronze</p>
-                                <p>Total</p>
+                                <div className="medals_container">
+                                    <div className="goldMedal"></div>
+                                </div>
+                                <div className="medals_container">
+                                    <div className="silverMedal"></div>
+                                </div>
+                                <div className="medals_container">
+                                    <div className="bronzeMedal"></div>
+                                </div>
+                                <p className="medals_container">Total</p>
                             </div>
                         </div>
                         {
@@ -123,7 +130,33 @@ class Ranking extends React.Component {
                     </div>
                 </div>
                 <div className="Ranking_graphs">
-                    
+                    <h4>Comparez le ratio médailles / athlètes</h4>
+                    <div className="Ranking_graphs_option">
+                        <input type="text" list="countries" onChange={this._onChange} />
+                        <datalist id="countries">
+                            {this.props.countries.map((country, key) =>
+                                <option key={key} value={country.name} />
+                            )}
+                        </datalist> 
+                        <Chart 
+                            legend={false}
+                            title={false}
+                            labels={[this.props.countries[0].name]}
+                            dataset={test}
+                            type="ratio"
+                            shape="doughnut" 
+                            height={500}
+                            // width={30 * this.state.data.length}
+                        />
+                    </div>
+                    <div className="Ranking_graphs_option">
+                        <input type="text" list="countries" onChange={this._onChange} />
+                        <datalist id="countries">
+                            {this.props.countries.map((country, key) =>
+                                <option key={key} value={country.name} />
+                            )}
+                        </datalist> 
+                    </div>
                 </div>
             </section>
         )

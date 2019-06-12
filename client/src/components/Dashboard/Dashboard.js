@@ -126,9 +126,9 @@ class Dashboard extends React.Component {
                             <div className="nations">
                                 <p>{this.props.data.countries.length}</p>
                                 <span>Pays participants</span>
-                                <div className="moreInfo">
+                                {/* <div className="moreInfo">
                                     <MoreInfo id="countries" onClick={this.openPopin} />
-                                </div>
+                                </div> */}
                             </div>
                             <div className="sports">
                                 <p>{this.props.data.sports.length}</p>
@@ -184,17 +184,35 @@ class Dashboard extends React.Component {
                                 {
                                     this.state.displayRatio ? (
                                         <Chart 
-                                            labels={this.maxRatio.map(country => country.code)}
+                                            legend={false}
+                                            labels={this.maxRatio.map(country => {
+                                                if (country.name.length > 12)
+                                                    return country.code;
+                                                else
+                                                    return country.name;
+                                            })}
                                             dataset={this.maxRatio.map(country => country.ratio)}
                                             type="ratio"
-                                            shape="bar" 
+                                            fontFamily="Signika"
+                                            shape="horizontal" 
+                                            height={220}
+                                            width={400}
                                         />
                                     ) : (
                                         <Chart 
-                                            labels={this.maxAmount.map(country => country.code)}
+                                            legend={false}
+                                            labels={this.maxAmount.map(country => {
+                                                if (country.name.length > 12)
+                                                    return country.code;
+                                                else
+                                                    return country.name;
+                                            })}
                                             dataset={this.maxAmount.map(country => country.female)}
                                             type="amount"
-                                            shape="bar" 
+                                            fontFamily="Signika"
+                                            shape="horizontal" 
+                                            height={220}
+                                            width={400}
                                         />
                                     )
                                 }
@@ -206,11 +224,6 @@ class Dashboard extends React.Component {
                 {
                     this.state.showSportsPopin && (
                         <Popin data={this.props.data} id="sport" closePopin={this.closePopin} />
-                    )
-                }
-                {
-                    this.state.showCountriesPopin && (
-                        <Popin data={this.props.data} id="country" closePopin={this.closePopin} />
                     )
                 }
             </section>

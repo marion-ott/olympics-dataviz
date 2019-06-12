@@ -53,7 +53,9 @@ class Home extends React.Component {
 
             <div className="Home">
                 <div className="Home_logo">
-                    <img src={`${process.env.PUBLIC_URL}assets/img/rings-olympics.png`} alt=""/>
+                    <a href="#map">
+                        <img src={`${process.env.PUBLIC_URL}assets/img/rings-olympics.png`} alt=""/>
+                    </a>
                 </div>
                 {/* <div className="Home_loader">
                     <div ref={el => this.line = el} className="Home_loader_line"></div>

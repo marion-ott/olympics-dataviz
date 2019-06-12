@@ -1,0 +1,23 @@
+@import 'src/config/settings';
+
+.Global {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    background-color: $darkBlue;
+    z-index: 999;
+    overflow: hidden;
+    -webkit-transition: ease .5s all;
+    transition: ease .5s all;
+    &_close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+    }
+    &_chart {
+        max-width: 800px;
+        width: 100%;
+    }
+}
