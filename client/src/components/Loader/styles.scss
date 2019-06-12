@@ -21,13 +21,13 @@
         object-fit: cover;
         object-position: center;
         z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #logoAnimated {
-        height: 100%;
-        svg {
-            margin: 25%;
-        }
+        width: 60%;
     }
 }
 
