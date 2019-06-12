@@ -79,6 +79,8 @@ class App extends React.Component {
                 <Loader />
             )*/}
         }
+
+        const globalData = global
         return(
             this.state.games !== null ? (
                 <div className="App">
