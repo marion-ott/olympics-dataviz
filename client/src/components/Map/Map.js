@@ -1109,6 +1109,10 @@ class Map extends React.Component {
                         id="ZIM" />
                 </svg>              
                 
+                <div className="Map_legend">
+                    <div className="bullet"></div>
+                    <span>Pays participants</span>
+                </div>
                 {
                     this.state.clicked && (
                         <div className="Map_popin" style={{ top: this.state.top, left: this.state.left }}>

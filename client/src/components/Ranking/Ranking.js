@@ -4,6 +4,12 @@ import Chart from '../Chart/Chart'
 import './styles.scss'
 
 class Ranking extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            countriesIndex: [0, 1]
+        }
+    }
 
     componentWillMount() {
         this.sortCountries()
@@ -59,9 +65,30 @@ class Ranking extends React.Component {
             })
         }
     }
+
+    changeChart = (event) => {
+        let countryInput = event.target.value
+
+        this.props.countries.forEach((country, i) => {
+            if(countryInput === country.name) {
+                if(event.target.dataset.label === 0) {
+                    let currentIndex = this.state.countriesIndex[1]
+                    this.setState({
+                        countriesIndex: [i, currentIndex]
+                    })
+                } else {
+                    let currentIndex = this.state.countriesIndex[0]
+                    this.setState({
+                        countriesIndex: [currentIndex, i]
+                    })
+                }
+            }
+        })
+    }
     
     render() {
-        let test = [this.props.countries[0].medals.total, (this.props.countries[0].male + this.props.countries[0].female - this.props.countries[0].medals.total)]
+        console.log(this.state);
+        
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
@@ -130,32 +157,46 @@ class Ranking extends React.Component {
                     </div>
                 </div>
                 <div className="Ranking_graphs">
-                    <h4>Comparez le ratio médailles / athlètes</h4>
-                    <div className="Ranking_graphs_option">
-                        <input type="text" list="countries" onChange={this._onChange} />
-                        <datalist id="countries">
-                            {this.props.countries.map((country, key) =>
-                                <option key={key} value={country.name} />
-                            )}
-                        </datalist> 
-                        <Chart 
-                            legend={false}
-                            title={false}
-                            labels={[this.props.countries[0].name]}
-                            dataset={test}
-                            type="ratio"
-                            shape="doughnut" 
-                            height={500}
-                            // width={30 * this.state.data.length}
-                        />
-                    </div>
-                    <div className="Ranking_graphs_option">
-                        <input type="text" list="countries" onChange={this._onChange} />
-                        <datalist id="countries">
-                            {this.props.countries.map((country, key) =>
-                                <option key={key} value={country.name} />
-                            )}
-                        </datalist> 
+                    <h4>Comparez le ratio médailles / athlètes entre deux pays</h4>
+                    <div className="Ranking_graphs_container">
+                        <div className="Ranking_graphs_option">
+                            <form onSubmit={this.changeChart}>
+                                <input data-label={0} type="text" list="countries" defaultValue={this.props.countries[this.state.countriesIndex[0]].name} onChange={this.changeChart} />
+                                <datalist id="countries">
+                                    {this.props.countries.map((country, key) =>
+                                        <option onClick={this.changeChart} data-index={key} key={key} value={country.name} />
+                                    )}
+                                </datalist> 
+                            </form>
+                            <Chart 
+                                legend={false}
+                                title={false}
+                                labels={['Médailles', 'Athlètes']}
+                                dataset={[this.props.countries[this.state.countriesIndex[0]].medals.total, (this.props.countries[0].male + this.props.countries[0].female)]}
+                                type="ratio"
+                                shape="doughnut" 
+                                height={500}
+                                // width={30 * this.state.data.length}
+                            />
+                        </div>
+                        <div className="Ranking_graphs_option">
+                            <input data-label={1} type="text" list="countries" defaultValue={this.props.countries[this.state.countriesIndex[1]].name} onChange={this.changeChart} />
+                            <datalist id="countries">
+                                {this.props.countries.map((country, key) =>
+                                    <option onClick={this.changeChart} data-index={key} key={key} value={country.name} />
+                                )}
+                            </datalist> 
+                            <Chart 
+                                legend={false}
+                                title={false}
+                                labels={['Médailles', 'Athlètes']}
+                                dataset={[this.props.countries[this.state.countriesIndex[1]].medals.total, (this.props.countries[0].male + this.props.countries[0].female)]}
+                                type="ratio"
+                                shape="doughnut" 
+                                height={500}
+                                // width={30 * this.state.data.length}
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
