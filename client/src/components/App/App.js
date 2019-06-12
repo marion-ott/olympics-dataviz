@@ -5,7 +5,6 @@ import api from '../../api/api';
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
-import Chart from '../Chart/Chart'
 import Global from '../Global/Global'
 import global from '../../json/global.json'
 
@@ -61,13 +60,22 @@ class App extends React.Component {
         }
     }
 
+    scrollTo = (event) => {
+        event.preventDefault()
+        let top = ReactDOM.findDOMNode(this).querySelector('#map').offsetTop
+        window.scrollTo({
+            top: top,
+            behavior: 'smooth'
+        })
+    }
+
     render() {
         const globalData = global
         
         return(
             this.state.games !== null ? (
                 <div className="App">
-                    <Home />
+                    <Home scrollTo={this.scrollTo} />
                     <Timeline toggleGlobal={this.toggleGlobal} games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
                     <Global toggleGlobal={this.toggleGlobal} data={globalData} />

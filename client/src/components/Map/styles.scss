@@ -16,6 +16,7 @@
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
+    position: relative;
     svg {
         display: block;
         margin: 0 auto;
@@ -36,6 +37,24 @@
         }
         path.clicked {
             fill: $yellow !important;
+        }
+    }
+    &_legend {
+        position: absolute;
+        right: 70px;
+        bottom: 30px;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        .bullet {
+            width: 10px;
+            height: 10px;
+            border-radius: 50px;
+            background-color: $lightYellow;
+            margin-right: 5px;
         }
     }
     &_popin {

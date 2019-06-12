@@ -207,12 +207,15 @@ class Chart extends React.Component {
                             scales: {
                                 yAxes: [
                                     {
-                                        display: false,
                                         ticks: {
+                                            display: false,
                                             fontSize: 16,
                                             fontColor: '#FFF'
                                         },
                                         gridLines: {
+                                            display: false,
+                                            drawBorder: false,
+                                            scaleLineColor: 'transparent',
                                             drawOnChartArea: false,
                                         }
                                     }
@@ -220,10 +223,14 @@ class Chart extends React.Component {
                                 xAxes: [
                                     {
                                         ticks: {
+                                            display: false,
                                             fontSize: 10,
                                             fontColor: '#FFF'
                                         },
                                         gridLines: {
+                                            display: false,
+                                            drawBorder: false,
+                                            scaleLineColor: 'transparent',
                                             drawOnChartArea: false,
                                         }
                                     }
