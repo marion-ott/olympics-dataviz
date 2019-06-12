@@ -95,7 +95,7 @@ class Map extends React.Component {
 
     render() { 
         return (
-            <div className="Map">
+            <div id="map" className="Map">
                 <svg
                     width="1009.6727"
                     height="665.96301">
