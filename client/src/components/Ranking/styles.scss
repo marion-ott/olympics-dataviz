@@ -225,14 +225,36 @@
         }
         h4 {
             margin-bottom: 40px;
+            font-size: 20px;
         }
         &_option {
             width: 48%;
+            height: 320px;
             input {
                 width: 100%;
+                background-color: transparent;
+                border-right: none;
+                border-left: none;
+                border-top: none;
+                border-bottom: solid 1px $white;
+                color: $white;
+                padding-bottom: 5px;
                 &:focus {
+                    color: $yellow;
                     outline: none;
+                    border-bottom: solid 1px $yellow;
                 }
+            }
+            p {
+                font-size: 15px;
+                line-height: 20px;
+                text-align: center;
+                strong {
+                    font-weight: $bold;
+                }
+            }
+            .pib {
+                margin-top: 20px;
             }
         }
     }
