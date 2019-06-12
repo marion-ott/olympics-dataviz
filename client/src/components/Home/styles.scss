@@ -58,7 +58,6 @@
             left: 0;
             width: 0%;
             height: 2px;
-            background-image: url()
         }
         &_lineAfter {
             display: none;
@@ -104,7 +103,7 @@
         //opacity: 1;
         text-transform: uppercase;
         position: absolute;
-        left: 6%;
+        left: 3%;
         top: 28%;
         text-align: right;
         h1 {
@@ -130,11 +129,11 @@
         }
         .title {
           &.one {
-            padding-right: 30px;
+            //padding-right: 100px;
             opacity: 0;
           }
           &.two {
-            padding-right: 30px;
+            //padding-right: 100px;
             opacity: 0;
           }
         }

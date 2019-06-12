@@ -11,6 +11,14 @@
         -webkit-transform: scale(1.1);
                 transform: scale(1.1);
     }
+    &.close {
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+        &:hover {
+            -webkit-transform: rotate(45deg) scale(1.1);
+                    transform: rotate(45deg) scale(1.1);
+        }
+    }
     .vertical, .horizontal {
         pointer-events: none;
         position: absolute;

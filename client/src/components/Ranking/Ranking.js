@@ -76,7 +76,7 @@ class Ranking extends React.Component {
         let countryInput = event.target.value
         this.props.countries.forEach((country, i) => {
             if(countryInput === country.name) {
-                if(event.target.dataset.label == 0) {
+                if(parseFloat(event.target.dataset.label) === 0) {
                     let currentIndex = this.state.countriesIndex[1]
                     this.setState({
                         countriesIndex: [i, currentIndex]

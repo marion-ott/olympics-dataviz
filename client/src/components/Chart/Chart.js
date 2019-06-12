@@ -47,7 +47,7 @@ class Chart extends React.Component {
                     pointHoverBorderWidth: 2,
                     pointRadius: 4,
                     pointHitRadius: 10,
-                    data: this.props.globalAmount,
+                    data: this.props.globalWomen,
                     spanGaps: true,
                   }, {
                     label: "Stock B",
@@ -126,7 +126,6 @@ class Chart extends React.Component {
                         }}
                     />
                 )
-                break;
             case 'horizontal':
                 return(
                     <HorizontalBar 
@@ -182,7 +181,6 @@ class Chart extends React.Component {
                         }}
                     />
                 )
-                break;
             case 'doughnut':
                 return(
                     <Doughnut 
@@ -239,7 +237,6 @@ class Chart extends React.Component {
                         }}
                     />
                 )
-                break;
             case 'line':
                     return(
                         <Line 
@@ -289,7 +286,6 @@ class Chart extends React.Component {
                             }}
                         />
                     )
-                    break;
             default:
                 break;
         }
