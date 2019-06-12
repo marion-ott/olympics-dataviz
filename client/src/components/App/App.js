@@ -6,7 +6,6 @@ import Loader from '../Loader/Loader'
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
-import Chart from '../Chart/Chart'
 import Global from '../Global/Global'
 import global from '../../json/global.json'
 
@@ -49,8 +48,7 @@ class App extends React.Component {
     async updateGame(event) {
         let gameId = event.target.dataset.index
         ReactDOM.findDOMNode(this).querySelector('.Timeline_item.clicked').classList.remove('clicked')
-        console.log(event.target)
-        event.target.classList.add('clicked')
+            event.target.classList.add('clicked')
         const details = await api.getGameById(gameId);
 
         this.setState({
@@ -73,6 +71,15 @@ class App extends React.Component {
         }
     }
 
+    scrollTo = (event) => {
+        event.preventDefault()
+        let top = ReactDOM.findDOMNode(this).querySelector('#map').offsetTop
+        window.scrollTo({
+            top: top,
+            behavior: 'smooth'
+        })
+    }
+
     render() {
         if (this.state.loading) {
               {/*return (
@@ -84,9 +91,7 @@ class App extends React.Component {
         return(
             this.state.games !== null ? (
                 <div className="App">
-                    {/* <WorldMap /> */}
-
-                    <Home />
+                    <Home scrollTo={this.scrollTo} />
                     <Timeline toggleGlobal={this.toggleGlobal} games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
                     <Global toggleGlobal={this.toggleGlobal} data={globalData} />

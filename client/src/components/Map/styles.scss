@@ -38,6 +38,25 @@
             fill: $yellow !important;
         }
     }
+    &_legend {
+        position: relative;
+        right: 70px;
+        bottom: 30px;
+        margin-left: auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        .bullet {
+            width: 10px;
+            height: 10px;
+            border-radius: 50px;
+            background-color: $lightYellow;
+            margin-right: 5px;
+        }
+    }
     &_popin {
         position: absolute;
         background-color: $white;

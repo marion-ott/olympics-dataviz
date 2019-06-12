@@ -12,7 +12,7 @@ class Game extends React.Component {
                 <Map game={this.props.data.game} countries={this.props.data.countries} />
                 <Statistics data={this.props.data} />
                 <Fact fact={this.props.data.fact[0]} />
-                <Ranking sports={this.props.data.sports} countries={this.props.data.countries} />
+                <Ranking year={this.props.data.game[0].year} sports={this.props.data.sports} countries={this.props.data.countries} />
             </div>
         )
     }

@@ -200,24 +200,61 @@
         }
     }
     &_graphs {
-        width: 40%;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+        width: 45%;
+        // display: -webkit-box;
+        // display: -ms-flexbox;
+        // display: flex;
+        // -webkit-box-orient: vertical;
+        // -webkit-box-direction: normal;
+        //     -ms-flex-direction: column;
+        //         flex-direction: column;
+        // -webkit-box-align: center;
+        //     -ms-flex-align: center;
+        //         align-items: center;
+        &_container {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+                -ms-flex-pack: justify;
+                    justify-content: space-between;
+            -webkit-box-align: center;
+                -ms-flex-align: center;
+                    align-items: center;
+        }
         h4 {
             margin-bottom: 40px;
+            font-size: 20px;
         }
         &_option {
-            width: 80%;
+            width: 48%;
+            height: 320px;
             input {
                 width: 100%;
+                background-color: transparent;
+                border-right: none;
+                border-left: none;
+                border-top: none;
+                border-bottom: solid 1px $white;
+                color: $white;
+                padding-bottom: 5px;
+                &:focus {
+                    color: $yellow;
+                    outline: none;
+                    border-bottom: solid 1px $yellow;
+                }
+            }
+            p {
+                font-size: 15px;
+                line-height: 20px;
+                text-align: center;
+                strong {
+                    font-weight: $bold;
+                }
+            }
+            .pib {
+                margin-top: 20px;
             }
         }
     }

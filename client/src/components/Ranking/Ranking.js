@@ -4,6 +4,12 @@ import Chart from '../Chart/Chart'
 import './styles.scss'
 
 class Ranking extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            countriesIndex: [0, 1]
+        }
+    }
 
     componentWillMount() {
         this.sortCountries()
@@ -12,12 +18,18 @@ class Ranking extends React.Component {
     componentWillReceiveProps(newProps) {
         this.props = newProps
         ReactDOM.findDOMNode(this).querySelector('select').value = ''
+        ReactDOM.findDOMNode(this).querySelectorAll('input').forEach((el, i) => el.value = this.props.countries[this.state.countriesIndex[i]].name)
+
+        this.setState({
+            countriesIndex: [0, 1]
+        })
         this.sortCountries()
+        
     }
 
     sortCountries = () => {
         let ranking = this.props.countries.sort(function(a, b) {
-            return parseFloat(b.medals.total) - parseFloat(a.medals.total)
+            return parseFloat(b.medals.gold) - parseFloat(a.medals.gold)
         }).slice(0,10)
 
         this.setState({
@@ -52,16 +64,35 @@ class Ranking extends React.Component {
                 return selectedCountry
             })
     
-            let rankingBySport = filteredCountries.sort((a, b) => (b.medals.total - a.medals.total || b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
+            let rankingBySport = filteredCountries.sort((a, b) => (b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
     
             this.setState({
                 countries: rankingBySport
             })
         }
     }
+
+    changeChart = (event) => {
+        let countryInput = event.target.value
+        this.props.countries.forEach((country, i) => {
+            if(countryInput === country.name) {
+                if(event.target.dataset.label == 0) {
+                    let currentIndex = this.state.countriesIndex[1]
+                    this.setState({
+                        countriesIndex: [i, currentIndex]
+                    })
+                } else {
+                    let currentIndex = this.state.countriesIndex[0]
+                    this.setState({
+                        countriesIndex: [currentIndex, i]
+                    })
+                }
+            }
+        })
+    }
     
     render() {
-        let test = [this.props.countries[0].medals.total, (this.props.countries[0].male + this.props.countries[0].female - this.props.countries[0].medals.total)]
+        
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Classement</p>
@@ -130,32 +161,72 @@ class Ranking extends React.Component {
                     </div>
                 </div>
                 <div className="Ranking_graphs">
-                    <h4>Comparez le ratio médailles / athlètes</h4>
-                    <div className="Ranking_graphs_option">
-                        <input type="text" list="countries" onChange={this._onChange} />
-                        <datalist id="countries">
-                            {this.props.countries.map((country, key) =>
-                                <option key={key} value={country.name} />
-                            )}
-                        </datalist> 
-                        <Chart 
-                            legend={false}
-                            title={false}
-                            labels={[this.props.countries[0].name]}
-                            dataset={test}
-                            type="ratio"
-                            shape="doughnut" 
-                            height={500}
-                            // width={30 * this.state.data.length}
-                        />
-                    </div>
-                    <div className="Ranking_graphs_option">
-                        <input type="text" list="countries" onChange={this._onChange} />
-                        <datalist id="countries">
-                            {this.props.countries.map((country, key) =>
-                                <option key={key} value={country.name} />
-                            )}
-                        </datalist> 
+                    <h4>Comparez le ratio médailles / athlète entre deux pays :</h4>
+                    <div className="Ranking_graphs_container">
+                        <div className="Ranking_graphs_option">
+                            <input data-label={0} type="text" list="countries" defaultValue={this.props.countries[this.state.countriesIndex[0]].name} onChange={this.changeChart} />
+                            <datalist id="countries">
+                                {this.props.countries.map((country, key) =>
+                                    <option onClick={this.changeChart} data-index={key} key={key} value={country.name} />
+                                )}
+                            </datalist> 
+                            <Chart 
+                                legend={false}
+                                title={false}
+                                labels={['Médailles', 'Athlètes']}
+                                dataset={[this.props.countries[this.state.countriesIndex[0]].medals.total, (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)]}
+                                type="ratio"
+                                shape="doughnut" 
+                                height={500}
+                                // width={30 * this.state.data.length}
+                            />
+                            <p>Ce pays obtient un ratio de<br></br><strong>{(this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2)}</strong> médaille(s) par athlète.<br></br>
+                            ({this.props.countries[this.state.countriesIndex[0]].medals.total} médaille(s) pour {(this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)} athlètes)
+                            </p>
+                            <div className="pib">
+                                {
+                                    (this.props.countries[this.state.countriesIndex[0]].gdp !== null && this.props.countries[this.state.countriesIndex[1]].gdp !== null) ? (
+                                        this.props.countries[this.state.countriesIndex[0]].gdp !== null ? (
+                                            <p>Compte-tenu du PIB du pays en {this.props.year}, le coût d'une médaille s'élève donc à {Math.floor(this.props.countries[this.state.countriesIndex[0]].gdp / this.props.countries[this.state.countriesIndex[0]].medals.total)}$</p>
+                                        ) : (
+                                            <p>Nous ne disposons pas du montant du PIB de ce pays pour l'année {this.props.year}.</p>
+                                        )
+                                    ) : null
+                                }
+                            </div>
+                        </div> 
+                        <div className="Ranking_graphs_option">
+                            <input data-label={1} type="text" list="countries" defaultValue={this.props.countries[this.state.countriesIndex[1]].name} onChange={this.changeChart} />
+                            <datalist id="countries">
+                                {this.props.countries.map((country, key) =>
+                                    <option onClick={this.changeChart} data-index={key} key={key} value={country.name} />
+                                )}
+                            </datalist> 
+                            <Chart 
+                                legend={false}
+                                title={false}
+                                labels={['Médailles', 'Athlètes']}
+                                dataset={[this.props.countries[this.state.countriesIndex[1]].medals.total, (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)]}
+                                type="ratio"
+                                shape="doughnut" 
+                                height={500}
+                                // width={30 * this.state.data.length}
+                            />
+                            <p>Ce pays obtient un ratio de<br></br><strong>{(this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2)}</strong> médaille(s) par athlète.<br></br>
+                            ({this.props.countries[this.state.countriesIndex[1]].medals.total} médaille(s) pour {(this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)} athlètes)
+                            </p>
+                            <div className="pib">
+                                {
+                                    (this.props.countries[this.state.countriesIndex[0]].gdp !== null && this.props.countries[this.state.countriesIndex[1]].gdp !== null) ? (
+                                        this.props.countries[this.state.countriesIndex[1]].gdp !== null ? (
+                                            <p>Compte-tenu du PIB du pays en {this.props.year}, le coût d'une médaille s'élève donc à {Math.floor(this.props.countries[this.state.countriesIndex[1]].gdp / this.props.countries[this.state.countriesIndex[1]].medals.total)}$</p>
+                                        ) : (
+                                            <p>Nous ne disposons pas du montant du PIB de ce pays pour l'année {this.props.year}.</p>
+                                        )
+                                    ) : null
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

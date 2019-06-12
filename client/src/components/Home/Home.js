@@ -47,14 +47,14 @@ class Home extends React.Component {
       scrollToY(offsetNextSibling);
     }
 
-
     render() {
         return(
 
             <div className="Home">
                 <div className="Home_logo">
-                    <a href="#map">
+                    <a onClick={this.props.scrollTo} href="/">
                         <img src={`${process.env.PUBLIC_URL}assets/img/rings-olympics.png`} alt=""/>
+                        <span>Retour à la carte</span>
                     </a>
                 </div>
                 {/* <div className="Home_loader">

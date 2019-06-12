@@ -8,8 +8,8 @@
     -webkit-transition: ease .2s transform;
     transition: ease .2s transform;
     &:hover {
-        -webkit-transform: rotate(45deg);
-                transform: rotate(45deg);
+        -webkit-transform: scale(1.1);
+                transform: scale(1.1);
     }
     .vertical, .horizontal {
         pointer-events: none;
