@@ -72,8 +72,8 @@
                 bottom: -10px;
                 -webkit-transform: translate(-50%, 0);
                         transform: translate(-50%, 0);
-                width: 0; 
-                height: 0; 
+                width: 0;
+                height: 0;
                 border-left: 15px solid transparent;
                 border-right: 15px solid transparent;
                 border-top: 15px solid $white;
@@ -157,12 +157,48 @@
                     display: -webkit-box;
                     display: -ms-flexbox;
                     display: flex;
+                    flex-direction: column;
                     -webkit-box-pack: justify;
                         -ms-flex-pack: justify;
                             justify-content: space-between;
                     -webkit-box-align: center;
                         -ms-flex-align: center;
                             align-items: center;
+                    h4 {
+                        font-weight: $bold;
+                        margin: 10px 0;
+                        text-align: center;
+                        position: relative;
+                        -webkit-user-select: none;
+                           -moz-user-select: none;
+                            -ms-user-select: none;
+                                user-select: none;
+                        &:after {
+                            display: none;
+                            content: '';
+                            position: absolute;
+                            left: 50%;
+                            -webkit-transform: translate(-50%, 0);
+                                    transform: translate(-50%, 0);
+                            bottom: -5px;
+                            width: 15%;
+                            height: 1px;
+                            background-color: $black;
+                        }
+                    }
+                    &_container {
+                      width: 100%;
+                      margin: 0 auto;
+                      display: -webkit-box;
+                      display: -ms-flexbox;
+                      display: flex;
+                      -webkit-box-pack: justify;
+                          -ms-flex-pack: justify;
+                              justify-content: space-between;
+                      -webkit-box-align: center;
+                          -ms-flex-align: center;
+                              align-items: center;
+                    }
                     &_single {
                         display: -webkit-box;
                         display: -ms-flexbox;
