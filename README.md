@@ -24,7 +24,7 @@ $ mysql -u <user> -p olympics < pathToFile/database.sql
 In server.js (line 11), enter your own mysql password
 
 
-
+--------
 
 ## Launch the project
 ```shell
