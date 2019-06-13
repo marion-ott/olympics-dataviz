@@ -7,6 +7,8 @@ import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
 import Global from '../Global/Global'
 import global from '../../json/global.json'
+import AOS from 'aos'
+require('aos/dist/aos.css')
 
 class App extends React.Component {
     constructor(props) {
@@ -17,6 +19,10 @@ class App extends React.Component {
         }
         this.updateGame = this.updateGame.bind(this)
         this.globalIsOpen = false
+        AOS.init({
+            duration: 1000,
+            once: true
+        })
     }
 
     state = {
@@ -42,6 +48,10 @@ class App extends React.Component {
                 loading: false
             })
         }, 5000)
+    }
+
+    compnentDidMount() {
+        AOS.refresh()
     }
 
     async updateGame(event) {
@@ -87,7 +97,7 @@ class App extends React.Component {
                     <Home scrollTo={this.scrollTo} />
                     <Timeline toggleGlobal={this.toggleGlobal} games={this.state.games} updateGame={this.updateGame} />
                     <Game data={this.state} updateGame={this.updateGame} />
-                    <Global toggleGlobal={this.toggleGlobal} data={globalData} />
+                    {/* <Global toggleGlobal={this.toggleGlobal} data={globalData} /> */}
                 </div>)
             : (<div>Loading</div>)
         )

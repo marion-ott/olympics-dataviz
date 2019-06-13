@@ -17,38 +17,44 @@
     &_sectionTitle {
         font-family: 'Anton';
         position: absolute;
-        bottom: 280px;
-        left: -340px;
-        font-size: 170px;
-        -webkit-transform: rotate(-90deg);
-                transform: rotate(-90deg);
-        opacity: 0.05;
+        bottom: 330px;
+        left: -250px;
+        font-size: 150px;
+        -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+        opacity: 0.07;
         text-transform: uppercase;
         z-index: -1;
     }
     &_sports {
         &_selector {
             //max-width: 150px;
-            width: 180px;
+            
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+                -ms-flex-direction: column;
+                    flex-direction: column;
             -ms-flex-wrap: wrap;
                 flex-wrap: wrap;
             position: relative;
             label {
                 margin-bottom: 15px;
+                font-size: 20px;
             }
             select {
-                width: 180px;
-                border: none;
+                width: 200px;
+                border: solid 1px rgba(255,255,255,0.5);
                 border-radius: 0;
                 -webkit-appearance: none;
-                padding: 5px 10px;
+                padding: 8px 15px;
                 text-transform: uppercase;
                 font-family: 'Signika';
                 letter-spacing: 0.05em;
-                color: $black;
+                color: $white;
+                background-color: $darkBlue;
                 &:focus {
                     outline: none;
                 }
@@ -56,18 +62,19 @@
             div {
                 position: absolute;
                 top: 73%;
-                right: 10px;
+                left: 175px;
                 width: 0; 
                 height: 0; 
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                border-top: 5px solid $darkBlue;
+                border-top: 5px solid $white;
                 z-index: 1;
             }
         }
     }
     &_table {
-        width: 50%;
+        width: 46%;
+        margin-top: 30px;
         h3 {
             font-family: 'Graduate';
             font-size: 30px;
@@ -84,7 +91,7 @@
                 -webkit-box-align: center;
                     -ms-flex-align: center;
                         align-items: center;
-                padding: 25px 10px 5px 10px;
+                padding: 45px 10px 5px 10px;
                 color: $white;
                 font-size: 13px;
                 font-weight: $semi-bold;
@@ -144,7 +151,7 @@
                 padding: 10px 15px;
                 color: $white;
                 &:not(:last-child) {
-                    border-bottom: solid 1px $white;
+                    border-bottom: solid 1px rgba(230, 230, 232, 0.3);
                 }
                 .name {
                     width: 60%;
@@ -198,19 +205,33 @@
                 }
             }
         }
+        .rankingSwitch {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            width: 150px;
+            margin: 30px auto 0 auto;
+            &_item {
+                width: 50px;
+                border-radius: none;
+                height: 5px;
+                margin: 0 5px;
+                background-color: rgba(245, 200, 105, 0.5);
+                cursor: pointer;
+                -webkit-transition: ease .1s all;
+                transition: ease .1s all;
+                &:hover {
+                    background-color: rgba(242,182,50,1);
+                }
+                &.active {
+                    background-color: rgba(242,182,50,1);
+                }
+            }
+        }
     }
     &_graphs {
         width: 45%;
-        // display: -webkit-box;
-        // display: -ms-flexbox;
-        // display: flex;
-        // -webkit-box-orient: vertical;
-        // -webkit-box-direction: normal;
-        //     -ms-flex-direction: column;
-        //         flex-direction: column;
-        // -webkit-box-align: center;
-        //     -ms-flex-align: center;
-        //         align-items: center;
+        position: relative;
         &_container {
             width: 100%;
             display: -webkit-box;
@@ -226,9 +247,27 @@
         h4 {
             margin-bottom: 40px;
             font-size: 20px;
+            .asterisque {
+                position: relative;
+                margin-right: 5px;
+                &:after {
+                    content: '*';
+                    position: absolute;
+                    right: -4px;
+                    top: 3px;
+                    font-size: 10px;
+                    color: $white;
+                }
+            }
+        }
+        .titleLegend {
+            position: absolute;
+            left: 0;
+            top: 26px;
+            font-size: 11px;
         }
         &_option {
-            width: 48%;
+            width: 45%;
             height: 320px;
             input {
                 width: 100%;
@@ -239,6 +278,13 @@
                 border-bottom: solid 1px $white;
                 color: $white;
                 padding-bottom: 5px;
+                &.red {
+                    &:focus {
+                        color: $red;
+                        outline: none;
+                        border-bottom: solid 1px $red;
+                    }
+                }
                 &:focus {
                     color: $yellow;
                     outline: none;
@@ -246,11 +292,32 @@
                 }
             }
             p {
-                font-size: 15px;
+                font-size: 14px;
                 line-height: 20px;
                 text-align: center;
                 strong {
                     font-weight: $bold;
+                }
+            }
+            .chart {
+                position: relative;
+                .percentage {
+                    font-weight: $semi-bold;
+                    font-size: 30px;
+                    position: absolute;
+                    top: 50%;
+                    left: 53%;
+                    -webkit-transform: translate(-50%, -50%);
+                            transform: translate(-50%, -50%);
+                    &.red {
+                        color: $red;
+                    }
+                    &.yellow {
+                        color: $yellow;
+                    }
+                    span {
+                        font-size: 18px;
+                    }
                 }
             }
             .pib {

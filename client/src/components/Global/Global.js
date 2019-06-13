@@ -2,7 +2,6 @@ import React from 'react'
 import './styles.scss'
 import MoreInfo from '../MoreInfo/MoreInfo'
 import { Line, Bar } from 'react-chartjs-2'
-import Chart from '../Chart/Chart'
 
 class Global extends React.Component {
     
@@ -282,15 +281,6 @@ class Global extends React.Component {
                             width={600}
                             height={250}
                             options={{
-                                // title: {
-                                //     display: this.props.title,
-                                //     text: this.props.titleText,
-                                //     fontFamily: this.props.titleFontFamily,
-                                //     fontColor: this.props.titleFontColor,
-                                //     fontSize: 18,
-                                //     fontStyle: 'normal'
-                                // },
-                                // maintainAspectRatio: false,
                                 legend: {
                                     display: false,
                                     fontFamily: this.props.fontFamily,
@@ -344,15 +334,6 @@ class Global extends React.Component {
                             height={250}
                             width={600}
                             options={{
-                                // title: {
-                                //     display: this.props.title,
-                                //     text: this.props.titleText,
-                                //     fontFamily: this.props.titleFontFamily,
-                                //     fontColor: this.props.titleFontColor,
-                                //     fontSize: 18,
-                                //     fontStyle: 'normal'
-                                // },
-                                // maintainAspectRatio: false,
                                 legend: {
                                     display: false,
                                     fontFamily: this.props.fontFamily,

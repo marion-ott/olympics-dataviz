@@ -6,6 +6,7 @@ import Fact from '../Fact/Fact'
 import Statistics from '../Dashboard/Dashboard'
 
 class Game extends React.Component {
+
     render() {
         return(
             <div className="Game">

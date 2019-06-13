@@ -32,9 +32,9 @@ class Timeline extends React.Component {
                             </div>
                         ))
                     }
-                    <div onClick={this.props.toggleGlobal} className="Timeline_global">
+                    {/* <div onClick={this.props.toggleGlobal} className="Timeline_global">
                         <p>ALL TIME</p>
-                    </div>
+                    </div> */}
                 </div>
             </section>
         )

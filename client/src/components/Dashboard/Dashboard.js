@@ -4,6 +4,8 @@ import './styles.scss'
 import MoreInfo from '../MoreInfo/MoreInfo'
 import Popin from '../Popin/Popin'
 import Chart from '../Chart/Chart'
+import AOS from 'aos'
+
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -25,6 +27,10 @@ class Dashboard extends React.Component {
     
         this.malePercentage = Math.round((this.props.data.game[0].male / (this.props.data.game[0].female + this.props.data.game[0].male)) * 100)
     }
+
+    componentWillReceiveProps (){ 
+        AOS.refresh(); 
+    } 
 
     changeGraph = (event) => {
         let displayAmount;
@@ -102,26 +108,26 @@ class Dashboard extends React.Component {
             <section className="Dashboard">
                 <div className="Dashboard_infos">
                     <div className="Dashboard_infos_year">
-                        <span>Année</span>
-                        <h5>{this.props.data.game[0].year}</h5>
+                        <span data-aos="fade-zoom-in">Année</span>
+                        <h5 data-aos="fade-right" data-aos-easing="ease-in-out" data-aos-duration="500">{this.props.data.game[0].year}</h5>
                     </div>
                     <div className="Dashboard_infos_details">
-                        <div className="Dashboard_infos_details_location">
-                            <div>
+                        <div data-aos="slide-right"  className="Dashboard_infos_details_location" >
+                            <div >
                                 <span>Pays hôte</span>
                                 <p>{this.props.data.game[0].country_name}</p>
                             </div>
-                            <div>
+                            <div data-aos-easing="ease-in-out" data-aos-duration="400" data-aos="fade-zoom-in" data-aos-duration="500">
                                 <span>Ville hôte</span>
                                 <p>{this.props.data.game[0].city_name}</p>
                             </div>
                         </div>
                         <div className="Dashboard_infos_details_numbers">
-                            <div className="nations">
+                            <div data-aos="slide-up" data-aos-offset="-50" data-aos-easing="ease-in-out" data-aos-duration="500" className="nations">
                                 <p>{this.props.data.countries.length}</p>
                                 <span>Pays participants</span>
                             </div>
-                            <div className="sports">
+                            <div data-aos="slide-up" data-aos-offset="-50" data-aos-easing="ease-in-out" data-aos-duration="400" data-aos-delay="200" className="sports">
                                 <p>{this.props.data.sports.length}</p>
                                 <span>Disciplines</span>
                                 <div className="moreInfo">
@@ -132,7 +138,7 @@ class Dashboard extends React.Component {
                     </div>
                 </div>
                 <div className="Dashboard_athletes">
-                    <div className="top">
+                    <div data-aos="fade-in" data-aos-easing="ease-in-out" data-aos-duration="500" className="top">
                         <h4>La parité aux<br/>Jeux Olympiques de {this.props.data.game[0].year}</h4>
                         <div className="Dashboard_athletes_text">
                             <div className={`scale ${this.props.data.game[0].year === 1896 && 'firstGame'}`}>
@@ -169,7 +175,7 @@ class Dashboard extends React.Component {
                     </div>
                     {
                         this.props.data.game[0].year === 1896 ? (
-                            <div className="bottom womenLess">
+                            <div data-aos="fade-in" data-aos-easing="ease-in-out" data-aos-duration="500" className="bottom womenLess">
                                 <p>Il s'agit de la seule édition durant laquelle absolument <strong>aucune femme athlète n'a concuru.</strong></p>
                             </div>
                         ) : (

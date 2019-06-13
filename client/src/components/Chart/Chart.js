@@ -20,8 +20,8 @@ class Chart extends React.Component {
                     {
                         label: '',
                         data: this.props.dataset,
-                        backgroundColor: this.props.shape === 'doughnut' ? ['#f2b632', '#ffd270'] : '#f2b632',
-                        borderWidth: 1,
+                        backgroundColor: this.props.shape === 'doughnut' ? [this.props.color, 'rgba(255,255,255,0.2)'] : '#f2b632',
+                        borderWidth: 0,
                     }
                 ]
             }
@@ -188,6 +188,10 @@ class Chart extends React.Component {
                         // width={520}
                         // height={220}
                         options={{
+                            cutoutPercentage: 85,
+                            tooltips: {
+                                enabled: false
+                            },
                             title: {
                                 display: this.props.title,
                                 text: this.props.titleText,

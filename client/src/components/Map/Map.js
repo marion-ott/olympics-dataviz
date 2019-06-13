@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { TweenLite, Power2 } from 'gsap'
 import './styles.scss'
 
 class Map extends React.Component {
@@ -64,33 +65,43 @@ class Map extends React.Component {
     renderPopin = (event) => {
         event.persist()
         let clicked;
+        let animate;
         const nextId = event.target.getAttribute('aria-label')
 
         if(!this.state.clicked) {
             event.target.classList.add('clicked')
             clicked = true
+            animate = true
         } else if(this.state.clicked && this.prevId !== nextId){
             event.target.classList.add('clicked')
             this.prevEl.classList.remove('clicked')
             clicked = true
+            animate = false
         } else if(this.state.clicked && this.prevId === nextId) {
             this.prevEl.classList.remove('clicked')
             clicked = false
+            animate = false
         }
 
         this.prevEl = event.target
         this.prevId = event.target.getAttribute('aria-label')
 
         const popin = this.props.countries[nextId]
-        let [ popinWidth, popinHeight ] = [ 240, 160 ]
-        const [ top, left ] = [ (event.pageY - (popinHeight + 20)), (event.pageX - (popinWidth / 2)) ]
+        let [ popinWidth, popinHeight ] = [ 200, 160 ]
+        const [ top, left ] = [ (event.pageY - (popinHeight + 60)), (event.pageX - (popinWidth / 2)) ]
 
         this.setState({
             clicked,
             popin,
             top,
             left
-        })
+        }, () => animate && this.animatePopin())
+        
+    }
+
+    animatePopin = () => {
+        TweenLite.to(this.popin, 0.2, {ease: Power2.easeOut, opacity: 1})
+        TweenLite.to(this.popin, 0.5, {ease: Power2.easeOut, y: 20},0)
     }
 
     render() {
@@ -1115,22 +1126,20 @@ class Map extends React.Component {
                 </div>
                 {
                     this.state.clicked && (
-                        <div className="Map_popin" style={{ top: this.state.top, left: this.state.left }}>
+                        <div ref={el => this.popin = el} className="Map_popin" style={{ opacity: 0, top: this.state.top, left: this.state.left }}>
                             <div className="Map_popin_item" >
                                 <div className="Map_popin_item_head">
-                                    <img src={this.state.popin.flag} alt={`Drapeau du pays ${this.state.popin.name}`}/>
+                                    <div className="Map_popin_item_head_flag" style={{backgroundImage: `url(${this.state.popin.flag})`}}></div>
                                     <h2>{this.state.popin.name}</h2>
                                 </div>
                                 <div className="Map_popin_item_infos">
                                     <div className="Map_popin_item_infos_athletes">
-                                        <h4>Athlètes</h4>
                                         <div>
                                             <p>Hommes : <span>{this.state.popin.male}</span></p>
                                             <p>Femmes : <span>{this.state.popin.female}</span></p>
                                         </div>
                                     </div>
                                     <div className="Map_popin_item_infos_results">
-                                        <h4>Médailles</h4>
                                         <div className="Map_popin_item_infos_results_container">
                                           <div className="Map_popin_item_results_single">
                                             <div className="gold"></div>

@@ -18,7 +18,7 @@ class Home extends React.Component {
       TweenLite.to('.one',1.2,{ease: Power2.easeOut, x:'30', opacity: 1, delay:0.5})
       TweenLite.to('.two',1,{ease: Power2.easeOut, x:'30', opacity: 1, delay:0.7})
       TweenLite.to('.date',1,{ease: Power2.easeOut, opacity: 1, delay: 2})
-      TweenLite.to('.scroller',1.5,{ease: Power2.easeOut, opacity: 1, delay: 2.5})
+    //   TweenLite.to('.scroller',1.5,{ease: Power2.easeOut, opacity: 1, delay: 2.5})
     }
 
 
@@ -52,8 +52,13 @@ class Home extends React.Component {
                     </div>
                 </div>
                 <div ref={el => this.scrollIcon = el} className="scroller" onClick={this.scrollTo}>
-                    <div className="mouse">
-                        <div className="ball"></div>
+                    <div className="scroller_background">
+                        <div>
+                            <svg>
+                                <path className="path" d="M21.9644928,8.3267822l-8.0706987,8.0706997c-0.7697706,0.7697716-2.0178175,0.7697716-2.7875881,0
+                                L3.0355062,8.3267822"/>
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
