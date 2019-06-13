@@ -11,7 +11,7 @@ $ cd <pathToFolder>/server
 $ npm install || yarn install
 ```
 
-#### Create the database and populate your database
+#### Create the database and add the data
 ```shell
 $ mysql -u userName -p
 $ enter your mysql password
