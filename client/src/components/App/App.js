@@ -80,12 +80,6 @@ class App extends React.Component {
     }
 
     render() {
-        if (this.state.loading) {
-              {/*return (
-                <Loader />
-            )*/}
-        }
-
         const globalData = global
         return(
             this.state.games !== null ? (

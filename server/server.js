@@ -16,7 +16,6 @@ app.use(morgan('short'))
 app.use(cors())
 
 app.get('/', (req, res) => {
-    console.log('Responding');
     res.send('hello')
 })
 
@@ -92,7 +91,6 @@ app.get('/games/:id', (req, res) => {
             return
         }
         data.countries = rows
-        //console.log(rows);
 
         /* Query to get all the disciplines of the current game */
         const sportsQuery = "SELECT sport.sport_name, sport.id FROM sport_per_game INNER JOIN sport ON sport_per_game.sport_id = sport.id WHERE game_id =?"

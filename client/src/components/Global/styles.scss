@@ -1,5 +1,7 @@
 @import 'src/config/settings';
 
+$red: #F06543;
+
 .Global {
     width: 100vw;
     height: 100vh;
@@ -11,13 +13,86 @@
     overflow: hidden;
     -webkit-transition: ease .5s all;
     transition: ease .5s all;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    justify-content: space-between;
+    padding: 40px 60px;
+    .Ranking_sectionTitle {
+        left: -210px;
+        top: 50%;
+        -webkit-transform: rotate(90deg) translate(0, -50%);
+                transform: rotate(90deg) translate(0, -50%);
+        opacity: 0.6;
+    }
+    h2 {
+        font-family: 'Anton';
+        font-size: 26px;
+        color: $white;
+        font-weight: 100;
+        position: absolute;
+        top: 50px;
+        left: 50px;
+    }
     &_close {
         position: absolute;
         top: 20px;
         right: 30px;
     }
     &_chart {
-        max-width: 800px;
+        max-width: 600px;
         width: 100%;
+        h4 {
+            font-family: 'Anton';
+            font-size: 18px;
+            color: $white;
+            font-weight: 100;
+            padding: 0 0 40px 20px;
+        }
+        .legend {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: center;
+                -ms-flex-pack: center;
+                    justify-content: center;
+            &_item {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+                color: $white;
+                font-size: 12px;
+                &:not(:last-child) {
+                    margin-right: 20px;
+                }
+                .bullet {
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 30px;
+                    margin-right: 5px;
+                    &.red {
+                        background-color: $red;
+                    }
+                    &.yellow {
+                        background-color: $yellow;
+                    }
+                    &.gold {
+                        background-color: $gold;
+                    }
+                    &.silver {
+                        background-color: $silver;
+                    }
+                    &.bronze {
+                        background-color: $bronze;
+                    }
+                }
+            }
+        }
     }
 }

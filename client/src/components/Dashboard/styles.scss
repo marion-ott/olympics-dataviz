@@ -168,6 +168,32 @@
                 display: -webkit-box;
                 display: -ms-flexbox;
                 display: flex;
+                &.firstGame {
+                    display: block;
+                    width: 100%;
+                    margin-top: auto;
+                    .scale_visual {
+                        width: 100%;
+                        height: 50px;
+                    }
+                    .scale_explanation {
+                        -webkit-box-orient: horizontal;
+                        -webkit-box-direction: normal;
+                            -ms-flex-direction: row;
+                                flex-direction: row;
+                        -webkit-box-align: center;
+                            -ms-flex-align: center;
+                                align-items: center;
+                        margin-top: 20px;
+                        -webkit-box-pack: end;
+                            -ms-flex-pack: end;
+                                justify-content: flex-end;
+                        &_male {
+                            margin-bottom: 0;
+                            margin-right: 20px;
+                        }
+                    }
+                }
                 &_visual {
                     width: 50px;
                     height: 100%;
@@ -315,6 +341,21 @@
             height: 50%;
             padding: 10px 20px 0px 30px;
             position: relative;
+            &.womenLess {
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                    -ms-flex-align: center;
+                        align-items: center;
+                font-size: 28px;
+                line-height: 38px;
+                text-align: right;
+                padding: 0 50px;
+                strong {
+                    font-weight: $bold;
+                }
+            }
         }
         &_selector {
             max-width: 150px;
