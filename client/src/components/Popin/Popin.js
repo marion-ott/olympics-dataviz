@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import './styles.scss'
 import Chart from '../Chart/Chart'
 import { TweenLite, Power2 } from 'gsap'
@@ -19,17 +18,14 @@ class Popin extends React.Component {
         this.setData()
         this.animateIn()
     }
-
+    
     animateIn = () => {
         TweenLite.to(this.overlay, .3, {ease: Power2.easeInOut, opacity: 1})
         TweenLite.to(this.container, .6, {ease: Power2.easeInOut, width: '100%'},0)
         TweenLite.to(this.content, .6, {ease: Power2.easeInOut, marginLeft: '0px'}, 0)
     }
     
-    componentWillUnmount() {
-        
-    }
-
+    
     handleClick = (event) => {
         if(event.target.className.includes('popinClose')) {
             TweenLite.to(this.overlay, .3, {ease: Power2.easeInOut, opacity: 0})
@@ -75,14 +71,13 @@ class Popin extends React.Component {
     }
 
     render() {
-
         return(
-            <div ref={el => this.container = el}  onClick={this.handleClick} id={this.props.id} className="Popin popinClose">
+            <div ref={el => this.container = el} id={this.props.id} className="Popin">
                 <div ref={el => this.overlay = el} className="Popin--overlay popinClose" onClick={this.handleClick}></div>
                 <div ref={el => this.content = el} className="Popin_container">
                     <span className="popinClose" onClick={this.props.closePopin}>X</span>
                     <div className="Popin_container_list">
-                        <h4>Les disciplines<br/>en compétition :</h4>
+                        <h4>Les disciplines en compétition :</h4>
                         <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>
                             { this.props.data.sports.map((sport, key) => {
                                 return(
