@@ -1,6 +1,6 @@
 # DATA VIZ - OLYMPICS
 
-## Follow these steps to install the project 
+# Follow these steps to install the project 
 
 #### Install required dependencies
 ```shell
@@ -11,20 +11,20 @@ $ cd <pathToFolder>/server
 $ npm install || yarn install
 ```
 
-## Follow these steps to create the database
+#### Create the database and populate your database
 ```shell
 $ mysql -u userName -p
 $ enter your mysql password
 $ CREATE DATABASE olympics;
 $ exit;
-$ mysql -u <user> -p olympics < pathToFile/data.sql
+$ mysql -u <user> -p olympics < pathToFile/database.sql
 ```
 
 #### Update the MySql connection information in server/server.js
 In server.js (line 11), enter your own mysql password
 
 
-## Start the project locally
+## Launch the project
 ```shell
 $ cd <pathToFolder>/client
 $ npm start || yarn start
