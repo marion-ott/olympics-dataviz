@@ -1,6 +1,8 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import './styles.scss'
 import Chart from '../Chart/Chart'
+import { TweenLite, Power2 } from 'gsap'
 
 class Popin extends React.Component {
 
@@ -9,19 +11,33 @@ class Popin extends React.Component {
         this.setData()
     }
     
+    componentDidMount() {
+        this.animateIn()
+    }
+    
     componentWillReceiveProps() {
         this.setData()
+        this.animateIn()
+    }
+
+    animateIn = () => {
+        TweenLite.to(this.overlay, .3, {ease: Power2.easeInOut, opacity: 1})
+        TweenLite.to(this.container, .6, {ease: Power2.easeInOut, width: '100%'},0)
+        TweenLite.to(this.content, .6, {ease: Power2.easeInOut, marginLeft: '0px'}, 0)
     }
     
     componentWillUnmount() {
-        console.log('popin unmount')
+        
     }
 
     handleClick = (event) => {
-        if(event.target.className === 'Popin') {
-            //TODO: Create animation for popin diappearing
-            //then call appropriate function
-            this.props.closePopin()
+        if(event.target.className.includes('popinClose')) {
+            TweenLite.to(this.overlay, .3, {ease: Power2.easeInOut, opacity: 0})
+            TweenLite.to(this.container, .6, {ease: Power2.easeInOut, width: '0%'})
+            TweenLite.to(this.content, .6, {ease: Power2.easeInOut, marginLeft: '-1000px'})
+            setTimeout(() => {
+                this.props.closePopin()
+            }, 1500)
         }
     }
 
@@ -58,43 +74,13 @@ class Popin extends React.Component {
         })
     }
 
-    selectSport = (event) => {
-        const selectedSport = parseFloat(event.target.value)
-
-        let filteredCountries = this.props.data.countries.map(country => {
-            let selectedCountry = {}
-            selectedCountry.results = country.results.filter(result => result.sportId === selectedSport)
-            selectedCountry.name = country.name
-            selectedCountry.flag = country.flag
-            let medalCount = {
-                gold: 0,
-                silver: 0,
-                bronze: 0,
-                total: 0
-            }
-            selectedCountry.results.forEach(result => {
-                medalCount.gold = medalCount.gold + result.male.gold + result.female.gold + result.neutral.gold
-                medalCount.silver = medalCount.silver + result.male.silver + result.female.silver + result.neutral.silver
-                medalCount.bronze = medalCount.bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
-            })
-            medalCount.total = medalCount.gold + medalCount.silver + medalCount.bronze
-            selectedCountry.medals = medalCount
-            return selectedCountry
-        })
-
-        let rankingBySport = filteredCountries.sort((a, b) => (b.medals.total - a.medals.total || b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
-
-        this.setState({
-            countries: rankingBySport
-        })
-    }
-
     render() {
 
         return(
-            <div onClick={this.handleClick} id={this.props.id} className="Popin">
-                <div className="Popin_container">
-                    <span onClick={this.props.closePopin}>X</span>
+            <div ref={el => this.container = el}  onClick={this.handleClick} id={this.props.id} className="Popin popinClose">
+                <div ref={el => this.overlay = el} className="Popin--overlay popinClose" onClick={this.handleClick}></div>
+                <div ref={el => this.content = el} className="Popin_container">
+                    <span className="popinClose" onClick={this.props.closePopin}>X</span>
                     <div className="Popin_container_list">
                         <h4>Les disciplines<br/>en compétition :</h4>
                         <ul className={this.props.data.sports.length > 14 ? 'columns' : ''}>

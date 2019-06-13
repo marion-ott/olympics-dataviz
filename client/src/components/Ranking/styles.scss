@@ -211,21 +211,16 @@
             display: flex;
             width: 150px;
             margin: 30px auto 0 auto;
-            &_item {
-                width: 50px;
-                border-radius: none;
-                height: 5px;
-                margin: 0 5px;
-                background-color: rgba(245, 200, 105, 0.5);
+            -webkit-user-select: none;
+               -moz-user-select: none;
+                -ms-user-select: none;
+                    user-select: none;
+            div {
                 cursor: pointer;
-                -webkit-transition: ease .1s all;
-                transition: ease .1s all;
-                &:hover {
-                    background-color: rgba(242,182,50,1);
-                }
-                &.active {
-                    background-color: rgba(242,182,50,1);
-                }
+            }
+            div.selected {
+                background-color: #333751;
+                font-weight: $semi-bold;
             }
         }
     }

@@ -29,47 +29,78 @@ class Ranking extends React.Component {
     }
 
     sortCountries = () => {
-        let ranking = this.props.countries.sort(function(a, b) {
+        const countries = [...this.props.countries]
+        let ranking = countries.sort(function(a, b) {
             return parseFloat(b.medals.gold) - parseFloat(a.medals.gold)
         }).slice(0,10)
-
+        
         this.setState({
             countries: ranking
         })
     }
 
-    selectSport = (event) => {
+
+    selectSport = (event, female = false) => {
         
         const selectedSport = event.target.value !== 'all' ? parseFloat(event.target.value) : 'all'
         if(event.target.value === 'all') {
             this.sortCountries()
         } else {
-            let filteredCountries = this.props.countries.map(country => {
-                let selectedCountry = {}
-                selectedCountry.results = country.results.filter(result => result.sportId === selectedSport)
-                selectedCountry.name = country.name
-                selectedCountry.flag = country.flag
-                let medalCount = {
-                    gold: 0,
-                    silver: 0,
-                    bronze: 0,
-                    total: 0
-                }
-                selectedCountry.results.forEach(result => {
-                    medalCount.gold = medalCount.gold + result.male.gold + result.female.gold + result.neutral.gold
-                    medalCount.silver = medalCount.silver + result.male.silver + result.female.silver + result.neutral.silver
-                    medalCount.bronze = medalCount.bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
+            if(!female) {
+                let filteredCountries = this.props.countries.map(country => {
+                    let selectedCountry = {}
+                    selectedCountry.results = country.results.filter(result => result.sportId === selectedSport)
+                    selectedCountry.name = country.name
+                    selectedCountry.flag = country.flag
+                    let medalCount = {
+                        gold: 0,
+                        silver: 0,
+                        bronze: 0,
+                        total: 0
+                    }
+                    selectedCountry.results.forEach(result => {
+                        medalCount.gold = medalCount.gold + result.male.gold + result.female.gold + result.neutral.gold
+                        medalCount.silver = medalCount.silver + result.male.silver + result.female.silver + result.neutral.silver
+                        medalCount.bronze = medalCount.bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
+                    })
+                    medalCount.total = medalCount.gold + medalCount.silver + medalCount.bronze
+                    selectedCountry.medals = medalCount
+                    return selectedCountry
                 })
-                medalCount.total = medalCount.gold + medalCount.silver + medalCount.bronze
-                selectedCountry.medals = medalCount
-                return selectedCountry
-            })
-    
-            let rankingBySport = filteredCountries.sort((a, b) => (b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
-    
-            this.setState({
-                countries: rankingBySport
-            })
+        
+                let rankingBySport = filteredCountries.sort((a, b) => (b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
+        
+                this.setState({
+                    countries: rankingBySport
+                })
+            } else {
+                let filteredCountries = this.props.countries.map(country => {
+                    let selectedCountry = {}
+                    selectedCountry.results = country.results.filter(result => result.sportId === selectedSport)
+                    selectedCountry.name = country.name
+                    selectedCountry.flag = country.flag
+                    let medalCount = {
+                        gold: 0,
+                        silver: 0,
+                        bronze: 0,
+                        total: 0
+                    }
+                    selectedCountry.results.forEach(result => {
+                        medalCount.gold = medalCount.gold + result.female.gold
+                        medalCount.silver = medalCount.silver + result.female.silver + result.neutral.silver
+                        medalCount.bronze = medalCount.bronze + result.female.bronze + result.neutral.bronze
+                    })
+                    medalCount.total = medalCount.gold + medalCount.silver + medalCount.bronze
+                    selectedCountry.medals = medalCount
+                    return selectedCountry
+                })
+                let rankingBySport = filteredCountries.sort((a, b) => (b.medals.gold - a.medals.gold || b.medals.silver - a.medals.silver || b.medals.bronze - a.medals.bronze)).slice(0,10)
+        
+        
+                this.setState({
+                    countries: rankingBySport
+                })
+            }
         }
     }
 
@@ -146,8 +177,8 @@ class Ranking extends React.Component {
                 return(
                     <div>
                         <div className="Ranking_sports_selector">
-                            <label htmlFor="sportSelect">Filter sssssle tableau des médailles par discipline :</label>
-                            <select name="sportSelect" defaultValue="all" id="" onChange={this.selectSport}>
+                            <label htmlFor="sportSelect">Filter le tableau des médailles par discipline :</label>
+                            <select name="sportSelect" defaultValue="all" id="" onChange={(event) => this.selectSport(event, true)}>
                                 <option value="all">Tous</option>
                                 {
                                     this.props.sports.map((sport, key) => (
@@ -182,9 +213,9 @@ class Ranking extends React.Component {
                                     let bronze = 0
                                     
                                     country.results.forEach(result => {
-                                        gold = gold + result.male.gold + result.female.gold + result.neutral.gold
-                                        silver = silver + result.male.silver + result.female.silver + result.neutral.silver
-                                        bronze = bronze + result.male.bronze + result.female.bronze + result.neutral.bronze
+                                        gold = gold + result.female.gold
+                                        silver = silver + result.female.silver
+                                        bronze = bronze + result.female.bronze
                                     })
 
                                     return(
@@ -209,6 +240,8 @@ class Ranking extends React.Component {
                         </div>
                     </div>
                 )
+            default:
+                break;
         }
     }
 
@@ -234,9 +267,9 @@ class Ranking extends React.Component {
     switchRank = (event) => {
         let rankingIndex = parseFloat(event.target.dataset.index)
         if(rankingIndex !== this.state.rankingIndex) {
-            let currentActive = ReactDOM.findDOMNode(this).querySelector('.rankingSwitch_item.active')
-            currentActive.classList.remove('active')
-            event.target.classList.add('active')
+            let currentActive = ReactDOM.findDOMNode(this).querySelector('.rankingSwitch_item.selected')
+            currentActive.classList.remove('selected')
+            event.target.classList.add('selected')
             this.setState({
                 rankingIndex
             })
@@ -244,7 +277,6 @@ class Ranking extends React.Component {
     }
     
     render() {
-        
         return(
             <section className="Ranking">
                 <p className="Ranking_sectionTitle">Résultats</p>
@@ -252,9 +284,9 @@ class Ranking extends React.Component {
                     {
                         this.renderRanking(this.state.rankingIndex)
                     }
-                    <div className="rankingSwitch">
-                        <div onClick={this.switchRank} data-index={0} className="rankingSwitch_item active"></div>
-                        <div onClick={this.switchRank} data-index={1} className="rankingSwitch_item"></div>
+                    <div className="rankingSwitch Dashboard_athletes_selector">
+                        <div className="rankingSwitch_item selected" onClick={this.switchRank} data-index={0}>Mixte</div>
+                        <div className="rankingSwitch_item" onClick={this.switchRank} data-index={1}>Femmes</div>
                     </div>
                 </div>
                 <div className="Ranking_graphs">
@@ -273,7 +305,11 @@ class Ranking extends React.Component {
                                     legend={false}
                                     title={false}
                                     labels={['Médailles', 'Athlètes']}
-                                    dataset={[this.props.countries[this.state.countriesIndex[0]].medals.total, (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)]}
+                                    dataset={[(this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2) * 100,
+                                    (100 - (this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2) * 100 > 0 ?
+                                        100 - (this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2) * 100
+                                        : 0
+                                    )]}
                                     type="ratio"
                                     shape="doughnut" 
                                     height={500}
@@ -281,7 +317,7 @@ class Ranking extends React.Component {
                                     // width={30 * this.state.data.length}
                                 />
                                 <p className="percentage yellow">
-                                    {(this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2) * 100}<span>%</span>
+                                    {Math.round((this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2) * 100)}<span>%</span>
                                 </p>
                             </div>
                             <p><strong>{(this.props.countries[this.state.countriesIndex[0]].medals.total / (this.props.countries[this.state.countriesIndex[0]].male + this.props.countries[this.state.countriesIndex[0]].female)).toFixed(2)}</strong> médaille(s) par athlète<br></br>
@@ -291,7 +327,7 @@ class Ranking extends React.Component {
                                 {
                                     (this.props.countries[this.state.countriesIndex[0]].gdp !== null && this.props.countries[this.state.countriesIndex[1]].gdp !== null) ? (
                                         this.props.countries[this.state.countriesIndex[0]].gdp !== null ? (
-                                            <p>Compte-tenu du PIB du pays en {this.props.year}, le coût d'une médaille s'élève donc à {Math.floor(this.props.countries[this.state.countriesIndex[0]].gdp / this.props.countries[this.state.countriesIndex[0]].medals.total)}$</p>
+                                            <p>Compte-tenu du PIB du pays en {this.props.year}, le coût d'une médaille s'élève donc à {Math.floor((this.props.countries[this.state.countriesIndex[0]].gdp / this.props.countries[this.state.countriesIndex[0]].medals.total))}$</p>
                                         ) : (
                                             <p>Nous ne disposons pas du montant du PIB de ce pays pour l'année {this.props.year}.</p>
                                         )
@@ -311,7 +347,11 @@ class Ranking extends React.Component {
                                     legend={false}
                                     title={false}
                                     labels={['Médailles', 'Athlètes']}
-                                    dataset={[this.props.countries[this.state.countriesIndex[1]].medals.total, (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)]}
+                                    dataset={[(this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2) * 100,
+                                    (100 - (this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2) * 100 > 0 ?
+                                        100 - (this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2) * 100
+                                        : 0
+                                    )]}
                                     type="ratio"
                                     shape="doughnut" 
                                     height={500}
@@ -319,7 +359,7 @@ class Ranking extends React.Component {
                                     // width={30 * this.state.data.length}
                                 />
                                 <p className="percentage red">
-                                    {(this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2) * 100}<span>%</span>
+                                    {Math.round((this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2) * 100)}<span>%</span>
                                 </p>
                             </div>
                             <p><strong>{(this.props.countries[this.state.countriesIndex[1]].medals.total / (this.props.countries[this.state.countriesIndex[1]].male + this.props.countries[this.state.countriesIndex[1]].female)).toFixed(2)}</strong> médaille(s) par athlète<br></br>

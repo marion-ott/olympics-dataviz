@@ -5,8 +5,8 @@ import api from '../../api/api'
 import Home from '../Home/Home'
 import Timeline from '../Timeline/Timeline'
 import Game from '../Game/Game'
-import Global from '../Global/Global'
-import global from '../../json/global.json'
+// import Global from '../Global/Global'
+// import global from '../../json/global.json'
 import AOS from 'aos'
 require('aos/dist/aos.css')
 
@@ -90,7 +90,7 @@ class App extends React.Component {
     }
 
     render() {
-        const globalData = global
+        // const globalData = global
         return(
             this.state.games !== null ? (
                 <div className="App">

@@ -174,7 +174,6 @@ class Global extends React.Component {
                     // pointBorderColor: "black",
                     pointBackgroundColor: "#f2b632",
                     //pointHoverBorderWidth: 2,
-                    pointRadius: 3,
                     pointHitRadius: 10,
                     data: womenCount,
                     spanGaps: true,

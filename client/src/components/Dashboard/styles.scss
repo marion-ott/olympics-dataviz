@@ -9,7 +9,7 @@
     display: flex;
     position: relative;
     &_infos {
-        width: 50%;
+        min-width: 50vw;
         height: 100%;
         &_year {
             background-color: $darkBlue;
@@ -132,7 +132,7 @@
            -moz-user-select: none;
             -ms-user-select: none;
                 user-select: none;
-        width: 50%;
+        min-width: 50vw;
         height: 100%;
         background-color: #333751;
         .top {

@@ -106,6 +106,11 @@ class Dashboard extends React.Component {
 
         return(
             <section className="Dashboard">
+                {
+                    this.state.showSportsPopin && (
+                        <Popin data={this.props.data} id="sport" closePopin={this.closePopin} />
+                    )
+                }
                 <div className="Dashboard_infos">
                     <div className="Dashboard_infos_year">
                         <span data-aos="fade-zoom-in">Année</span>
@@ -117,7 +122,7 @@ class Dashboard extends React.Component {
                                 <span>Pays hôte</span>
                                 <p>{this.props.data.game[0].country_name}</p>
                             </div>
-                            <div data-aos-easing="ease-in-out" data-aos-duration="400" data-aos="fade-zoom-in" data-aos-duration="500">
+                            <div data-aos-easing="ease-in-out" data-aos-duration="400" data-aos="fade-zoom-in" >
                                 <span>Ville hôte</span>
                                 <p>{this.props.data.game[0].city_name}</p>
                             </div>
@@ -230,11 +235,6 @@ class Dashboard extends React.Component {
                         )
                     }
                 </div>
-                {
-                    this.state.showSportsPopin && (
-                        <Popin data={this.props.data} id="sport" closePopin={this.closePopin} />
-                    )
-                }
             </section>
         )
     }
