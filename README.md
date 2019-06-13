@@ -5,9 +5,9 @@
 #### Install required dependencies
 ```shell
 $ git clone https://github.com/marion-ott/olympics-dataviz.git
-$ cd <pathToFolder>/client
+$ cd <pathToProjectFolder>/client
 $ npm install || yarn install
-$ cd <pathToFolder>/server
+$ cd <pathToProjectFolder>/server
 $ npm install || yarn install
 ```
 
@@ -17,7 +17,7 @@ $ mysql -u userName -p
 $ enter your mysql password
 $ CREATE DATABASE olympics;
 $ exit;
-$ mysql -u <user> -p olympics < pathToFile/database.sql
+$ mysql -u <user> -p olympics < <pathToProjectFolder>/server/database.sql
 ```
 
 #### Update the MySql connection information in server/server.js
@@ -28,9 +28,9 @@ In server.js (line 11), enter your own mysql password
 
 ## Launch the project
 ```shell
-$ cd <pathToFolder>/client
+$ cd <pathToProjectFolder>/client
 $ npm start || yarn start
-$ cd <pathToFolder>/server
+$ cd <pathToProjectFolder>/server
 $ node server.js
 ```
 
