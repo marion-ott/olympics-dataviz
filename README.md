@@ -2,6 +2,7 @@
 
 ## Follow these steps to install the project 
 
+#### Install required packages
 ```shell
 $ git clone https://github.com/marion-ott/olympics-dataviz.git
 $ cd <pathToFolder>/client
