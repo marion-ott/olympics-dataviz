@@ -17,7 +17,7 @@ $ mysql -u userName -p
 $ enter your mysql password
 $ CREATE DATABASE olympics;
 $ exit;
-$ mysql -u <user> -p olympics < pathToFile/database.sql
+$ mysql -u <user> -p olympics < <pathToProjectFolder>/server/database.sql
 ```
 
 #### Update the MySql connection information in server/server.js
