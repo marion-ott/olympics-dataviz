@@ -9,7 +9,7 @@
     "d3-geo": "^1.11.3",
     "gsap": "^2.1.3",
     "mapbox-gl": "^0.39.1",
-    "node-sass": "^4.12.0",
+    "node-sass": "^7.0.0",
     "prop-types": "^15.5.10",
     "react": "^16.8.6",
     "react-aos": "^1.0.1",
